@@ -1,0 +1,309 @@
+/* ==========================================================================
+   07 · Competições
+   Desktop (>= 1100): título | texto e botão | foto aérea noturna encostada na
+   borda direita, fundida no preto pela esquerda, com a pilha por cima.
+   Tablet (768 a 1099): título, texto e botão na metade esquerda; foto na
+   metade direita, de cima a baixo.
+   Celular (< 768): título à esquerda com a foto à direita (mesma leitura do
+   mockup), texto e botão embaixo, em largura cheia.
+   ========================================================================== */
+
+#competicoes {
+  --comp-pad-topo: clamp(36px, 2.75vw, 64px);
+  --comp-pad-base: clamp(28px, 2.1vw, 52px);
+  padding-block: var(--comp-pad-topo) var(--comp-pad-base);
+}
+/* esfumaçado leve no alto, como a névoa do mockup (fica atrás do conteúdo) */
+#competicoes::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 90% at 42% 10%, rgba(255, 255, 255, 0.04), transparent 70%),
+    radial-gradient(40% 70% at 8% 90%, rgba(255, 255, 255, 0.018), transparent 70%);
+}
+/* No desktop a seção tem a proporção do mockup (377 de altura em 1440) e o
+   conteúdo fica centrado nela; em tela muito larga ela cresce junto com a foto. */
+@media (min-width: 1100px) {
+  #competicoes {
+    min-height: min(26.2vw, 680px);
+    display: grid;
+    align-content: center;
+  }
+}
+
+/* ---------------------------------------------------------------- grade */
+.comp__grade {
+  display: grid;
+  grid-template-columns: 27.6% minmax(0, 34%) minmax(0, 1fr) auto;
+  grid-template-areas: 'cabeca corpo . pilha';
+  align-items: center;
+}
+
+.comp__cabeca,
+.comp__corpo,
+.comp__pilha {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------------- título */
+.comp__cabeca {
+  grid-area: cabeca;
+  align-self: start;
+}
+#competicoes .comp__titulo {
+  margin-top: 0.16em;
+  padding-left: 0.08em;
+  /* teto em 82 px: é o tamanho em 1728 px, quando o .wrap para de crescer */
+  font-size: clamp(40px, 4.75vw, 82px);
+  line-height: 0.99;
+  /* a Anton sai mais larga que a fonte do mockup; aperta um pouco sem colar */
+  letter-spacing: -0.015em;
+}
+/* segunda e quarta linha recuadas, como no mockup */
+#competicoes .comp__recuo {
+  padding-left: 0.39em;
+}
+
+/* ---------------------------------------------------------- texto e botão */
+.comp__corpo {
+  grid-area: corpo;
+  padding-top: 0.9em;
+}
+#competicoes .comp__texto {
+  font-size: clamp(15px, 1.225vw, 20.5px);
+  line-height: 1.62;
+  max-width: 27.4em;
+  color: #e4e4e4;
+  text-wrap: pretty;
+}
+/* quebras de linha do mockup, só quando a coluna tem largura pra elas */
+.comp__qb {
+  display: none;
+}
+@media (min-width: 1360px) {
+  .comp__qb {
+    display: inline;
+  }
+  #competicoes .comp__texto {
+    max-width: none;
+  }
+}
+#competicoes .comp__btn {
+  margin-top: clamp(26px, 2.4vw, 44px);
+  padding-block: 1em;
+  padding-inline: 1.78em 1.15em;
+  gap: 1.05em;
+}
+#competicoes .comp__btn svg {
+  color: var(--ouro-claro);
+}
+#competicoes .comp__btn:hover svg {
+  color: var(--tinta);
+}
+
+/* ---------------------------------------------------------------- pilha */
+.comp__pilha {
+  grid-area: pilha;
+  align-self: end;
+  justify-self: end;
+  font-size: max(12px, var(--t-pilha));
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.85);
+}
+/* No desktop a pilha acompanha a foto, não o .wrap: fica a um gutter da borda
+   direita da tela, com a base um pouco acima da base do título. Até 1728 px dá
+   no mesmo lugar do fim do .wrap; acima disso não fica solta no meio da foto. */
+@media (min-width: 1100px) {
+  .comp__pilha {
+    position: absolute;
+    right: var(--gutter);
+    bottom: calc(var(--comp-pad-base) + 0.2em);
+  }
+}
+
+/* ---------------------------------------------------------------- foto
+   A figura cobre a metade direita da seção, de cima a baixo. No desktop a
+   imagem (retrato 1097x1434) é dimensionada pela largura da tela (38vw, e não
+   pela altura da seção), ancorada na borda direita e quase centrada na
+   vertical: com a seção em 26,2vw, aparecem os refletores e a torcida em cima
+   e o conjunto de quadras na diagonal. Some no preto pela esquerda com uma
+   máscara longa, que começa logo depois do texto, como no mockup. */
+.comp__foto {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 54%;
+  margin: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.comp__img {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 38vw;
+  height: auto;
+  max-width: none;
+  /* translate (e não transform) pra somar com o scale da entrada; -45% em vez
+     de -50% traz pra dentro os refletores do alto, como no mockup */
+  translate: 0 -45%;
+  filter: brightness(0.8) saturate(0.92) contrast(1.08);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.45) 12%, rgba(0, 0, 0, 0.85) 24%, #000 34%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.45) 12%, rgba(0, 0, 0, 0.85) 24%, #000 34%);
+}
+/* véu: sombra macia atrás da pilha (a quina das quadras encosta na borda
+   direita da foto real, então a pilha cai perto dela), escurece a borda direita
+   e um fio no topo e na base */
+.comp__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(26% 52% at 86% 70%, rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0) 100%),
+    linear-gradient(270deg, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0.35) 17%, rgba(10, 10, 10, 0) 34%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.12) 0%, rgba(10, 10, 10, 0) 16%, rgba(10, 10, 10, 0) 84%, rgba(10, 10, 10, 0.3) 100%);
+}
+
+/* Entrada da foto: só esmaece (sem deslocar a figura, que encosta nas bordas)
+   e a imagem assenta de 1,06 para 1, sem nunca abrir fresta. */
+.js #competicoes .comp__foto[data-revelar] {
+  transform: none;
+  transition-duration: 1.2s;
+}
+.js .comp__foto[data-revelar] .comp__img {
+  transform: scale(1.06);
+  transform-origin: 70% 50%;
+  transition: transform 1.8s var(--ease);
+  transition-delay: 90ms;
+}
+.js .comp__foto.visivel .comp__img {
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .comp__foto[data-revelar] .comp__img {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ===================================================== tablet 768 a 1099 */
+@media (max-width: 1099px) {
+  #competicoes {
+    padding-block: var(--sec-pad);
+  }
+  .comp__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+    grid-template-areas:
+      'cabeca pilha'
+      'corpo pilha';
+    align-items: start;
+  }
+  #competicoes .rotulo {
+    font-size: 13px;
+  }
+  #competicoes .comp__titulo {
+    font-size: clamp(40px, 6.6vw, 68px);
+  }
+  .comp__corpo {
+    padding-top: clamp(24px, 3.2vw, 34px);
+  }
+  #competicoes .comp__texto {
+    font-size: 16px;
+    /* não encosta na foto, que começa na metade da tela */
+    max-width: min(26.5em, calc(50vw - var(--gutter) - 24px));
+  }
+  #competicoes .comp__btn {
+    font-size: 13px;
+  }
+  #competicoes .comp__pilha {
+    font-size: 13px;
+  }
+  .comp__foto {
+    width: 50%;
+  }
+  .comp__img {
+    top: 0;
+    height: 100%;
+    width: 100%;
+    translate: none;
+    object-fit: cover;
+    object-position: 62% 50%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.55) 20%, #000 46%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.55) 20%, #000 46%);
+  }
+}
+
+/* ======================================================== celular < 768 */
+@media (max-width: 767px) {
+  #competicoes {
+    --comp-pad-topo: 56px;
+    padding-block: var(--comp-pad-topo) 60px;
+  }
+  .comp__grade {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    grid-template-areas:
+      'cabeca foto'
+      'corpo corpo';
+  }
+  #competicoes .comp__titulo {
+    font-size: clamp(38px, 11.6vw, 60px);
+  }
+  #competicoes .comp__texto {
+    font-size: 15.5px;
+    line-height: 1.62;
+    max-width: 34em;
+  }
+  #competicoes .comp__btn {
+    margin-top: 26px;
+  }
+  #competicoes .comp__pilha {
+    grid-area: foto;
+    align-self: end;
+    justify-self: end;
+    font-size: 12px;
+    line-height: 2;
+    letter-spacing: 0.18em;
+    margin: 0 -2px -4px 0;
+  }
+
+  /* a foto entra na grade, à direita do título, e sangra até a borda da tela
+     e até o topo da seção */
+  .comp__foto {
+    grid-area: foto;
+    position: relative;
+    inset: auto;
+    width: auto;
+    align-self: stretch;
+    min-height: 300px;
+    margin-top: calc(-1 * var(--comp-pad-topo));
+    margin-right: calc(-1 * var(--gutter));
+    margin-left: -26%;
+    margin-bottom: -28px;
+  }
+  .comp__img {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 58% 52%;
+    filter: brightness(0.84) saturate(0.92) contrast(1.08);
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.6) 24%, #000 48%),
+      linear-gradient(0deg, transparent 0%, #000 22%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.6) 24%, #000 48%),
+      linear-gradient(0deg, transparent 0%, #000 22%);
+    mask-composite: intersect;
+  }
+  .comp__foto::after {
+    background: linear-gradient(270deg, rgba(10, 10, 10, 0.85) 0%, rgba(10, 10, 10, 0.55) 26%, rgba(10, 10, 10, 0) 50%);
+  }
+  .comp__corpo {
+    padding-top: 30px;
+  }
+}

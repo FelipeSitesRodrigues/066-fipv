@@ -1,0 +1,805 @@
+/* ==========================================================================
+   Hero. Desktop (e qualquer tela deitada a partir de 560 px): texto à
+   esquerda, foto numa caixa que começa depois do título e se funde no preto,
+   com o atleta caindo à direita das letras.
+   Celular e tablet em pé: foto vertical, título no topo, atleta no meio,
+   subtítulo e controles no piso escuro de baixo.
+   ========================================================================== */
+
+.hero {
+  --hg: clamp(64px, 13.6vw, 236px); /* palavra gigante; para junto com o .wrap */
+  /* altura: proporção do mockup (731 px em 1440), até 920 px. A 920 px o
+     título e o .wrap já pararam de crescer (1811 px de janela): se o hero
+     continuasse, a foto cresceria sozinha e a bola entraria na pilha. */
+  --hh: clamp(620px, min(50.8vw, 920px), 100vh);
+  --hero-texto: #f4f1ec;
+  position: relative;
+  height: var(--hh);
+  overflow: clip;
+  isolation: isolate;
+  background: var(--preto);
+  color: var(--hero-texto);
+}
+
+@supports (height: 100svh) {
+  .hero {
+    --hh: clamp(620px, min(50.8vw, 920px), 100svh);
+  }
+}
+
+/* ------------------------------------------------------------------- foto
+   A foto tem sempre a altura do hero (largura = altura × 1,904) e a caixa
+   começa onde o atleta (26% da largura da foto) cai logo depois do fim do
+   título:  fim do título = margem do .wrap + 3,79 × palavra gigante.
+   Em tela muito larga a foto acaba antes da borda direita: a caixa para ali
+   e a ponta direita também se funde no preto (--fade-dir), em vez de a foto
+   ampliar e empurrar a bola pra dentro da pilha. */
+.hero__foto {
+  --foto-x: max(0px, calc(max(var(--gutter), (100% - var(--wrap)) / 2) + var(--hg) * 3.79 + 40px - var(--hh) * 0.495));
+  --fade-dir: clamp(0px, (100vw - var(--hh) * 1.904 - max(0px, max(var(--gutter), (100vw - var(--wrap)) / 2) + var(--hg) * 3.79 + 40px - var(--hh) * 0.495)) * 3, 200px);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--foto-x);
+  width: min(100% - var(--foto-x), var(--hh) * 1.904);
+  z-index: -3;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.3) 14%, rgba(0, 0, 0, 0.85) 30%, #000 38%, #000 calc(100% - var(--fade-dir)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.3) 14%, rgba(0, 0, 0, 0.85) 30%, #000 38%, #000 calc(100% - var(--fade-dir)), transparent 100%);
+}
+.hero__foto picture,
+.hero__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.hero__img {
+  object-fit: cover;
+  object-position: 0% 50%;
+  filter: brightness(0.86) contrast(1.06) saturate(0.92);
+}
+/* Escurece o terço esquerdo DA FOTO (medido na foto, não na tela): o colega
+   de amarelo e o árbitro ficam atrás de "SEM LIMITES." e do "Y". Some antes
+   do atleta, que começa em 25% da largura da foto. */
+.hero__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(calc(var(--hh) * 0.12) calc(var(--hh) * 0.13) at calc(var(--hh) * 1.904 * 0.215) calc(var(--hh) * 0.33), rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.44) calc(var(--hh) * 1.904 * 0.19), rgba(0, 0, 0, 0) calc(var(--hh) * 1.904 * 0.25));
+}
+
+/* Véus: topo (menu sobre os refletores), base, faixa escura à esquerda e um
+   brilho quente no canto de baixo, onde o mockup tinha folhagem. O ruído dá o
+   grão de filme do mockup. */
+.hero__veu {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.42) 13%, rgba(0, 0, 0, 0) 30%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0) 26%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.55) 30%, rgba(0, 0, 0, 0.42) 50%, rgba(0, 0, 0, 0) 62%),
+    radial-gradient(46% 62% at 14% 74%, rgba(96, 70, 32, 0.34), rgba(40, 28, 12, 0.14) 55%, rgba(0, 0, 0, 0) 100%),
+    radial-gradient(40% 50% at 30% 40%, rgba(70, 52, 26, 0.16), rgba(0, 0, 0, 0) 100%);
+}
+.hero__veu::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--ruido);
+  background-size: 240px 240px;
+  opacity: 0.12;
+  mix-blend-mode: screen;
+}
+
+/* Recorte do atleta: só existe no celular, por cima do texto. */
+.hero__recorte {
+  display: none;
+}
+
+/* --------------------------------------------------------------- conteúdo */
+.hero__conteudo {
+  position: relative;
+  height: 100%;
+}
+
+.hero__frases {
+  position: absolute;
+  left: calc(var(--hg) * -0.075);
+  top: 26.2%;
+  display: grid;
+  justify-items: start;
+}
+.hero__frase {
+  grid-area: 1 / 1;
+  display: grid;
+  width: max-content;
+  align-self: end; /* frases mais baixas encostam na base: a cauda fica no mesmo lugar */
+  margin: 0;
+  font-weight: 400;
+  /* opacidade (e não visibility) pra o h1 continuar na árvore de
+     acessibilidade quando outra frase está na tela */
+  opacity: 0;
+  pointer-events: none;
+}
+.hero__frase.ativa,
+.hero__frase.saindo {
+  opacity: 1;
+  pointer-events: auto;
+}
+.hero__linha {
+  display: block;
+}
+
+.hero__kicker,
+.hero__cauda {
+  font-family: var(--f-kicker);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hero-texto);
+}
+.hero__kicker {
+  font-size: calc(var(--hg) * 0.184);
+  letter-spacing: 0.137em;
+  padding-left: calc(var(--hg) * 0.14);
+}
+.hero__grande {
+  margin-top: calc(var(--hg) * 0.02);
+  font-family: var(--f-display);
+  font-style: italic;
+  font-synthesis: style;
+  font-weight: 400;
+  font-size: var(--hg);
+  line-height: 0.95;
+  letter-spacing: 0.002em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hero-texto);
+}
+/* a linha gigante de cada frase é ajustada pra ter a largura de PIKIVOLEY
+   (--escala vem no HTML, e muda com o idioma); a altura acompanha o texto */
+.hero__ajuste {
+  display: block;
+  font-size: calc(var(--escala, 1) * 1em);
+  line-height: 0.95;
+}
+.hero__grande .ouro {
+  padding-right: 0.07em;
+  margin-right: -0.07em;
+}
+.hero__cauda {
+  margin-top: calc(var(--hg) * -0.005);
+  font-size: calc(var(--hg) * 0.275);
+  letter-spacing: 0.13em;
+  text-align: right;
+  margin-right: calc(var(--hg) * -0.25);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6), 0 0 3px rgba(0, 0, 0, 0.35);
+}
+
+/* Pilha da direita */
+.hero__lado {
+  position: absolute;
+  top: 19.6%;
+  right: calc(var(--hg) * 0.02);
+}
+/* sombra própria, presa à pilha em qualquer largura: o fundo ali é a faixa
+   com o "FIPV" branco e a fita azul da rede */
+.hero__lado::before {
+  content: '';
+  position: absolute;
+  inset: -55% -42% -50% -48%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.56) 52%, rgba(0, 0, 0, 0) 100%);
+}
+#inicio .hero__pilha {
+  font-size: clamp(12px, 0.96vw, 18px);
+  line-height: 1.7;
+  letter-spacing: 0.2em;
+  color: #eeebe6;
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+#inicio .hero__filete {
+  width: clamp(60px, 6.6vw, 124px);
+  margin-top: clamp(12px, 1.25vw, 22px);
+}
+
+/* A parte do apoio que a frase grande já diz sai (frase 2 = "para o mundo",
+   frase 3 = "tem chão, tem jogo"). */
+.hero[data-atual='1'] .hero__so-mundo,
+.hero[data-atual='2'] .hero__so-chao {
+  display: none;
+}
+
+/* Base: tracinhos à esquerda, vídeo à direita */
+.hero__base {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(12px, 1.1vw, 24px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 'tracos video';
+  align-items: center;
+}
+.hero__sub,
+.hero__valores {
+  display: none;
+}
+.hero__sub > span {
+  display: block;
+}
+
+.hero__tracos {
+  grid-area: tracos;
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 0.9vw, 16px);
+  margin-left: calc(var(--hg) * 0.02);
+}
+/* O botão tem a largura da barra (o vão entre as barras fica igual, em
+   qualquer frase); a área de clique cresce 6 px pra cada lado. */
+.hero__traco {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+.hero__traco::after {
+  content: '';
+  position: absolute;
+  inset: 0 -6px;
+}
+.hero__num {
+  display: none;
+}
+.hero__barra {
+  position: relative;
+  display: block;
+  width: clamp(28px, 3vw, 54px);
+  height: 2px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.34);
+  transition: background-color 0.3s;
+}
+.hero__traco[aria-current='true'] .hero__barra {
+  width: clamp(48px, 4.9vw, 88px);
+}
+.hero__progresso {
+  position: absolute;
+  inset: 0;
+  background: #f4f1ec;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.hero__traco[aria-current='true'] .hero__progresso {
+  transform: scaleX(1);
+}
+.hero.rodando .hero__traco[aria-current='true'] .hero__progresso {
+  animation: hero-progresso 7s linear both;
+}
+.hero.rodando.pausado .hero__traco[aria-current='true'] .hero__progresso {
+  animation-play-state: paused;
+}
+.hero__traco:hover .hero__barra {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.hero__video {
+  grid-area: video;
+  margin-right: 0.75vw;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.4vw, 24px);
+  min-height: 44px;
+  text-align: left;
+  color: var(--hero-texto);
+}
+.hero__play {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: clamp(50px, 3.96vw, 74px);
+  aspect-ratio: 1;
+  border: 1.5px solid var(--ouro);
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.25);
+  transition: background-color 0.35s var(--ease-suave), transform 0.35s var(--ease);
+}
+.hero__play svg {
+  width: 38%;
+  height: 38%;
+  margin-left: 6%;
+  fill: var(--ouro-claro);
+  transition: fill 0.35s;
+}
+.hero__video-txt {
+  display: flex;
+  flex-direction: column;
+  font: 600 clamp(12px, 0.97vw, 17px) / 1.42 var(--f-rotulo);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.hero__video:hover .hero__play {
+  background: var(--ouro);
+  transform: scale(1.05);
+}
+.hero__video:hover .hero__play svg {
+  fill: var(--tinta);
+}
+
+/* ---------------------------------------------------------- lightbox vídeo */
+.hero__dialogo {
+  width: min(1100px, 100% - 32px);
+  max-width: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--branco);
+  overflow: visible;
+}
+.hero__dialogo::backdrop {
+  background: rgba(0, 0, 0, 0.88);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.hero__dialogo-caixa {
+  position: relative;
+}
+.hero__player {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid rgba(201, 162, 90, 0.4);
+}
+.hero__player iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.hero__fechar {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: var(--branco);
+}
+.hero__fechar svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+/* ==========================================================================
+   Desktop estreito e telas deitadas (tablet e celular, 560 a 1099 px)
+   ========================================================================== */
+/* desktop estreito: a palavra gigante encolhe um pouco pra bola não
+   encostar na pilha (o hero está no mínimo de 620 px e a foto fica larga) */
+@media (min-width: 1100px) and (max-width: 1279.98px) {
+  .hero {
+    --hg: 12.9vw;
+  }
+}
+
+/* deitado: sem espaço pra pilha à direita; a frase dela desce pra base,
+   como no celular */
+@media (min-width: 560px) and (max-width: 1099.98px) and (orientation: landscape) {
+  .hero {
+    --hg: 12.6vw;
+  }
+  .hero__frases {
+    top: 27%;
+  }
+  .hero__lado {
+    display: none;
+  }
+  .hero__base {
+    grid-template-areas:
+      'sub .'
+      'tracos video';
+    row-gap: 14px;
+    align-items: end;
+  }
+  .hero__sub {
+    grid-area: sub;
+    display: block;
+    max-width: 30ch;
+    font: 500 16px / 1.5 var(--f-corpo);
+    color: #f2efea;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* ==========================================================================
+   Celular e tablet em pé: foto vertical
+   Tudo aqui é calculado a partir da geometria medida da foto (941 × 1672):
+   mão do atleta em 32,3% da altura, bola de 33,6% a 37,7%, pé mais baixo em
+   79,2% (entre 60% e 75% da largura). A foto fica presa pela base; o título
+   termina acima da bola e o bloco de baixo cabe no piso (os 20,8% finais).
+   ========================================================================== */
+@media (max-width: 559.98px), (max-width: 1099.98px) and (orientation: portrait) {
+  .hero {
+    --hh: clamp(640px, 100vh, 920px);
+    /* caixa da foto: tela inteira no celular; no tablet em pé, a largura da
+       foto em pé na altura do hero, centralizada, com as laterais fundindo */
+    --caixa: min(100vw, var(--hh) * 0.5628);
+    --lado: clamp(0px, (100vw - var(--caixa)) * 0.6, 90px);
+    --img-h: max(var(--caixa) * 1.7768, var(--hh)); /* altura da foto na tela */
+    --topo: calc(var(--header-h) + clamp(8px, 3.4vh - 6px, 40px));
+    --bola: calc(var(--hh) - var(--img-h) * 0.664); /* topo da bola */
+    --piso: calc(var(--img-h) * 0.208); /* do pé mais baixo até o fim do hero */
+    --hg: clamp(56px, min(23vw, (var(--bola) - 8px - var(--topo)) / 1.54), 190px);
+  }
+  @supports (height: 100svh) {
+    .hero {
+      --hh: clamp(640px, 100svh, 920px);
+    }
+  }
+  .hero__foto,
+  .hero__recorte {
+    inset: 0;
+    width: var(--caixa);
+    margin-inline: auto;
+  }
+  .hero__foto {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--lado), #000 calc(100% - var(--lado)), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 var(--lado), #000 calc(100% - var(--lado)), transparent 100%);
+  }
+  .hero__foto::after {
+    content: none;
+  }
+  .hero__img,
+  .hero__recorte img {
+    object-fit: cover;
+    object-position: 54% 100%;
+  }
+  /* topo: escurece as faixas atrás do título. Base: forte até perto do pé
+     (onde fica o texto), leve no pé, some logo acima. */
+  .hero__veu {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.74) 18%, rgba(0, 0, 0, 0.5) 31%, rgba(0, 0, 0, 0.14) 41%, rgba(0, 0, 0, 0) 47%),
+      linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0, rgba(0, 0, 0, 0.82) calc(var(--piso) - 34px), rgba(0, 0, 0, 0.3) calc(var(--piso) + 6px), rgba(0, 0, 0, 0) calc(var(--piso) + 80px));
+  }
+
+  /* Recorte do atleta por cima do véu e do título: o fundo atrás das letras
+     escurece e o atleta continua aceso; se o título encosta nele, a mão e a
+     bola passam na frente das letras. Só a metade de cima, onde o véu do
+     topo age. */
+  .hero__recorte {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 47%, transparent 55%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 47%, transparent 55%);
+  }
+  .hero__recorte img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    filter: brightness(0.86) contrast(1.06) saturate(0.92);
+  }
+
+  .hero__conteudo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: var(--topo);
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+  }
+  .hero__frases {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+  .hero__kicker {
+    font-size: calc(var(--hg) * 0.222);
+    padding-left: calc(var(--hg) * 0.1);
+  }
+  .hero__grande {
+    margin-top: calc(var(--hg) * 0.03);
+  }
+  .hero__cauda {
+    font-size: calc(var(--hg) * 0.31);
+    margin-top: calc(var(--hg) * 0.02);
+    margin-right: calc(var(--hg) * -0.16);
+  }
+  .hero__lado {
+    display: none;
+  }
+
+  /* Bloco de baixo, na ordem do mockup: subtítulo; paginação à esquerda e
+     valores à direita na mesma linha. Quando o vídeo existir, ele assume o
+     lugar dos valores (senão o bloco sobe até os pés do atleta). */
+  .hero__base {
+    position: relative;
+    bottom: auto;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'sub sub'
+      'tracos valores';
+    align-items: center;
+    row-gap: 12px;
+    column-gap: 8px;
+  }
+  .hero__base:has(.hero__video) {
+    grid-template-areas:
+      'sub sub'
+      'tracos video';
+  }
+  .hero__base:has(.hero__video) .hero__valores {
+    display: none;
+  }
+  .hero__sub {
+    grid-area: sub;
+    display: block;
+    font: 500 clamp(15px, 4.1vw, 22px) / 1.5 var(--f-corpo);
+    color: #f2efea;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.7), 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+  .hero__video {
+    justify-self: end;
+    margin-right: 0;
+    gap: 12px;
+  }
+  .hero__play {
+    width: 48px;
+  }
+  .hero__video-txt {
+    font-size: 13px;
+  }
+
+  /* paginação 01 — 02 — 03, com o traço desenhado em CSS */
+  .hero__tracos {
+    gap: 0;
+    margin-left: -8px;
+  }
+  .hero__traco {
+    justify-content: center;
+    min-width: 44px;
+    padding-inline: 8px;
+  }
+  .hero__traco::after {
+    content: none;
+  }
+  .hero__traco + .hero__traco::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 50%;
+    width: 12px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.45);
+  }
+  .hero__num {
+    display: block;
+    font: 600 13px / 1 var(--f-rotulo);
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.72);
+    font-variant-numeric: tabular-nums;
+  }
+  .hero__traco[aria-current='true'] .hero__num {
+    color: var(--ouro-claro);
+  }
+  .hero__barra,
+  .hero__traco[aria-current='true'] .hero__barra {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 6px;
+    width: auto;
+    height: 2px;
+    background: transparent;
+  }
+  .hero__traco[aria-current='true'] .hero__barra {
+    background: rgba(201, 162, 90, 0.3);
+  }
+  .hero__progresso {
+    background: var(--ouro-grad-linha);
+  }
+
+  /* valores em 2 × 2, alinhados à direita: nenhuma linha começa com o ponto */
+  .hero__valores {
+    grid-area: valores;
+    justify-self: end;
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font: 600 12px / 1.55 var(--f-rotulo);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #efece7;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7);
+  }
+  .hero__valores li {
+    white-space: nowrap;
+  }
+  .hero__valores li:nth-child(even)::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin: 0 0.72em 0.22em;
+    border-radius: 50%;
+    background: var(--ouro);
+    vertical-align: middle;
+  }
+}
+
+/* Celular: a foto vai de borda a borda (sem faixa preta dos lados, que
+   aparecia no Safari, onde a altura visível é menor que 1,78 × a largura).
+   Só estreita, centralizada, se a tela for larga demais pra altura: aí a
+   foto larga subiria a mão do atleta pra dentro do título. */
+@media (max-width: 559.98px), (max-width: 767.98px) and (orientation: portrait) {
+  .hero {
+    --caixa: min(100vw, max(var(--hh) * 0.5628, (var(--hh) - 170px) * 0.83));
+  }
+}
+
+/* celular estreito: valores mais justos pra caber ao lado da paginação;
+   abaixo de 350 px não cabem e saem (é enfeite, e repete "sem fronteiras") */
+@media (max-width: 389.98px) {
+  .hero__valores {
+    letter-spacing: 0.1em;
+  }
+  .hero__valores li:nth-child(even)::before {
+    margin-inline: 0.5em;
+  }
+}
+@media (max-width: 349.98px) {
+  .hero__valores {
+    display: none;
+  }
+}
+
+/* tablet em pé: hero na altura da tela, foto centralizada; sobra espaço no
+   piso pra o vídeo ter linha própria e os valores numa linha só */
+@media (min-width: 768px) and (max-width: 1099.98px) and (orientation: portrait) {
+  .hero {
+    --hh: clamp(640px, 100vh, 1400px);
+  }
+  @supports (height: 100svh) {
+    .hero {
+      --hh: clamp(640px, 100svh, 1400px);
+    }
+  }
+  .hero__base,
+  .hero__base:has(.hero__video) {
+    grid-template-areas:
+      'sub sub'
+      'video video'
+      'tracos valores';
+    row-gap: 18px;
+  }
+  .hero__base:has(.hero__video) .hero__valores {
+    display: flex;
+  }
+  .hero__sub {
+    max-width: 34ch;
+  }
+  .hero__video {
+    justify-self: start;
+    gap: 16px;
+  }
+  .hero__play {
+    width: 64px;
+  }
+  .hero__video-txt {
+    font-size: 15px;
+  }
+  .hero__valores {
+    display: flex;
+    font-size: 13px;
+  }
+  .hero__valores li:nth-child(n + 2)::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin: 0 0.8em 0.22em;
+    border-radius: 50%;
+    background: var(--ouro);
+    vertical-align: middle;
+  }
+}
+
+/* ==========================================================================
+   Movimento: entrada da página e troca de frase. Nada disso roda com
+   prefers-reduced-motion; o estado final é igual ao estático.
+   ========================================================================== */
+@keyframes hero-progresso {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes hero-zoom {
+  from { transform: scale(1.06); }
+  to { transform: scale(1); }
+}
+@keyframes hero-entra {
+  from { clip-path: inset(-30% 110% -30% -10%); transform: translateX(-0.12em); }
+  to { clip-path: inset(-30% -12% -30% -10%); transform: none; }
+}
+@keyframes hero-sai {
+  from { clip-path: inset(-30% -12% -30% -10%); }
+  to { clip-path: inset(-30% -12% -30% 112%); }
+}
+@keyframes hero-sobe {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes hero-aparece {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes hero-brilho {
+  from { background-position: 135% 0, 0 0; }
+  to { background-position: -45% 0, 0 0; }
+}
+/* apaga e acende o apoio; o conteúdo troca no meio (420 ms, no JS) */
+@keyframes hero-apoio {
+  0% { opacity: 1; }
+  34%, 46% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* troca de frase: sai varrendo da esquerda pra direita, entra do mesmo jeito */
+  .hero__frase.saindo .hero__linha {
+    animation: hero-sai 0.75s cubic-bezier(0.7, 0, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+  .hero__frase.entrando .hero__linha {
+    animation: hero-entra 1.05s var(--ease) both;
+    animation-delay: calc(420ms + var(--i, 0) * 130ms);
+  }
+  .hero.trocando .hero__pilha,
+  .hero.trocando .hero__sub {
+    animation: hero-apoio 1.2s var(--ease-suave) both;
+  }
+
+  /* entrada da página */
+  .js .hero--intro .hero__img,
+  .js .hero--intro .hero__recorte img {
+    animation: hero-zoom 2.8s cubic-bezier(0.16, 0.7, 0.2, 1) both;
+  }
+  .js .hero--intro .hero__frase.ativa .hero__linha {
+    animation: hero-entra 1.25s var(--ease) both;
+    animation-delay: calc(220ms + var(--i, 0) * 150ms);
+  }
+  .js .hero--intro .hero__brilho {
+    background-image:
+      linear-gradient(100deg, rgba(255, 246, 220, 0) 34%, rgba(255, 246, 220, 0.95) 49%, rgba(255, 246, 220, 0) 64%),
+      var(--ouro-grad-escuro);
+    background-size: 260% 100%, 100% 100%;
+    background-repeat: no-repeat;
+    animation: hero-brilho 1.5s 1.25s cubic-bezier(0.45, 0, 0.25, 1) both;
+  }
+  .js .hero--intro .hero__lado {
+    animation: hero-sobe 1s 0.95s var(--ease) both;
+  }
+  .js .hero--intro .hero__base {
+    animation: hero-sobe 1s 1.15s var(--ease) both;
+  }
+  .js .hero--intro .hero__veu {
+    animation: hero-aparece 1.2s var(--ease-suave) both;
+  }
+  /* enquanto o relógio não começa (fim da entrada), a barra fica vazia */
+  .js .hero--intro:not(.rodando) .hero__traco[aria-current='true'] .hero__progresso {
+    transform: scaleX(0);
+  }
+}

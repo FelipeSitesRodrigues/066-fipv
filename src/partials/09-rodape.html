@@ -1,0 +1,77 @@
+  <footer class="rod" id="contato">
+    <div class="rod__globo" aria-hidden="true">
+      <img class="rod__globo-img" src="/assets/img/logo-globo-640.webp" width="640" height="592" alt="" loading="lazy" decoding="async">
+    </div>
+
+    <div class="wrap rod__wrap">
+      <div class="rod__grade">
+        <div class="rod__marca-bloco" data-revelar>
+          <a class="rod__marca" href="#inicio">
+            <img class="rod__marca-globo" src="/assets/img/logo-globo-192.webp" srcset="/assets/img/logo-globo-96.webp 96w, /assets/img/logo-globo-192.webp 192w, /assets/img/logo-globo-640.webp 640w" sizes="(max-width: 767px) 80px, (max-width: 1099px) 108px, 9vw" width="192" height="178" alt="" loading="lazy" decoding="async">
+            <span class="rod__marca-texto">
+              <img class="rod__marca-fipv" src="/assets/img/logo-fipv-320.webp" srcset="/assets/img/logo-fipv-160.webp 160w, /assets/img/logo-fipv-320.webp 320w, /assets/img/logo-fipv-640.webp 640w" sizes="(max-width: 767px) 150px, (max-width: 1099px) 196px, 15.4vw" width="320" height="68" alt="FIPV" loading="lazy" decoding="async">
+              <span class="rod__marca-nome" data-i18n="rodape.nome">Federação Internacional<br>de Pikivoley</span>
+            </span>
+          </a>
+          <p class="rod__frase">
+            <span data-i18n="rodape.frase1">Da América do Sul para o mundo.</span>
+            <span data-i18n="rodape.frase2">Tem chão, tem jogo.</span>
+          </p>
+          <a class="rod__email" data-requer="email" href="mailto:{{links.email}}">{{links.email}}</a>
+        </div>
+
+        <nav class="rod__col rod__nav" aria-labelledby="rod-nav-titulo" data-revelar style="--atraso:1">
+          <h2 class="rod__titulo" id="rod-nav-titulo" data-i18n="rodape.navTitulo">Navegação</h2>
+          <ul class="rod__links" role="list">
+            <li><a href="#inicio" data-i18n="rodape.inicio">Início</a></li>
+            <li><a href="#sobre" data-i18n="rodape.sobre">Sobre</a></li>
+            <li><a href="#esporte" data-i18n="rodape.esporte">O Esporte</a></li>
+            <li><a href="#competicoes" data-i18n="rodape.competicoes">Competições</a></li>
+            <li><a href="#galeria" data-i18n="rodape.galeria">Galeria</a></li>
+            <li><a href="#contato" data-i18n="rodape.contato">Contato</a></li>
+          </ul>
+        </nav>
+
+        <div class="rod__col rod__siga" data-revelar style="--atraso:2">
+          <h2 class="rod__titulo" data-i18n="rodape.sigaTitulo">Siga a FIPV</h2>
+          <!-- role="link": enquanto o endereço não existe o build tira o href, e sem ele o aria-label não é lido -->
+          <ul class="rod__redes" role="list">
+            <li>
+              <a class="rod__rede" role="link" href="{{links.instagram}}" target="_blank" rel="noopener" aria-label="Instagram da FIPV" data-i18n-attr="aria-label:rodape.instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.5" cy="6.5" r="1.25" fill="currentColor" stroke="none"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="rod__rede" role="link" href="{{links.youtube}}" target="_blank" rel="noopener" aria-label="YouTube da FIPV" data-i18n-attr="aria-label:rodape.youtube">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M23.1 7.1a3 3 0 0 0-2.1-2.1C19.1 4.5 12 4.5 12 4.5s-7.1 0-9 .5A3 3 0 0 0 .9 7.1 31.4 31.4 0 0 0 .5 12a31.4 31.4 0 0 0 .4 4.9A3 3 0 0 0 3 19c1.9.5 9 .5 9 .5s7.1 0 9-.5a3 3 0 0 0 2.1-2.1 31.4 31.4 0 0 0 .4-4.9 31.4 31.4 0 0 0-.4-4.9ZM9.7 15.2V8.8l5.6 3.2Z"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="rod__rede" role="link" href="{{links.facebook}}" target="_blank" rel="noopener" aria-label="Facebook da FIPV" data-i18n-attr="aria-label:rodape.facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.9 22.5v-9.1h3.05l.46-3.55H13.9V7.58c0-1.03.29-1.73 1.76-1.73h1.88V2.68a25 25 0 0 0-2.74-.14c-2.71 0-4.57 1.66-4.57 4.7v2.61H7.17v3.55h3.06v9.1Z"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="rod__rede" role="link" href="{{links.x}}" target="_blank" rel="noopener" aria-label="X (antigo Twitter) da FIPV" data-i18n-attr="aria-label:rodape.x">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12Z"/></svg>
+              </a>
+            </li>
+          </ul>
+          <span class="filete rod__filete" aria-hidden="true"></span>
+          <ul class="rod__valores" role="list">
+            <li data-i18n="rodape.valor1">Esporte</li>
+            <li data-i18n="rodape.valor2">Cultura</li>
+            <li data-i18n="rodape.valor3">Integração</li>
+            <li data-i18n="rodape.valor4">Sem fronteiras</li>
+          </ul>
+        </div>
+
+        <p class="pilha rod__pilha" data-i18n="rodape.pilha" data-revelar style="--atraso:3"><span>Pikivoley</span> <span class="rod__apagado">para um</span> <span class="rod__apagado">mundo</span> <span>mais conectado.</span></p>
+      </div>
+
+      <div class="rod__base">
+        <p class="rod__copy">&copy; {{ano}} FIPV &middot; <span data-i18n="rodape.copy">Federação Internacional de Pikivoley. Todos os direitos reservados.</span></p>
+        <p class="rod__credito"><span data-i18n="rodape.credito">Site por</span> <a href="https://www.instagram.com/credialta.sites/" target="_blank" rel="noopener">Credialta Sites</a></p>
+      </div>
+    </div>
+  </footer>

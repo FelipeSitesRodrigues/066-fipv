@@ -1,0 +1,13 @@
+{
+  "_leia": "Endereços que o Vitor ainda precisa mandar. Link vazio: o elemento sai sem href (não navega) ou some, se tiver data-requer. O build lista o que está pendente.",
+  "siteUrl": "",
+  "ano": 2026,
+  "links": {
+    "instagram": "",
+    "youtube": "",
+    "facebook": "",
+    "x": "",
+    "video": "",
+    "email": ""
+  }
+}

@@ -1,0 +1,561 @@
+/* ==========================================================================
+   08 · Galeria. Rótulo e título à esquerda, frase e setas no topo direito,
+   faixa de 4 fotos reais com rolagem e snap. Clique abre o lightbox.
+   Medidas calibradas no recorte 07-galeria a 1440 px.
+   ========================================================================== */
+
+#galeria {
+  --gal-gap: clamp(10px, 0.78vw, 14px);
+  --gal-proporcao: 1.05;
+  padding-block: clamp(28px, 2.24vw, 42px) clamp(24px, 1.65vw, 36px);
+}
+
+/* ------------------------------------------------------------- grade */
+.gal__grade {
+  display: grid;
+  /* a coluna do título cresce se o texto (espanhol, tela estreita) pedir */
+  grid-template-columns: minmax(max-content, 25.9%) minmax(0, 1fr);
+  grid-template-areas:
+    'rotulo topo'
+    'titulo faixa';
+  row-gap: clamp(7px, 0.58vw, 12px);
+  align-items: center;
+}
+.gal__rotulo {
+  grid-area: rotulo;
+  justify-self: start;
+}
+/* No recorte da galeria o rótulo é mais cheio e mais fechado que o da base
+   (maiúscula de ~11 px e 66 px de largura a 1440, marca da altura da
+   maiúscula, colada no texto). */
+#galeria .gal__rotulo {
+  font-size: clamp(12px, 1.04vw, 16px);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  gap: 0.45em;
+}
+#galeria .gal__rotulo::before {
+  width: 0.34em;
+  height: 0.82em;
+}
+.gal__titulo {
+  grid-area: titulo;
+  align-self: start;
+}
+.gal__topo {
+  grid-area: topo;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(24px, 3.95vw, 72px);
+  min-width: 0;
+}
+.gal__faixa {
+  grid-area: faixa;
+}
+
+/* ------------------------------------------------------------- título */
+/* Anton tem maiúscula de 0,845em: 62 px dá os 54 px de altura do mockup. */
+#galeria .titulo {
+  /* teto de 75 px: acima de 1440 o .wrap para de crescer e o título não pode
+     continuar crescendo sozinho, senão encosta na primeira foto */
+  font-size: clamp(44px, 4.3vw, 75px);
+  line-height: 1.03;
+  /* a Anton sai ~7% mais larga que a letra do mockup: o tracking negativo
+     devolve parte do respiro até a primeira foto sem baixar a maiúscula */
+  letter-spacing: -0.03em;
+  word-spacing: -0.04em;
+  margin-top: -0.17em;
+  margin-left: -0.09em; /* o O inclinado alinha com a barra do rótulo */
+  padding-right: 0.3em;
+}
+#galeria .gal__linha {
+  white-space: nowrap;
+}
+.gal__linha--recuo {
+  padding-left: 0.27em;
+}
+/* "Juega unido." é mais longo: no desktop o título desce ~8% pra não
+   encostar na primeira foto */
+@media (min-width: 1100px) {
+  html[lang='es'] #galeria .titulo {
+    font-size: clamp(42px, 3.95vw, 69px);
+  }
+}
+
+/* ------------------------------------------ frase do topo e setas */
+.gal__frase {
+  font: 700 clamp(12px, 0.94vw, 17px) / 1.5 var(--f-rotulo);
+  letter-spacing: 0.165em;
+  text-transform: uppercase;
+  color: #2e2a27;
+  text-align: right;
+}
+/* Ouro um pouco mais fechado que o do mockup: com o claro do mockup a
+   palavra ficava em 2,2:1 sobre o osso; assim passa de 3:1. */
+.gal__frase .ouro {
+  background-image: linear-gradient(180deg, #c6a15b 0%, #a98545 50%, #8e6a2c 100%);
+  padding-block: 0;
+}
+.gal__setas {
+  display: flex;
+  gap: clamp(8px, 0.97vw, 16px);
+  flex: none;
+  margin-right: -5px; /* ponta da seta a ~10 px da borda da faixa, como no mockup */
+}
+.no-js .gal__setas {
+  display: none;
+}
+.gal__seta {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--ouro-escuro);
+  transition: color 0.3s var(--ease-suave), opacity 0.3s var(--ease-suave);
+}
+/* traço de 2,2 no viewBox de 24 desenhado a ~21 px: ~2 px na tela, como no mockup */
+.gal__seta svg {
+  width: clamp(20px, 1.5vw, 26px);
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  overflow: visible;
+  transition: transform 0.35s var(--ease);
+}
+.gal__seta:disabled {
+  opacity: 0.72;
+  cursor: default;
+}
+@media (hover: hover) {
+  .gal__seta:not(:disabled):hover {
+    color: var(--tinta);
+  }
+  .gal__seta--ant:not(:disabled):hover svg {
+    transform: translateX(-4px);
+  }
+  .gal__seta--prox:not(:disabled):hover svg {
+    transform: translateX(4px);
+  }
+}
+
+/* ------------------------------------------------------------- faixa */
+.gal__faixa {
+  display: flex;
+  gap: var(--gal-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.gal__faixa::-webkit-scrollbar {
+  display: none;
+}
+.gal__item {
+  flex: 0 0 max(160px, (100% - 3 * var(--gal-gap)) / 4);
+  scroll-snap-align: start;
+  min-width: 0;
+}
+.gal__abrir {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--gal-proporcao);
+  overflow: hidden;
+  background: var(--osso-2);
+  cursor: zoom-in;
+}
+/* Anel de foco num pseudo-elemento acima da foto: um outline por dentro some
+   debaixo da imagem quando o hover a amplia (o transform vira camada própria
+   e é pintado por cima). O sombreado escuro segura o ouro sobre foto clara. */
+.gal__abrir::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  z-index: 1;
+  border: 2px solid var(--ouro-claro);
+  box-shadow: 0 0 0 1px rgba(8, 8, 8, 0.4), inset 0 0 0 1px rgba(8, 8, 8, 0.4);
+  opacity: 0;
+  pointer-events: none;
+}
+#galeria .gal__abrir:focus-visible {
+  outline: none;
+}
+.gal__abrir:focus-visible::after {
+  opacity: 1;
+}
+.gal__foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+.gal__foto--terra {
+  object-position: 42% 50%;
+}
+.gal__foto--grama {
+  object-position: 40% 50%;
+}
+.gal__foto--cabeceio {
+  object-position: 50% 45%;
+}
+.gal__foto--noturna {
+  object-position: 50% 57%;
+}
+
+/* ícone de ampliar: aparece no hover e no foco do teclado */
+.gal__lupa {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: rgba(10, 10, 10, 0.62);
+  border: 1px solid rgba(237, 205, 134, 0.55);
+  color: var(--ouro-claro);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s var(--ease-suave), transform 0.35s var(--ease);
+}
+.gal__lupa svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+.gal__abrir:focus-visible .gal__lupa {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: hover) {
+  .gal__abrir:hover .gal__foto {
+    transform: scale(1.045);
+  }
+  .gal__abrir:hover .gal__lupa {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* No toque não há hover: a lupa fica sempre, pequena no canto, pra dizer que
+   a foto amplia. */
+@media (hover: none) {
+  .gal__lupa {
+    opacity: 0.88;
+    transform: none;
+    width: 30px;
+    height: 30px;
+    right: 8px;
+    bottom: 8px;
+  }
+  .gal__lupa svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* entrada das fotos em sequência (a faixa inteira observa, os itens animam) */
+.js #galeria .gal__faixa[data-revelar] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+.js #galeria .gal__faixa[data-revelar] .gal__item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: calc((var(--i, 0) + 2) * 90ms);
+}
+.js #galeria .gal__faixa.visivel .gal__item {
+  opacity: 1;
+  transform: none;
+}
+
+/* ------------------------------------------------------------ lightbox */
+.gal__caixa {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #080808;
+  color: var(--texto-escuro);
+  overscroll-behavior: contain;
+}
+.gal__caixa::backdrop {
+  background: #080808;
+}
+.gal__caixa[open] {
+  display: block;
+  animation: gal-entra 0.35s var(--ease-suave);
+}
+.gal__caixa :focus-visible {
+  outline-color: var(--ouro-claro);
+}
+.gal__palco {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 64px clamp(16px, 7vw, 120px) 28px;
+}
+.gal__figura {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 100%;
+  max-height: 100%;
+}
+.gal__grande {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 1500px);
+  max-height: calc(100vh - 170px);
+  max-height: calc(100dvh - 170px);
+  object-fit: contain;
+  background: var(--carvao);
+  transition: opacity 0.25s var(--ease-suave);
+}
+.gal__grande--troca {
+  opacity: 0.25;
+}
+.gal__caixa[open] .gal__grande {
+  animation: gal-foto 0.45s var(--ease);
+}
+.gal__legenda {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  max-width: 62ch;
+  text-align: left;
+  font: 400 15px / 1.5 var(--f-corpo);
+  color: #d9d6d2;
+}
+.gal__contador {
+  flex: none;
+  font: 600 13px / 1 var(--f-rotulo);
+  letter-spacing: 0.16em;
+  color: var(--ouro-claro);
+}
+.gal__fechar,
+.gal__nav {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  color: var(--branco);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 10, 10, 0.45);
+  transition: border-color 0.3s var(--ease-suave), color 0.3s var(--ease-suave), background-color 0.3s;
+}
+.gal__fechar {
+  top: 12px;
+  right: 12px;
+  width: 48px;
+  height: 48px;
+}
+.gal__fechar svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+.gal__nav {
+  top: 50%;
+  margin-top: -26px;
+  color: var(--ouro-claro);
+}
+.gal__nav--ant {
+  left: clamp(12px, 2vw, 32px);
+}
+.gal__nav--prox {
+  right: clamp(12px, 2vw, 32px);
+}
+.gal__nav svg {
+  width: 22px;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+@media (hover: hover) {
+  .gal__fechar:hover,
+  .gal__nav:hover {
+    border-color: var(--ouro);
+    color: var(--ouro-claro);
+    background: rgba(10, 10, 10, 0.8);
+  }
+}
+@keyframes gal-entra {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes gal-foto {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js #galeria .gal__faixa[data-revelar] .gal__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .gal__foto,
+  .gal__lupa,
+  .gal__seta svg,
+  .gal__grande {
+    transition: none;
+  }
+  .gal__caixa[open],
+  .gal__caixa[open] .gal__grande {
+    animation: none;
+  }
+}
+
+/* ----------------------------------------------- 768 a 1099: tablet
+   Título à esquerda, frase e setas à direita na mesma linha, faixa larga
+   embaixo, sangrando até a borda da tela pra rolagem ficar natural. */
+@media (max-width: 1099px) {
+  #galeria {
+    padding-block: clamp(56px, 7vw, 72px) clamp(48px, 6vw, 64px);
+  }
+  .gal__grade {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'rotulo rotulo'
+      'titulo topo'
+      'faixa faixa';
+    column-gap: 32px;
+    row-gap: 0;
+  }
+  .gal__rotulo {
+    margin-bottom: 18px;
+  }
+  .gal__topo {
+    align-self: end;
+    gap: 24px;
+  }
+  #galeria .titulo {
+    font-size: clamp(46px, 5.6vw, 58px);
+  }
+  /* .gal__grade na frente: ul[role='list'] da base zera o padding com mais peso */
+  .gal__grade > .gal__faixa {
+    margin: clamp(28px, 3.4vw, 36px) calc(-1 * var(--gutter)) 0;
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
+  .gal__item {
+    flex-basis: max(200px, (100% - 3 * var(--gal-gap)) / 4);
+  }
+}
+
+/* ------------------------------------------------ < 768: celular
+   Mesma ordem do mockup (rótulo, título, fotos). Frase em duas linhas com as
+   setas ao lado. Duas fotos por vez e a ponta da terceira aparecendo. */
+@media (max-width: 767px) {
+  #galeria {
+    --gal-gap: 10px;
+    --gal-proporcao: 0.8;
+    padding-block: 56px 52px;
+  }
+  .gal__grade {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'rotulo'
+      'titulo'
+      'topo'
+      'faixa';
+  }
+  .gal__rotulo {
+    margin-bottom: 14px;
+  }
+  #galeria .titulo {
+    font-size: clamp(44px, 11.8vw, 60px);
+  }
+  .gal__topo {
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 22px;
+  }
+  .gal__frase {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    line-height: 1.75;
+    text-align: left;
+  }
+  .gal__frase > span {
+    display: block;
+  }
+  .gal__setas {
+    gap: 4px;
+    margin-right: -10px;
+  }
+  .gal__seta svg {
+    width: 24px;
+  }
+  .gal__grade > .gal__faixa {
+    margin-top: 16px;
+  }
+  .gal__item {
+    flex-basis: calc((100% + var(--gutter) - 2 * var(--gal-gap) - 28px) / 2);
+  }
+  .gal__foto--terra {
+    object-position: 44% 50%;
+  }
+  .gal__foto--grama {
+    object-position: 38% 50%;
+  }
+  .gal__foto--cabeceio {
+    object-position: 50% 40%;
+  }
+  .gal__foto--noturna {
+    object-position: 50% 50%;
+  }
+
+  /* lightbox no celular: setas embaixo, foto ocupa a largura */
+  .gal__palco {
+    padding: 68px 12px 92px;
+  }
+  .gal__grande {
+    max-height: calc(100vh - 230px);
+    max-height: calc(100dvh - 230px);
+  }
+  .gal__legenda {
+    padding-inline: 4px;
+    font-size: 15px;
+  }
+  .gal__nav {
+    top: auto;
+    bottom: 20px;
+    margin-top: 0;
+  }
+  .gal__nav--ant {
+    left: 16px;
+  }
+  .gal__nav--prox {
+    right: 16px;
+  }
+}

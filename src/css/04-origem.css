@@ -1,0 +1,299 @@
+/* ==========================================================================
+   04 · ORIGEM
+   Desktop (>= 1100): foto P&B encostada na borda esquerda (~41% da tela),
+   texto no meio, bandeira e assinatura à direita, alinhadas à borda do .wrap.
+   Tablet (768 a 1099): foto à esquerda nas duas linhas, texto em cima e
+   bandeira + assinatura lado a lado embaixo.
+   Celular (< 768): sem foto, como no mockup mobile; rótulo e título ao lado
+   da bandeira, texto corrido na largura toda e assinatura no fim, alinhada
+   ao texto.
+   A bandeira é um SVG no próprio parcial (tecido com dobras), sem arquivo.
+   As medidas saem do mockup calibrado em 1440 px.
+   ========================================================================== */
+
+#origem {
+  /* 1cqw = 1% da largura da seção (sem a barra de rolagem, ao contrário do vw) */
+  container-type: inline-size;
+  padding-block: clamp(24px, 1.9vw, 40px);
+}
+
+.origem__grade {
+  /* margem = sobra do .wrap de cada lado; util = largura útil do .wrap */
+  --margem: max(var(--gutter), (100cqw - var(--wrap)) / 2);
+  --util: calc(100cqw - 2 * var(--margem));
+  --col-foto: calc(var(--margem) + var(--util) * 0.403);
+  --col-lado: max(176px, var(--util) * 0.164);
+
+  display: grid;
+  grid-template-columns: var(--col-foto) minmax(0, 1fr) var(--col-lado);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'foto texto bandeira'
+    'foto texto assinatura';
+  column-gap: calc(var(--util) * 0.038);
+  padding-right: var(--margem);
+}
+/* navegador sem unidade de contêiner (Safari < 16): mesma conta com vw */
+@supports not (width: 1cqw) {
+  .origem__grade {
+    --margem: max(var(--gutter), (100vw - var(--wrap)) / 2);
+    --util: calc(100vw - 2 * var(--margem));
+  }
+}
+
+/* ------------------------------------------------------------------ foto */
+.origem__foto {
+  grid-area: foto;
+  position: relative;
+  /* proporção do mockup (595 x 328 em 1440). A conta usa o gutter e não a
+     margem externa, senão em tela muito larga a foto fica mais alta que a
+     coluna da direita */
+  min-height: calc((var(--gutter) + var(--util) * 0.403) * 328 / 595);
+  overflow: hidden;
+  background: #2a2826;
+}
+.origem__foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  /* P&B com leve tom quente de foto antiga, como no mockup; contraste
+     contido pra o céu e as linhas da quadra não estourarem */
+  filter: grayscale(1) sepia(0.2) contrast(1.14) brightness(1.04);
+}
+/* desktop: aproxima um pouco a quadra (os jogadores da frente ficam maiores,
+   a bola continua no quadro) */
+@media (min-width: 1100px) {
+  .origem__foto img {
+    transform: scale(1.12);
+    transform-origin: 42% 70%;
+  }
+}
+/* grão de filme e vinheta leve por cima da foto */
+.origem__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--ruido);
+  background-size: 240px 240px;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+}
+.origem__foto::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(120% 95% at 55% 45%, transparent 58%, rgba(12, 10, 8, 0.32) 100%);
+}
+
+/* ----------------------------------------------------------------- texto */
+.origem__texto {
+  grid-area: texto;
+  align-self: center;
+}
+#origem .rotulo {
+  margin-bottom: clamp(12px, 1.1vw, 20px);
+}
+#origem .titulo {
+  font-size: clamp(44px, 4.58vw, 88px);
+  line-height: 0.99;
+  letter-spacing: -0.045em;
+}
+.origem__recuo {
+  padding-left: 0.5em;
+}
+.origem__corpo {
+  margin-top: clamp(18px, 1.4vw, 28px);
+}
+#origem .texto {
+  max-width: none;
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+/* largura em em: a quebra de linha do mockup se mantém quando a fonte trava
+   no clamp (em 1440 dá 441 px, a medida do mockup) */
+#origem .origem__p1 {
+  font-size: clamp(15px, 1.12vw, 19px);
+  color: #252321;
+  max-width: min(100%, 27.35em);
+}
+#origem .origem__p2 {
+  font-size: clamp(15px, 1.04vw, 18px);
+  color: #34312f;
+  margin-top: clamp(10px, 0.78vw, 14px);
+  max-width: min(100%, 29.4em);
+}
+
+/* ---------------------------------------------------- bandeira e assinatura */
+.origem__bandeira {
+  grid-area: bandeira;
+  position: relative;
+  aspect-ratio: 212 / 241;
+  background: #1c1a18;
+  /* quadro: filete claro em volta e sombra curta, como foto colada no papel */
+  outline: 2px solid #fbf9f4;
+  box-shadow:
+    0 1px 2px rgba(20, 16, 10, 0.18),
+    0 10px 24px -14px rgba(20, 16, 10, 0.45);
+}
+.origem__bandeira-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.origem__bandeira::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--ruido);
+  background-size: 200px 200px;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+}
+
+.origem__assinatura {
+  grid-area: assinatura;
+  padding-top: clamp(10px, 0.72vw, 16px);
+}
+#origem .pilha {
+  font-size: clamp(12px, 0.92vw, 15px);
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 0.19em;
+  color: var(--tinta);
+}
+#origem .filete {
+  width: clamp(40px, 3.8vw, 64px);
+  height: 2.5px;
+  margin-top: clamp(12px, 1.1vw, 20px);
+}
+
+/* ============================================================ tablet */
+@media (min-width: 768px) and (max-width: 1099.98px) {
+  #origem {
+    padding-block: clamp(40px, 5vw, 56px);
+  }
+  .origem__grade {
+    --col-foto: calc(var(--margem) + var(--util) * 0.43);
+    grid-template-columns: var(--col-foto) clamp(150px, 20cqw, 210px) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      'foto texto texto'
+      'foto bandeira assinatura';
+    column-gap: clamp(24px, 3.4cqw, 40px);
+    row-gap: clamp(26px, 3cqw, 34px);
+  }
+  .origem__foto {
+    min-height: 0;
+  }
+  /* coluna estreita e alta: puxa o quadro pra esquerda, pra os dois
+     jogadores da frente, a rede e a bola ficarem inteiros */
+  .origem__foto img {
+    object-position: 36% 50%;
+  }
+  .origem__texto {
+    align-self: start;
+  }
+  #origem .titulo {
+    font-size: clamp(44px, 5.9vw, 62px);
+  }
+  .origem__corpo {
+    max-width: 34em;
+  }
+  #origem .origem__p1,
+  #origem .origem__p2 {
+    max-width: none;
+  }
+  .origem__bandeira {
+    aspect-ratio: 6 / 5;
+  }
+  .origem__assinatura {
+    align-self: end;
+    padding-top: 0;
+  }
+}
+
+/* ============================================================ celular */
+@media (max-width: 767.98px) {
+  #origem {
+    padding-block: 44px 48px;
+  }
+  .origem__grade {
+    grid-template-columns: minmax(0, 1fr) clamp(146px, 38%, 260px);
+    /* rótulo alinhado ao topo da bandeira e o título logo abaixo, como no
+       mockup; a terceira linha absorve a sobra de altura da bandeira */
+    grid-template-rows: auto auto 1fr auto auto;
+    grid-template-areas:
+      'rotulo bandeira'
+      'titulo bandeira'
+      '. bandeira'
+      'corpo corpo'
+      'assinatura assinatura';
+    column-gap: 14px;
+    width: min(100% - 2 * var(--gutter), var(--wrap));
+    margin-inline: auto;
+    padding-right: 0;
+  }
+  .origem__foto {
+    display: none;
+  }
+  .origem__texto {
+    display: contents;
+  }
+  #origem .rotulo {
+    grid-area: rotulo;
+    align-self: start;
+    margin: 0;
+  }
+  #origem .titulo {
+    grid-area: titulo;
+    align-self: start;
+    /* cabe "NO PARAGUAI." numa linha só, ao lado da bandeira */
+    font-size: clamp(30px, calc(11.8vw - 8px), 60px);
+    font-size: clamp(30px, min(20cqw - 40px, 11.8cqw - 6px), 60px);
+    line-height: 0.98;
+    /* tamanho pequeno: aperto menor que no desktop, pra as letras não colarem */
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+  }
+  .origem__recuo {
+    padding-left: 0;
+  }
+  .origem__corpo {
+    grid-area: corpo;
+    max-width: none;
+    margin-top: 22px;
+  }
+  #origem .origem__p1 {
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: none;
+  }
+  #origem .origem__p2 {
+    font-size: 15px;
+    line-height: 1.55;
+    margin-top: 12px;
+    max-width: none;
+  }
+  .origem__bandeira {
+    aspect-ratio: 34 / 28;
+    align-self: start;
+    margin-top: 2px;
+  }
+  /* pilha fecha a seção no mesmo eixo do texto */
+  .origem__assinatura {
+    justify-self: start;
+    padding-top: 22px;
+  }
+  #origem .pilha {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+  }
+}

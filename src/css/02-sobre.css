@@ -1,0 +1,387 @@
+/* ==========================================================================
+   02 · Sobre a FIPV
+   Desktop (>= 1100): três colunas, como no mockup. Título em três tamanhos
+   (UNINDO, NAÇÕES maior, ATRAVÉS DO JOGO menor), texto no meio e o globo
+   quase encostado na borda direita, com a pilha à direita do continente.
+   Tablet (768 a 1099): texto empilhado à esquerda, globo inteiro à direita.
+   Celular (< 768): título com o globo inteiro no alto à direita, como no
+   mockup mobile, e o texto embaixo em largura total.
+   Medidas calibradas em 1440 px (mockup 776 px, escala 1,856).
+   ========================================================================== */
+
+.sobre {
+  /* --sobre-t é o tamanho da linha menor (ATRAVÉS DO JOGO.). As outras duas
+     saem dela, calibradas pra dar a altura de maiúscula e a largura do
+     mockup em Anton (a fonte do mockup é mais estreita em ATRAVÉS). */
+  --sobre-t: clamp(26px, 7.7vw, 50px);
+  /* largura da imagem do globo no celular */
+  --sobre-g: min(47vw, 330px);
+  --sobre-k1: 1.479;
+  --sobre-k2: 1.755;
+  /* ouro de NAÇÕES, amostrado no mockup (o da base sai mais escuro embaixo) */
+  --sobre-ouro: linear-gradient(180deg, #cfae6a 0%, #bd9853 50%, #ab843e 100%);
+}
+
+/* --------------------------------------------------------------- rótulo */
+/* No mockup o rótulo é mais pesado e um pouco maior que o da base, e a
+   barra é fina, clara e quase encosta no texto. */
+.sobre__rotulo {
+  font-size: max(12px, min(1.25vw, 19px));
+  font-weight: 700;
+  gap: 0.36em;
+}
+.sobre__rotulo::before {
+  width: 0.3em;
+  opacity: 0.62;
+}
+
+/* --------------------------------------------------------------- título */
+.sobre__titulo {
+  position: relative;
+  z-index: 2;
+}
+.sobre__titulo > span {
+  display: block;
+  white-space: nowrap;
+}
+.sobre__l1 {
+  font-size: calc(var(--sobre-t) * var(--sobre-k1));
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin-left: -0.06em;
+}
+/* NAÇÕES desce um pouco pra o til não bater na base do O de UNINDO. O
+   recorte embaixo deixa só um toco da cedilha, como no mockup, pra ela não
+   entrar em ATRAVÉS. */
+.sobre__l2 {
+  font-size: calc(var(--sobre-t) * var(--sobre-k2));
+  line-height: 0.99;
+  letter-spacing: -0.02em;
+  margin-left: 0.08em;
+  margin-top: 0.085em;
+  clip-path: inset(-0.5em -0.2em -0.035em -0.2em);
+}
+.sobre .sobre__l2 .ouro {
+  background-image: var(--sobre-ouro);
+}
+/* ATRAVÉS DO JOGO. no mockup é mais estreita e alta que a Anton: estica 8%
+   na vertical a partir da linha de base, mantendo a largura. */
+.sobre__l3 {
+  font-size: var(--sobre-t);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin-top: 0.12em;
+  transform: scaleY(1.08);
+  transform-origin: 0 83%;
+}
+/* Rastro de velocidade na primeira letra, como no mockup: uma faixa clara
+   corre por dentro da haste esquerda do U, com a borda de fora ainda
+   escura. O ângulo (104°) segue a inclinação que o navegador dá à Anton
+   (14°), e as paradas em em caem dentro da haste, que nesse eixo vai de
+   0,264em a 0,423em. Fica na linha inteira, sem span no meio da palavra,
+   pro leitor de tela ler "Unindo" de uma vez. */
+.sobre__l1 {
+  background: linear-gradient(104deg, #070707 0.274em, rgba(7, 7, 7, 0.3) 0.296em, rgba(7, 7, 7, 0.16) 0.32em, rgba(7, 7, 7, 0.24) 0.345em, rgba(7, 7, 7, 0.6) 0.372em, #070707 0.395em);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Em espanhol "a través del juego." tem três letras a mais */
+.sobre__l3:lang(es) {
+  font-size: calc(var(--sobre-t) * 0.86);
+}
+
+/* ---------------------------------------------------------------- texto */
+.sobre__texto {
+  position: relative;
+  z-index: 2;
+}
+.sobre__lead {
+  font-size: clamp(17px, 1.354vw, 23.4px);
+  font-weight: 700;
+  line-height: 1.405;
+  letter-spacing: -0.006em;
+  max-width: 22.5em;
+}
+.sobre__corpo {
+  font-size: clamp(15px, 1.18vw, 20.4px);
+  line-height: 1.49;
+  color: var(--texto-claro);
+  max-width: 27.8em;
+}
+.sobre__lead + .sobre__corpo {
+  margin-top: 1.1em;
+}
+.sobre__fecho {
+  margin-top: clamp(24px, 2.1vw, 36px);
+}
+.sobre__filete {
+  width: clamp(44px, 3.93vw, 68px);
+  height: 3px;
+}
+.sobre__lema {
+  margin-top: clamp(22px, 2.05vw, 36px);
+  font: 600 clamp(12px, 1.028vw, 17.8px) / 1.5 var(--f-rotulo);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2f2a2a;
+}
+.sobre__lema span {
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- globo */
+.sobre__globo {
+  position: relative;
+  margin: 0;
+  pointer-events: none;
+  /* a pilha cresce junto com o globo (unidade cqi) */
+  container-type: inline-size;
+}
+.sobre__esfera {
+  position: relative;
+  display: block;
+}
+.sobre__globo-img {
+  width: 100%;
+  height: auto;
+  /* O globo do mockup é de vidro: o papel aparece através da esfera e o
+     continente é um ouro mais claro. O asset é um marfim opaco com o Brasil
+     marrom: o filtro SVG do parcial (#sobre-vidro) aproxima. */
+  filter: url('#sobre-vidro');
+}
+.sobre__filtros {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+/* sombra de vidro nas bordas da esfera, como no mockup */
+.sobre__esfera::after {
+  content: '';
+  position: absolute;
+  inset: 2.9%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 56% 34%, rgba(96, 88, 78, 0) 58%, rgba(96, 88, 78, 0.09) 80%, rgba(96, 88, 78, 0.2) 100%);
+}
+/* A pilha fica à direita do continente: na linha do DA ele vai até 66% do
+   globo. */
+.sobre__pilha {
+  position: absolute;
+  left: 70%;
+  top: 59%;
+  font-size: max(12px, 3.5cqi);
+  font-weight: 700;
+  line-height: 1.98;
+  white-space: nowrap;
+}
+/* Em espanhol, SUDAMÉRICA é mais longa e sairia da tela: a pilha desce pra
+   altura da Patagônia, onde o continente é estreito, e pode começar mais à
+   esquerda. */
+.sobre__pilha:lang(es) {
+  left: 55%;
+  top: 70%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sobre__esfera {
+    animation: sobre-flutuar 9s var(--ease-suave) infinite alternate;
+  }
+}
+/* Alto contraste do Windows tira o fundo: o texto recortado no degradê
+   sumiria. Volta pra cor sólida. */
+@media (forced-colors: active) {
+  .sobre__l1,
+  .sobre .sobre__l2 .ouro {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+@keyframes sobre-flutuar {
+  from {
+    transform: translate3d(0, -1.1%, 0) rotate(-1.2deg);
+  }
+  to {
+    transform: translate3d(0, 1.1%, 0) rotate(1.2deg);
+  }
+}
+
+/* ============================================================ celular */
+@media (max-width: 767.98px) {
+  .sobre__grade {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'rotulo'
+      'titulo'
+      'texto';
+  }
+  .sobre__rotulo {
+    grid-area: rotulo;
+    justify-self: start;
+    position: relative;
+    z-index: 2;
+  }
+  .sobre__titulo {
+    grid-area: titulo;
+    margin-top: 12px;
+  }
+  .sobre__texto {
+    grid-area: texto;
+    margin-top: 22px;
+  }
+  /* O globo divide a área do título, à direita, inteiro como no mockup
+     mobile: sobe até a altura do rótulo e encosta na margem do conteúdo. A
+     margem de baixo faz a linha do título terminar junto com a pilha, sem
+     buraco antes do texto. */
+  .sobre__globo {
+    grid-area: titulo;
+    justify-self: end;
+    align-self: start;
+    width: var(--sobre-g);
+    margin-top: calc(12px - min(0.24 * var(--sobre-g), 56px));
+    margin-bottom: calc(90px - 0.42 * var(--sobre-g));
+  }
+  /* A pilha fica à direita do continente e passa um pouco do contorno do
+     globo, como no mockup. Presa pela direita, a 14 px da borda da tela no
+     celular pequeno; num aparelho maior, a uns 70% do globo. O halo da cor
+     do papel só aparece onde uma letra encosta no ouro (em espanhol,
+     SUDAMÉRICA é mais longa). */
+  .sobre__pilha {
+    left: auto;
+    right: max(calc(14px - var(--gutter)), calc(30% - 5.2em));
+    top: 58%;
+    line-height: 1.5;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 3px var(--osso), 0 0 8px var(--osso);
+  }
+  /* Espanhol no celular: NACIONES e A TRAVÉS DEL JUEGO. são mais longas e
+     passariam por cima do globo. A pilha (4 linhas) desce pra baixo do
+     continente. */
+  .sobre__l2:lang(es) {
+    font-size: calc(var(--sobre-t) * var(--sobre-k2) * 0.88);
+  }
+  .sobre__l3:lang(es) {
+    font-size: calc(var(--sobre-t) * 0.79);
+  }
+  .sobre__pilha:lang(es) {
+    left: auto;
+    top: 70%;
+  }
+  .sobre__globo:lang(es) {
+    margin-bottom: calc(72px - 0.3 * var(--sobre-g));
+  }
+  .sobre__lema span {
+    display: block;
+  }
+  .sobre__lema {
+    font-size: 12.5px;
+    line-height: 1.75;
+    letter-spacing: 0.15em;
+  }
+  .sobre__filete {
+    height: 2px;
+  }
+}
+
+/* ============================================================= tablet */
+@media (min-width: 768px) and (max-width: 1099.98px) {
+  .sobre {
+    --sobre-t: min(6.6vw, 56px);
+  }
+  .sobre__grade {
+    display: grid;
+    grid-template-columns: minmax(0, 58%) minmax(0, 1fr);
+    grid-template-areas:
+      'rotulo globo'
+      'titulo globo'
+      'texto globo';
+    grid-template-rows: auto auto 1fr;
+  }
+  .sobre__rotulo {
+    grid-area: rotulo;
+    justify-self: start;
+  }
+  .sobre__titulo {
+    grid-area: titulo;
+    margin-top: 16px;
+  }
+  .sobre__texto {
+    grid-area: texto;
+    margin-top: 30px;
+  }
+  /* Globo inteiro, um pouco além da margem do conteúdo: grande o bastante
+     pra dominar a coluna e pequeno o bastante pra pilha caber à direita
+     do continente sem sair da tela. */
+  .sobre__globo {
+    grid-area: globo;
+    align-self: center;
+    justify-self: start;
+    width: calc(100% + 0.6 * var(--gutter));
+    margin-left: 1vw;
+  }
+}
+
+/* ============================================================ desktop */
+@media (min-width: 1100px) {
+  .sobre {
+    --sobre-t: clamp(40px, 4.306vw, 74.4px);
+    padding-block: clamp(40px, 3.5vw, 60px) clamp(40px, 3.38vw, 58px);
+  }
+  /* sombra de papel no canto de cima à direita, atrás do globo */
+  .sec--claro.sobre {
+    background:
+      radial-gradient(38% 70% at 100% 0%, rgba(80, 70, 60, 0.13), rgba(80, 70, 60, 0) 70%),
+      var(--osso);
+  }
+  .sobre__grade {
+    position: relative;
+    display: grid;
+    grid-template-columns: 36.3% minmax(0, 39%) 1fr;
+    grid-template-areas:
+      'rotulo . .'
+      'titulo texto .';
+    align-items: end;
+  }
+  .sobre__rotulo {
+    grid-area: rotulo;
+    justify-self: start;
+  }
+  .sobre__titulo {
+    grid-area: titulo;
+    margin-top: 0.99vw;
+  }
+  .sobre__texto {
+    grid-area: texto;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.81vw;
+  }
+  .sobre__fecho {
+    margin-top: auto;
+    padding-top: 1.83vw;
+  }
+  .sobre__lema {
+    margin-top: 1.65vw;
+    /* a linha de base do lema cai na mesma da última linha do título */
+    padding-bottom: calc(var(--sobre-t) * 0.174 - 0.35em);
+  }
+  .sobre__globo {
+    position: absolute;
+    left: 75.4%;
+    top: 50%;
+    width: 29.5%;
+    translate: 0 -51%;
+  }
+}
+
+/* Entre 1100 e 1279 a coluna do texto fica mais alta que o título (o corpo
+   ganha uma linha e o lema quebra em duas). Sem isso o título desce e se
+   solta do rótulo. */
+@media (min-width: 1100px) and (max-width: 1279.98px) {
+  .sobre__titulo {
+    align-self: start;
+  }
+}

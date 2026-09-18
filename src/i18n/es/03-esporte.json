@@ -1,0 +1,14 @@
+{
+  "esporte.rotulo": "El deporte",
+  "esporte.titulo": "<span>Fútbol</span> <span>y vóley</span> <span class=\"ouro\">en la misma</span> <span class=\"esporte__recuo\">cancha.</span>",
+  "esporte.lead": "El Pikivoley es la combinación perfecta entre la técnica del fútbol y la dinámica del vóley.",
+  "esporte.corpo": "La pelota pasa por encima de la red sin tocar nunca la mano, usando solo los pies, la cabeza, el pecho, el muslo y la rodilla. Es habilidad, estrategia, agilidad y trabajo en equipo, en cualquier tipo de piso: tierra batida, césped o cancha.",
+  "esporte.partes": "Partes del cuerpo que juegan",
+  "esporte.pe": "Pie",
+  "esporte.cabeca": "Cabeza",
+  "esporte.peito": "Pecho",
+  "esporte.coxa": "Muslo",
+  "esporte.joelho": "Rodilla",
+  "esporte.foto.alt": "Partido de Pikivoley en cancha de tierra batida: un atleta salta para cabecear la pelota junto a la red, con otro jugador en primer plano y el público alrededor",
+  "esporte.pilha": "<span>Técnica</span> <span>Estrategia</span> <span>Agilidad</span> <span>Equipo</span>"
+}

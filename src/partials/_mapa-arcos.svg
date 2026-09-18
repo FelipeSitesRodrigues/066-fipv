@@ -1,0 +1,27 @@
+<svg class="mapa-arcos" viewBox="0 0 170 86" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="arco-ouro" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#B8862B"/><stop offset=".5" stop-color="#E7C46E"/><stop offset="1" stop-color="#C99A3E"/></linearGradient>
+  </defs>
+  <g class="mapa-arcos__rotas" fill="none" stroke="url(#arco-ouro)" stroke-width=".32" stroke-linecap="round">
+    <path class="mapa-arcos__rota" style="--i:0" pathLength="1" d="M57.00 65.00 Q41.00 34.52 25.00 33.00"><title>Los Angeles</title></path>
+    <path class="mapa-arcos__rota" style="--i:1" pathLength="1" d="M57.00 65.00 Q50.50 41.91 44.00 38.00"><title>Miami</title></path>
+    <path class="mapa-arcos__rota" style="--i:2" pathLength="1" d="M57.00 65.00 Q68.50 34.86 80.00 31.00"><title>Lisboa</title></path>
+    <path class="mapa-arcos__rota" style="--i:3" pathLength="1" d="M57.00 65.00 Q74.00 30.42 91.00 28.00"><title>Roma</title></path>
+    <path class="mapa-arcos__rota" style="--i:4" pathLength="1" d="M57.00 65.00 Q85.00 32.24 113.00 39.00"><title>Dubai</title></path>
+    <path class="mapa-arcos__rota" style="--i:5" pathLength="1" d="M57.00 65.00 Q78.00 51.56 99.00 65.00"><title>Joanesburgo</title></path>
+    <path class="mapa-arcos__rota" style="--i:6" pathLength="1" d="M57.00 65.00 Q106.50 15.11 156.00 32.00"><title>Tóquio</title></path>
+    <path class="mapa-arcos__rota" style="--i:7" pathLength="1" d="M57.00 65.00 Q109.50 33.86 162.00 70.00"><title>Sydney</title></path>
+  </g>
+  <g class="mapa-arcos__pinos" fill="#C99A3E">
+    <circle class="mapa-arcos__pino" style="--i:0" cx="25.00" cy="33.00" r=".62"/>
+    <circle class="mapa-arcos__pino" style="--i:1" cx="44.00" cy="38.00" r=".62"/>
+    <circle class="mapa-arcos__pino" style="--i:2" cx="80.00" cy="31.00" r=".62"/>
+    <circle class="mapa-arcos__pino" style="--i:3" cx="91.00" cy="28.00" r=".62"/>
+    <circle class="mapa-arcos__pino" style="--i:4" cx="113.00" cy="39.00" r=".62"/>
+    <circle class="mapa-arcos__pino" style="--i:5" cx="99.00" cy="65.00" r=".62"/>
+    <circle class="mapa-arcos__pino" style="--i:6" cx="156.00" cy="32.00" r=".62"/>
+    <circle class="mapa-arcos__pino" style="--i:7" cx="162.00" cy="70.00" r=".62"/>
+    <circle class="mapa-arcos__halo" cx="57.00" cy="65.00" r="1.9" fill="#C99A3E" fill-opacity=".25"/>
+    <circle class="mapa-arcos__origem" cx="57.00" cy="65.00" r=".95"/>
+  </g>
+</svg>

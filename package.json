@@ -1,0 +1,23 @@
+{
+  "name": "066-fipv",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site institucional da FIPV, Federação Internacional de Pikivoley. HTML, CSS e JS estático, gerado em PT e ES.",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "imagens": "node scripts/processar-imagens.mjs"
+  },
+  "devDependencies": {
+    "@imgly/background-removal-node": "^1.4.5",
+    "cheerio": "^1.2.0",
+    "d3-geo": "^3.1.1",
+    "dotted-map": "^3.1.0",
+    "lighthouse": "^12.8.2",
+    "puppeteer-core": "^25.11.0",
+    "sharp": "^0.35.4",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  }
+}

@@ -1,0 +1,401 @@
+/* ==========================================================================
+   03 · O ESPORTE (fundo escuro)
+   Desktop (>= 1100): título | texto e ícones | foto sangrando à direita.
+   768 a 1099: título e texto à esquerda, foto à direita, ícones embaixo.
+   < 768: título e foto lado a lado no alto, texto, ícones 3 + 2 em caixas.
+   ========================================================================== */
+
+#esporte {
+  --esp-pt: clamp(48px, 3.5vw, 66px);
+  --esp-pb: 52px;
+  padding-block: var(--esp-pt) var(--esp-pb);
+}
+/* névoa leve no alto, entre o título e o texto, como o fundo esfumaçado do
+   mockup (fica atrás do conteúdo e da foto) */
+#esporte::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 75% at 34% 18%, rgba(255, 255, 255, 0.034), transparent 72%),
+    radial-gradient(30% 60% at 6% 96%, rgba(255, 255, 255, 0.012), transparent 70%);
+}
+
+.esporte__defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------ grade (celular) */
+.esporte__grade {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  grid-template-areas:
+    'cabeca foto'
+    'texto texto'
+    'partes partes';
+  column-gap: 10px;
+}
+
+.esporte__cabeca {
+  grid-area: cabeca;
+  position: relative;
+  z-index: 2;
+  align-self: start;
+}
+
+#esporte .esporte__rotulo {
+  margin-bottom: clamp(12px, 1.2vw, 22px);
+}
+
+/* título: 4 linhas, a última com o recuo do mockup */
+#esporte .esporte__titulo {
+  font-size: clamp(40px, 11.4vw, 52px);
+  line-height: 1;
+  white-space: nowrap;
+}
+#esporte .esporte__titulo .ouro {
+  margin-block: -0.06em;
+}
+#esporte .esporte__recuo {
+  padding-left: 0.32em;
+}
+
+/* ------------------------------------------------------------------ texto */
+.esporte__texto {
+  grid-area: texto;
+  position: relative;
+  z-index: 2;
+  margin-top: 28px;
+}
+#esporte .esporte__lead {
+  font-size: clamp(16.5px, 1.35vw, 22px);
+  font-weight: 400;
+  line-height: 1.4;
+  max-width: 24em;
+  text-wrap: balance;
+}
+#esporte .esporte__corpo {
+  margin-top: 0.15em;
+  font-size: clamp(15px, 1.17vw, 19px);
+  line-height: 1.4;
+  color: var(--texto-escuro);
+  max-width: 26.8em;
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------ ícones (celular: caixas) */
+.esporte__partes {
+  grid-area: partes;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 26px;
+}
+.esporte__parte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 100px;
+  padding: 14px 6px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  background: rgba(6, 6, 6, 0.8);
+}
+.esporte__caixa {
+  display: grid;
+  place-items: center;
+}
+.esporte__icone {
+  width: 40px;
+  height: 40px;
+  overflow: visible;
+}
+.esporte__nome {
+  font: 700 13px/1.1 var(--f-rotulo);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--branco);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------- foto
+   Preto e branco por CSS. A borda esquerda e a de baixo somem no preto por
+   máscara, então o ruído de filme da seção continua aparecendo por trás.
+   O enquadramento (zoom e ponto de origem) põe o atleta que salta pra
+   cabecear e a bola no centro da cena. */
+.esporte__foto {
+  grid-area: foto;
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--esp-pt));
+  margin-right: calc(-1 * var(--gutter));
+  margin-left: -22vw;
+  min-height: 240px;
+  overflow: hidden;
+  --esp-rampa: transparent 0%, rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0.7) 48%, #000 58%;
+  -webkit-mask-image: linear-gradient(90deg, var(--esp-rampa)), linear-gradient(0deg, transparent 0%, #000 30%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, var(--esp-rampa)), linear-gradient(0deg, transparent 0%, #000 30%);
+  mask-composite: intersect;
+}
+.esporte__foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--esp-pos, 50% 50%);
+  /* o sépia leve dá o tom quente do preto e branco do mockup */
+  filter: grayscale(1) sepia(0.12) contrast(1.1) brightness(0.85);
+  transform: scale(var(--esp-zoom, 1.5));
+  transform-origin: var(--esp-origem, 10% 26%);
+}
+/* escurece o céu no alto, as bordas e o canto da pilha, como a foto baixa
+   e contrastada do mockup. A primeira camada apaga o jogador de costas em
+   primeiro plano: ele vira silhueta e a cena fica com a bola e o atleta que
+   salta pra cabecear, como o atleta único do mockup. */
+.esporte__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(22% 50% at 46% 64%, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.82) 50%, rgba(10, 10, 10, 0) 100%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0) 30%),
+    radial-gradient(110% 80% at 55% 38%, rgba(10, 10, 10, 0) 40%, rgba(10, 10, 10, 0.55) 100%),
+    radial-gradient(90% 55% at 100% 100%, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0) 70%);
+}
+
+/* pilha: no celular ocupa o canto de baixo, na célula que sobra ao lado de
+   COXA e JOELHO (a área de grade é definida, então a % funciona) */
+.esporte__pilha {
+  grid-area: partes;
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  justify-self: end;
+  width: calc((100% - 16px) / 3);
+  height: calc((100% - 8px) / 2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 12px;
+}
+#esporte .esporte__pilha {
+  font-size: 12px;
+  line-height: 1.95;
+  letter-spacing: 0.15em;
+}
+
+@media (max-width: 374px) {
+  #esporte .esporte__pilha {
+    letter-spacing: 0.1em;
+  }
+  .esporte__nome {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* celular deitado e tablet pequeno: a caixa da foto fica larga e baixa, e com
+   o zoom a bola sairia pelo alto. Sem zoom (a imagem não amplia) e com o ponto
+   de origem mais alto, bola e atleta ficam inteiros no quadro. */
+@media (min-width: 560px) and (max-width: 767px) {
+  .esporte__foto {
+    --esp-zoom: 1;
+    --esp-pos: 50% 41%;
+  }
+  .esporte__foto::after {
+    background:
+      radial-gradient(16% 60% at 34% 68%, rgba(10, 10, 10, 0.86) 0%, rgba(10, 10, 10, 0.74) 50%, rgba(10, 10, 10, 0) 100%),
+      radial-gradient(30% 75% at 51% 38%, rgba(10, 10, 10, 0) 40%, rgba(10, 10, 10, 0.66) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.45) 0%, rgba(10, 10, 10, 0) 26%),
+      radial-gradient(90% 55% at 100% 100%, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0) 70%);
+  }
+}
+
+/* ------------------------------------------------------ intermediário */
+@media (min-width: 768px) {
+  .esporte__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    grid-template-areas:
+      'cabeca foto'
+      'texto foto'
+      'partes partes';
+    grid-template-rows: auto 1fr auto;
+    column-gap: 28px;
+  }
+  #esporte .esporte__titulo {
+    font-size: clamp(44px, 5.55vw, 100px);
+    line-height: 1.04;
+  }
+  .esporte__texto {
+    margin-top: 30px;
+  }
+  .esporte__foto {
+    margin-left: 0;
+    margin-bottom: -12px;
+    --esp-zoom: 1.45;
+    --esp-origem: 28% 55%;
+    --esp-rampa: transparent 0%, rgba(0, 0, 0, 0.12) 28%, rgba(0, 0, 0, 0.5) 44%, #000 58%;
+  }
+  .esporte__pilha {
+    grid-area: foto;
+    width: auto;
+    height: auto;
+    display: block;
+    padding-left: 0;
+    margin-bottom: 8px;
+  }
+  #esporte .esporte__pilha {
+    font-size: clamp(12px, 0.86vw, 13.5px);
+    line-height: 2.05;
+    letter-spacing: 0.2em;
+  }
+
+  /* ícones em linha, separados por filetes verticais */
+  .esporte__partes {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 44px;
+  }
+  .esporte__parte {
+    min-height: 0;
+    gap: clamp(12px, 1.2vw, 20px);
+    padding: 0 12px clamp(12px, 1vw, 18px);
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+  .esporte__parte + .esporte__parte {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .esporte__caixa {
+    width: clamp(58px, 4.5vw, 80px);
+    aspect-ratio: 1;
+    border-radius: 5px;
+    background: #141414;
+  }
+  .esporte__icone {
+    width: 90%;
+    height: 90%;
+  }
+  .esporte__nome {
+    font-size: clamp(13px, 1.02vw, 16.5px);
+    letter-spacing: 0.06em;
+  }
+}
+
+/* só no intermediário: a linha de ícones começa alinhada ao texto, como no
+   desktop, em vez de cinco colunas iguais espalhadas na largura toda */
+@media (min-width: 768px) and (max-width: 1099px) {
+  .esporte__partes {
+    display: flex;
+  }
+  .esporte__parte {
+    padding: 0 clamp(16px, 2.4vw, 26px) 12px;
+  }
+  .esporte__parte:first-child {
+    padding-left: 0;
+  }
+  .esporte__foto::after {
+    background:
+      radial-gradient(18% 55% at 37% 58%, rgba(10, 10, 10, 0.86) 0%, rgba(10, 10, 10, 0.74) 50%, rgba(10, 10, 10, 0) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0) 30%),
+      radial-gradient(110% 80% at 55% 38%, rgba(10, 10, 10, 0) 40%, rgba(10, 10, 10, 0.55) 100%),
+      radial-gradient(90% 55% at 100% 100%, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0) 70%);
+  }
+}
+
+/* ------------------------------------------------------------ desktop */
+@media (min-width: 1100px) {
+  #esporte {
+    --esp-pb: clamp(26px, 2vw, 40px);
+  }
+  .esporte__grade {
+    grid-template-columns: minmax(30.5%, max-content) minmax(0, 38fr) minmax(0, 31.5fr);
+    grid-template-areas:
+      'cabeca texto foto'
+      'cabeca partes foto';
+    grid-template-rows: auto 1fr;
+    column-gap: 0;
+  }
+  .esporte__cabeca {
+    padding-right: clamp(28px, 2.6vw, 48px);
+  }
+  .esporte__texto {
+    margin-top: clamp(20px, 1.7vw, 32px);
+  }
+
+  /* a foto sai da grade e ocupa a altura toda da seção, colada à direita */
+  .esporte__foto {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 43%;
+    margin: 0;
+    min-height: 0;
+    --esp-zoom: 1.42;
+    --esp-origem: 26% 15%;
+    /* centro do jogador de costas (apagado) e da luz (bola e atleta) */
+    --esp-sombra: 35% 74%;
+    --esp-luz: 61% 38%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 34%, rgba(0, 0, 0, 0.45) 47%, #000 57%);
+    -webkit-mask-composite: source-over;
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 34%, rgba(0, 0, 0, 0.45) 47%, #000 57%);
+    mask-composite: add;
+  }
+  /* como no mockup, só a bola e o atleta acendem: a foto fica mais
+     contrastada e uma vinheta centrada neles apaga o resto da cena */
+  .esporte__foto img {
+    filter: grayscale(1) sepia(0.12) contrast(1.25) brightness(0.86);
+  }
+  .esporte__foto::after {
+    background:
+      radial-gradient(17% 58% at var(--esp-sombra), rgba(10, 10, 10, 0.84) 0%, rgba(10, 10, 10, 0.72) 55%, rgba(10, 10, 10, 0) 100%),
+      radial-gradient(30% 66% at var(--esp-luz), rgba(10, 10, 10, 0) 38%, rgba(10, 10, 10, 0.74) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0) 16%),
+      linear-gradient(0deg, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0) 24%),
+      linear-gradient(90deg, rgba(10, 10, 10, 0) 76%, rgba(10, 10, 10, 0.6) 100%),
+      radial-gradient(38% 40% at 88% 64%, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0) 100%);
+  }
+
+  .esporte__partes {
+    display: flex;
+    align-self: start;
+    margin-top: clamp(30px, 2.9vw, 54px);
+  }
+  .esporte__parte {
+    gap: clamp(10px, 0.8vw, 16px);
+    padding: 0 clamp(14px, 1.4vw, 26px) clamp(12px, 1.1vw, 20px);
+  }
+  .esporte__parte:first-child {
+    padding-left: 0;
+  }
+  .esporte__pilha {
+    margin-bottom: clamp(10px, 1.1vw, 20px);
+  }
+}
+
+/* tela larga: o conteúdo para antes da borda (limite do .wrap), então a pilha
+   fica mais pra dentro da foto; o atleta anda um pouco pra esquerda */
+@media (min-width: 1600px) {
+  .esporte__foto {
+    --esp-origem: 44% 15%;
+    --esp-sombra: 30% 72%;
+    --esp-luz: 54% 36%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 28%, rgba(0, 0, 0, 0.45) 40%, #000 50%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 28%, rgba(0, 0, 0, 0.45) 40%, #000 50%);
+  }
+}

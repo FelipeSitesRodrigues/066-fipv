@@ -1,0 +1,203 @@
+/* ==========================================================================
+   05 · Pikivoley em números. Faixa escura e baixa: rótulo com globo, quatro
+   números em ouro separados por filetes verticais e o mapa-múndi pontilhado
+   bem apagado ao fundo, na metade direita.
+   ========================================================================== */
+
+#numeros {
+  padding-block: clamp(44px, 3.5vw, 64px) clamp(48px, 3.9vw, 72px);
+  background:
+    radial-gradient(ellipse 46% 120% at 64% 50%, rgba(255, 255, 255, 0.035), transparent 70%),
+    linear-gradient(180deg, #0b0b0b 0%, #0d0d0d 50%, #090909 100%);
+}
+
+/* mapa de textura: cinza escuro, bordas esfumadas, vazando em cima e embaixo */
+.num__fundo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.num__mapa {
+  position: absolute;
+  top: 50%;
+  left: 44%;
+  width: clamp(420px, 40vw, 780px);
+  /* múltiplo de 85px pra grade de pontos não formar faixas (moiré) */
+  width: round(nearest, clamp(420px, 40vw, 780px), 85px);
+  max-width: none;
+  height: auto;
+  transform: translateY(-53%);
+  filter: grayscale(1) brightness(0.9);
+  opacity: 0.2;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+}
+
+/* ------------------------------------------------------------- rótulo */
+#numeros .num__titulo {
+  margin-left: clamp(0px, 1vw, 16px);
+}
+
+/* ------------------------------------------------------------- lista */
+.num__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.45fr) minmax(0, 1.45fr) auto;
+  margin: clamp(16px, 1.45vw, 28px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.num__item {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 0.5vw, 10px);
+  padding-inline: clamp(24px, 4.1vw, 72px) clamp(12px, 1.4vw, 24px);
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+.num__item:first-child {
+  padding-left: clamp(0px, 2.9vw, 50px);
+  border-left: 0;
+}
+.num__item:last-child {
+  padding-right: 0;
+}
+
+.num__valor {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-style: italic;
+  font-synthesis: style;
+  font-size: var(--t-numero);
+  line-height: 1.02;
+  letter-spacing: 0.004em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ouro-claro);
+}
+.num__valor .ouro {
+  padding-block: 0.04em;
+}
+/* inline-block pra largura fixa enquanto conta; a margem negativa anula o
+   padding do .ouro, senão a linha cresce e desalinha as legendas */
+.num__contador {
+  display: inline-block;
+  margin-block: -0.04em;
+}
+/* o "+" do Anton é pequeno e baixo; no mockup ele é maior e centrado na
+   altura dos algarismos */
+.num__mais {
+  display: inline-block;
+  margin-block: -0.04em;
+  margin-left: 0.03em;
+  transform: translateY(-0.06em) scale(1.28);
+  transform-origin: 20% 62%;
+}
+/* ordinal: o º do Anton parece um zero sobrescrito. O do Barlow tem o
+   traço embaixo e se lê como "segundo" */
+.num__ordinal {
+  font-family: var(--f-rotulo);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 0.78em;
+  vertical-align: 0.4em;
+  line-height: 0;
+  margin-left: 0.1em;
+}
+
+.num__legenda {
+  display: block;
+  font: 700 clamp(13px, 1.18vw, 18px) / 1.3 var(--f-rotulo);
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  color: #f2f2f2;
+  text-wrap: balance;
+}
+
+/* --------------------------------------------------- intermediário
+   Entre 768 e 1099 as quatro colunas ficam estreitas pras legendas longas:
+   a grade vira 2 por 2, com filete vertical no meio e horizontal entre as
+   linhas. */
+@media (max-width: 1099px) {
+  .num__mapa {
+    left: 40%;
+    width: clamp(420px, 62vw, 680px);
+    width: round(nearest, clamp(420px, 62vw, 680px), 85px);
+  }
+  .num__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 0;
+  }
+  .num__item,
+  .num__item:first-child {
+    padding: clamp(20px, 3vw, 30px) clamp(16px, 3vw, 32px);
+  }
+  .num__item:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .num__item:nth-child(even) {
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .num__item:nth-child(n + 3) {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .num__item:nth-child(-n + 2) {
+    padding-top: clamp(8px, 1.4vw, 14px);
+  }
+  .num__item:nth-child(n + 3) {
+    padding-bottom: 0;
+  }
+  .num__valor {
+    font-size: clamp(42px, 7vw, 64px);
+  }
+  /* largura limitada: as duas legendas longas da primeira linha quebram
+     juntas em 2 linhas, em vez de uma em 1 e a vizinha em 2 */
+  .num__legenda {
+    max-width: 17em;
+    font-size: clamp(13px, 1.9vw, 16px);
+  }
+  #numeros .num__titulo {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  #numeros {
+    padding-block: 40px 44px;
+  }
+  .num__mapa {
+    left: 22%;
+    top: 46%;
+    width: 150vw;
+    opacity: 0.15;
+  }
+  .num__lista {
+    margin-top: 18px;
+  }
+  .num__item,
+  .num__item:first-child {
+    padding: 22px 0 22px 18px;
+    gap: 10px;
+  }
+  .num__item:nth-child(odd) {
+    padding-left: 0;
+    padding-right: 8px;
+  }
+  .num__item:nth-child(even) {
+    padding-left: 14px;
+  }
+  .num__item:nth-child(-n + 2) {
+    padding-top: 6px;
+  }
+  .num__item:nth-child(n + 3) {
+    padding-bottom: 0;
+  }
+  .num__valor {
+    font-size: clamp(40px, 12vw, 54px);
+  }
+  .num__legenda {
+    font-size: 13px;
+    letter-spacing: 0.01em;
+  }
+}

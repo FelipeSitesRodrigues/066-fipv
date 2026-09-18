@@ -1,0 +1,282 @@
+/* ==========================================================================
+   06 · Expansão global. Faixa clara em três colunas: mapa-múndi pontilhado com
+   as rotas douradas saindo de Ciudad del Este, o bloco de texto no meio e a
+   pilha "MAIS ..." à direita, cada coluna com seu filete dourado.
+   ========================================================================== */
+
+#expansao {
+  padding-block: clamp(36px, 2.8vw, 56px) clamp(32px, 2.4vw, 48px);
+}
+
+.exp__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 590fr) minmax(0, 414fr) auto;
+  /* coluna do mapa em múltiplo de 85px (ver .exp__mapa); o texto fica com o
+     resto. Em 1440 dá 595px, a mesma proporção do mockup */
+  grid-template-columns: round(nearest, 46%, 85px) minmax(0, 1fr) auto;
+  grid-template-areas: 'mapa texto lado';
+  column-gap: clamp(28px, 4.1vw, 76px);
+  align-items: start;
+}
+
+/* ------------------------------------------------------------------ mapa
+   O mapa vaza um pouco pra esquerda do alinhamento, como no mockup. A camada
+   de arcos tem o mesmo viewBox (170 x 86) e fica por cima, alinhada sozinha. */
+/* A largura do mapa é sempre múltiplo de 85px (a coluna da grade já sai
+   assim): cada ponto do mapa (1 unidade do viewBox) cai em 2, 2,5, 3, 3,5...
+   pixels. Com passo fracionado qualquer, a grade de pontos bate com a de
+   pixels e forma faixas (moiré) em tela de densidade 1. O vazamento pra
+   esquerda é deslocamento, não largura extra, pra não quebrar o múltiplo. */
+.exp__mapa {
+  grid-area: mapa;
+  position: relative;
+  left: -0.6vw;
+  width: 100%;
+  aspect-ratio: 170 / 86;
+  align-self: center;
+}
+.exp__mapa-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.82;
+  filter: saturate(0.8);
+}
+.exp__mapa .mapa-arcos {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.exp__mapa .mapa-arcos__rotas {
+  stroke-width: 0.46;
+}
+.exp__mapa .mapa-arcos__rota {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.exp__mapa .mapa-arcos__pino {
+  r: 1.05;
+  stroke: rgba(201, 154, 62, 0.3);
+  stroke-width: 0.9;
+  paint-order: stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.exp__mapa .mapa-arcos__halo,
+.exp__mapa .mapa-arcos__origem {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.exp__mapa .mapa-arcos__origem {
+  r: 1.2;
+  fill: #b8862b;
+}
+.exp__mapa .mapa-arcos__halo {
+  r: 2.6;
+}
+
+/* Animação: rotas se desenham uma a uma, os pinos surgem no fim de cada rota e
+   a origem pulsa de leve. Só com JS e sem movimento reduzido; senão, tudo
+   desenhado de cara. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .exp__mapa .mapa-arcos__rota {
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.45, 0.05, 0.25, 1);
+    transition-delay: calc(0.45s + var(--i, 0) * 0.16s);
+  }
+  .js .exp__mapa .mapa-arcos__pino {
+    opacity: 0;
+    transform: scale(0.2);
+    transition: opacity 0.4s ease, transform 0.6s var(--ease);
+    transition-delay: calc(1.55s + var(--i, 0) * 0.16s);
+  }
+  .js .exp__mapa .mapa-arcos__origem,
+  .js .exp__mapa .mapa-arcos__halo {
+    opacity: 0;
+    transform: scale(0.3);
+    transition: opacity 0.5s ease 0.2s, transform 0.7s var(--ease) 0.2s;
+  }
+  .js .exp__mapa.visivel .mapa-arcos__rota {
+    stroke-dashoffset: 0;
+  }
+  .js .exp__mapa.visivel .mapa-arcos__pino,
+  .js .exp__mapa.visivel .mapa-arcos__origem {
+    opacity: 1;
+    transform: none;
+  }
+  .js .exp__mapa.visivel .mapa-arcos__halo {
+    opacity: 1;
+    transform: none;
+    animation: exp-pulso 2.8s ease-in-out 1.2s infinite;
+  }
+}
+@keyframes exp-pulso {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.9);
+    opacity: 0.25;
+  }
+}
+
+/* ----------------------------------------------------------------- texto */
+.exp__texto {
+  grid-area: texto;
+  min-width: 0;
+}
+#expansao .exp__titulo {
+  margin-top: clamp(8px, 0.7vw, 14px);
+  font-size: clamp(44px, 4.1vw, 78px);
+  letter-spacing: -0.004em;
+}
+#expansao .exp__titulo-recuo {
+  padding-left: 0.37em;
+}
+/* no mockup o "MUNDIAL." tem o topo mais claro e o meio mais quente que o
+   degradê claro da base */
+#expansao .exp__titulo .ouro {
+  background-image: linear-gradient(180deg, #e4c98f 0%, #c49a4c 50%, #9a7030 100%);
+}
+#expansao .exp__corpo {
+  max-width: 26em;
+  margin-top: clamp(14px, 1.2vw, 24px);
+  line-height: 1.52;
+  color: #34312e;
+  text-wrap: pretty;
+}
+#expansao .exp__filete {
+  margin-top: clamp(12px, 1vw, 20px);
+}
+/* no mockup o parágrafo e o filete entram um pouco à direita do título */
+@media (min-width: 1100px) {
+  #expansao .exp__corpo,
+  #expansao .exp__filete {
+    margin-left: clamp(0px, 0.85vw, 16px);
+  }
+}
+
+/* ----------------------------------------------------------- lado (pilha) */
+.exp__lado {
+  grid-area: lado;
+  padding-top: clamp(18px, 2vw, 36px);
+}
+.exp__lado-filete {
+  display: block;
+  width: clamp(56px, 6vw, 100px);
+  height: 2px;
+  background: var(--ouro-grad-linha);
+}
+#expansao .exp__lista {
+  margin: clamp(8px, 0.8vw, 14px) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(12px, 0.98vw, 16px);
+  font-weight: 700;
+  line-height: 2.35;
+  letter-spacing: 0.17em;
+  color: #121110;
+  white-space: nowrap;
+}
+
+/* 1100 a 1279: o mapa cede espaço pro parágrafo não quebrar em 6 linhas */
+@media (min-width: 1100px) and (max-width: 1279px) {
+  .exp__grade {
+    grid-template-columns: minmax(0, 500fr) minmax(0, 414fr) auto;
+    grid-template-columns: round(nearest, 44%, 85px) minmax(0, 1fr) auto;
+    column-gap: clamp(28px, 3vw, 44px);
+  }
+}
+
+/* --------------------------------------------------- intermediário
+   Entre 768 e 1099: duas colunas. Mapa e pilha à esquerda, texto à direita. */
+@media (max-width: 1099px) {
+  /* a coluna do mapa tem largura em múltiplo de 85px (ver acima) e o texto
+     fica com o resto, nunca menos que uns 300px */
+  .exp__grade {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-columns: round(down, min(60%, 100% - 340px), 85px) minmax(0, 1fr);
+    grid-template-areas:
+      'mapa texto'
+      'lado texto';
+    column-gap: clamp(28px, 4.6vw, 48px);
+    row-gap: 0;
+  }
+  .exp__mapa {
+    left: 0;
+    align-self: start;
+    margin-top: 6px;
+  }
+  .exp__texto {
+    align-self: center;
+  }
+  .exp__lado {
+    padding-top: clamp(22px, 3vw, 32px);
+  }
+  /* pilha em duas colunas, pra coluna do mapa não ficar mais alta que a do
+     texto */
+  #expansao .exp__lista {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column;
+    justify-content: start;
+    column-gap: clamp(24px, 4vw, 48px);
+  }
+  #expansao .exp__titulo {
+    font-size: clamp(44px, 5.6vw, 60px);
+  }
+  #expansao .exp__corpo {
+    max-width: none;
+  }
+}
+
+/* ----------------------------------------------------------- celular
+   Uma coluna, na ordem do mockup: mapa, texto, pilha. O mapa ocupa a largura
+   toda (lado a lado com o texto ficaria ilegível). */
+@media (max-width: 767px) {
+  #expansao {
+    padding-block: 36px 40px;
+  }
+  .exp__grade {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'mapa'
+      'texto'
+      'lado';
+  }
+  .exp__texto {
+    align-self: start;
+  }
+  /* vaza até 4px da borda da tela e fica centralizado quando bate no limite */
+  .exp__mapa {
+    width: calc(100% + 2 * var(--gutter) - 8px);
+    max-width: 620px;
+    margin: 0 0 28px;
+    justify-self: center;
+  }
+  #expansao .exp__titulo {
+    font-size: clamp(44px, 13vw, 60px);
+  }
+  #expansao .exp__corpo {
+    max-width: 34em;
+  }
+  #expansao .exp__filete {
+    display: none;
+  }
+  .exp__lado {
+    padding-top: 28px;
+  }
+  .exp__lado-filete {
+    width: 64px;
+  }
+  #expansao .exp__lista {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 2.05;
+  }
+}

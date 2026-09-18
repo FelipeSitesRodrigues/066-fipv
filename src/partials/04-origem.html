@@ -1,0 +1,116 @@
+    <!-- ORIGEM · foto real em P&B encostada na borda esquerda, texto no meio,
+         bandeira do Paraguai à direita. No celular a foto sai (como no mockup
+         mobile) e a bandeira fica ao lado do rótulo e do título. -->
+    <section class="sec sec--claro origem" id="origem" aria-labelledby="origem-titulo">
+      <div class="origem__grade">
+        <figure class="origem__foto" data-revelar="esquerda">
+          <img
+            src="/assets/img/foto-02-grama-1200.webp"
+            srcset="/assets/img/foto-02-grama-480.webp 480w, /assets/img/foto-02-grama-800.webp 800w, /assets/img/foto-02-grama-1200.webp 1200w, /assets/img/foto-02-grama-1600.webp 1600w"
+            sizes="(min-width: 1100px) 42vw, (min-width: 768px) 44vw, 100vw"
+            width="1600" height="840"
+            alt="Partida de Pikivoley numa quadra de grama cercada de árvores, com a torcida em volta da rede"
+            data-i18n-attr="alt:origem.foto.alt"
+            loading="lazy" decoding="async">
+        </figure>
+
+        <div class="origem__texto">
+          <p class="rotulo origem__rotulo" data-revelar data-i18n="origem.rotulo">Origem</p>
+          <h2 class="titulo origem__titulo" id="origem-titulo" data-revelar style="--atraso: 1" data-i18n="origem.titulo">
+            <span>Nascido</span>
+            <span class="origem__recuo">no <span class="ouro">Paraguai.</span></span>
+          </h2>
+          <div class="origem__corpo" data-revelar style="--atraso: 2">
+            <p class="texto origem__p1" data-i18n="origem.texto1">O Pikivoley surgiu no fim dos anos 90, na região de Ciudad del Este, de forma popular, nas ruas e nos bairros.</p>
+            <p class="texto origem__p2" data-i18n="origem.texto2">Hoje é reconhecido como modalidade esportiva pelo Governo Paraguaio e é um dos esportes mais praticados do país, atrás apenas do futebol.</p>
+          </div>
+        </div>
+
+        <!-- Bandeira desenhada em SVG: tecido com dobras (turbulência + luz), sem
+             arquivo de imagem. Fica nítida em qualquer tela e não tem moiré. -->
+        <figure class="origem__bandeira" data-revelar="zoom" style="--atraso: 2">
+          <svg class="origem__bandeira-svg" viewBox="0 0 480 440" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Bandeira do Paraguai tremulando, em vermelho, branco e azul" data-i18n-attr="aria-label:origem.bandeira.alt">
+            <defs>
+              <linearGradient id="origem-ceu" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#3d3a36"/>
+                <stop offset=".55" stop-color="#262421"/>
+                <stop offset="1" stop-color="#171614"/>
+              </linearGradient>
+              <filter id="origem-nuvem" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="22"/>
+              </filter>
+              <filter id="origem-pano" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+                <feTurbulence type="turbulence" baseFrequency="0.0028 0.01" numOctaves="1" seed="4" result="dobra"/>
+                <feTurbulence type="fractalNoise" baseFrequency="0.01 0.03" numOctaves="1" seed="9" result="ruga"/>
+                <feComposite in="dobra" in2="ruga" operator="arithmetic" k2="0.8" k3="0.2"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0"/>
+                <feGaussianBlur stdDeviation="1.2" result="relevo"/>
+                <feDiffuseLighting in="relevo" surfaceScale="12" diffuseConstant="1" lighting-color="#fff">
+                  <feDistantLight azimuth="230" elevation="33"/>
+                </feDiffuseLighting>
+                <feComponentTransfer>
+                  <feFuncR type="linear" slope="1.3" intercept="-0.14"/>
+                  <feFuncG type="linear" slope="1.3" intercept="-0.14"/>
+                  <feFuncB type="linear" slope="1.3" intercept="-0.14"/>
+                </feComponentTransfer>
+                <feGaussianBlur stdDeviation="2.2" result="luz"/>
+                <feTurbulence type="fractalNoise" baseFrequency="0.003 0.01" numOctaves="1" seed="4" result="onda"/>
+                <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="fonte"/>
+                <feDisplacementMap in="fonte" in2="onda" scale="24" xChannelSelector="G" yChannelSelector="R" result="tecido"/>
+                <feBlend in="tecido" in2="luz" mode="multiply"/>
+                <feComposite in2="tecido" operator="in"/>
+                <feGaussianBlur stdDeviation="0.7"/>
+              </filter>
+              <!-- mesma luz do tecido sobre o brasão, sem deslocar nem desfocar -->
+              <filter id="origem-selo" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+                <feTurbulence type="turbulence" baseFrequency="0.0028 0.01" numOctaves="1" seed="4" result="dobra"/>
+                <feTurbulence type="fractalNoise" baseFrequency="0.01 0.03" numOctaves="1" seed="9" result="ruga"/>
+                <feComposite in="dobra" in2="ruga" operator="arithmetic" k2="0.8" k3="0.2"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0"/>
+                <feGaussianBlur stdDeviation="1.2" result="relevo"/>
+                <feDiffuseLighting in="relevo" surfaceScale="12" diffuseConstant="1" lighting-color="#fff">
+                  <feDistantLight azimuth="230" elevation="33"/>
+                </feDiffuseLighting>
+                <feComponentTransfer>
+                  <feFuncR type="linear" slope="1.3" intercept="-0.14"/>
+                  <feFuncG type="linear" slope="1.3" intercept="-0.14"/>
+                  <feFuncB type="linear" slope="1.3" intercept="-0.14"/>
+                </feComponentTransfer>
+                <feGaussianBlur stdDeviation="2.2" result="luz"/>
+                <feBlend in="SourceGraphic" in2="luz" mode="multiply"/>
+                <feComposite in2="SourceGraphic" operator="in"/>
+              </filter>
+            </defs>
+            <rect width="480" height="440" fill="url(#origem-ceu)"/>
+            <ellipse cx="330" cy="18" rx="150" ry="34" fill="#6a655e" opacity=".55" filter="url(#origem-nuvem)"/>
+            <ellipse cx="90" cy="30" rx="110" ry="22" fill="#57534d" opacity=".5" filter="url(#origem-nuvem)"/>
+            <g transform="rotate(-16 240 220)">
+              <g filter="url(#origem-pano)">
+                <g transform="rotate(10.5 240 220)">
+                  <rect x="-120" y="44" width="720" height="136" fill="#e0332a"/>
+                  <rect x="-120" y="180" width="720" height="120" fill="#f7f4ee"/>
+                  <rect x="-120" y="300" width="720" height="260" fill="#1f4fb8"/>
+                </g>
+              </g>
+              <g filter="url(#origem-selo)">
+                <g transform="rotate(10.5 240 220)">
+                  <g transform="translate(250 240)">
+                    <circle r="46" fill="#f4f0e8" stroke="#c8231b" stroke-width="2.6"/>
+                    <circle r="40" fill="none" stroke="#c8231b" stroke-width="5" stroke-dasharray="1.3 1.1" opacity=".7"/>
+                    <circle r="34" fill="#f7f4ee" stroke="#c8231b" stroke-width="3.4"/>
+                    <circle r="15" fill="#1f4fb8"/>
+                    <g fill="#2f8a3a"><ellipse cx="-7.1" cy="21.9" rx="2.2" ry="4.8" transform="rotate(96 -7.1 21.9)"/><ellipse cx="7.1" cy="21.9" rx="2.2" ry="4.8" transform="rotate(84 7.1 21.9)"/><ellipse cx="-14.2" cy="18.1" rx="2.2" ry="4.8" transform="rotate(116 -14.2 18.1)"/><ellipse cx="14.2" cy="18.1" rx="2.2" ry="4.8" transform="rotate(64 14.2 18.1)"/><ellipse cx="-19.5" cy="12.2" rx="2.2" ry="4.8" transform="rotate(136 -19.5 12.2)"/><ellipse cx="19.5" cy="12.2" rx="2.2" ry="4.8" transform="rotate(44 19.5 12.2)"/><ellipse cx="-22.5" cy="4.8" rx="2.2" ry="4.8" transform="rotate(156 -22.5 4.8)"/><ellipse cx="22.5" cy="4.8" rx="2.2" ry="4.8" transform="rotate(24 22.5 4.8)"/><ellipse cx="-22.8" cy="-3.2" rx="2.2" ry="4.8" transform="rotate(176 -22.8 -3.2)"/><ellipse cx="22.8" cy="-3.2" rx="2.2" ry="4.8" transform="rotate(4 22.8 -3.2)"/><ellipse cx="-20.3" cy="-10.8" rx="2.2" ry="4.8" transform="rotate(196 -20.3 -10.8)"/><ellipse cx="20.3" cy="-10.8" rx="2.2" ry="4.8" transform="rotate(-16 20.3 -10.8)"/></g>
+                    <polygon points="0,-13 3.8,-3.9 13.4,-4 5.8,1.9 8.2,11.1 0,5.8 -8.2,11.1 -5.8,1.9 -13.4,-4 -3.8,-3.9" fill="#f5c518" stroke="#8a6a08" stroke-width="1.2" stroke-linejoin="round"/>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </figure>
+
+        <div class="origem__assinatura" data-revelar style="--atraso: 3">
+          <p class="pilha origem__pilha" data-i18n="origem.pilha"><span>Raízes fortes.</span> <span>Um esporte global.</span></p>
+          <span class="filete origem__filete" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>

@@ -1,0 +1,105 @@
+    <!-- 08 · Galeria: faixa de fotos reais com setas e lightbox -->
+    <section class="sec sec--claro gal" id="galeria" aria-labelledby="gal-titulo">
+      <div class="wrap gal__grade">
+        <p class="rotulo gal__rotulo" data-revelar data-i18n="galeria.rotulo">Galeria</p>
+
+        <h2 class="titulo gal__titulo" id="gal-titulo" data-revelar style="--atraso: 1">
+          <span class="gal__linha" data-i18n="galeria.titulo1">O mundo</span>
+          <span class="gal__linha gal__linha--recuo" data-i18n="galeria.titulo2">joga <span class="ouro">junto.</span></span>
+        </h2>
+
+        <div class="gal__topo" data-revelar style="--atraso: 2">
+          <p class="gal__frase" data-i18n="galeria.frase"><span>Diferentes lugares.</span> <span>Uma só <span class="ouro">paixão.</span></span></p>
+          <div class="gal__setas">
+            <button type="button" class="gal__seta gal__seta--ant" aria-controls="gal-faixa" aria-label="Foto anterior" data-i18n-attr="aria-label:galeria.anterior" disabled>
+              <svg viewBox="0 0 24 16" aria-hidden="true" focusable="false"><path d="M23 8H1.8M9 .5 1.8 8 9 15.5" /></svg>
+            </button>
+            <button type="button" class="gal__seta gal__seta--prox" aria-controls="gal-faixa" aria-label="Próxima foto" data-i18n-attr="aria-label:galeria.proxima">
+              <svg viewBox="0 0 24 16" aria-hidden="true" focusable="false"><path d="M1 8h21.2M15 .5 22.2 8 15 15.5" /></svg>
+            </button>
+          </div>
+        </div>
+
+        <ul class="gal__faixa" id="gal-faixa" role="list" data-revelar>
+          <li class="gal__item" style="--i: 0">
+            <button type="button" class="gal__abrir" aria-haspopup="dialog" aria-controls="gal-caixa"
+              data-src="/assets/img/foto-01-terra-1600.webp"
+              data-srcset="/assets/img/foto-01-terra-800.webp 800w, /assets/img/foto-01-terra-1200.webp 1200w, /assets/img/foto-01-terra-1600.webp 1600w"
+              data-sizes="min(94vw, 1500px)" data-w="1600" data-h="840">
+              <img class="gal__foto gal__foto--terra"
+                src="/assets/img/foto-01-terra-800.webp"
+                srcset="/assets/img/foto-01-terra-480.webp 480w, /assets/img/foto-01-terra-800.webp 800w, /assets/img/foto-01-terra-1200.webp 1200w"
+                sizes="(min-width: 1100px) 29vw, (min-width: 768px) 44vw, 98vw"
+                width="800" height="420" loading="lazy" decoding="async"
+                alt="Quadra de terra vista do alto, com a torcida em volta da rede" data-i18n-attr="alt:galeria.alt1">
+              <span class="gal__lupa" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M12 2.5h5.5V8M8 17.5H2.5V12M17.5 2.5 11.5 8.5M2.5 17.5l6-6" /></svg></span>
+            </button>
+          </li>
+          <li class="gal__item" style="--i: 1">
+            <button type="button" class="gal__abrir" aria-haspopup="dialog" aria-controls="gal-caixa"
+              data-src="/assets/img/foto-02-grama-1600.webp"
+              data-srcset="/assets/img/foto-02-grama-800.webp 800w, /assets/img/foto-02-grama-1200.webp 1200w, /assets/img/foto-02-grama-1600.webp 1600w"
+              data-sizes="min(94vw, 1500px)" data-w="1600" data-h="840">
+              <img class="gal__foto gal__foto--grama"
+                src="/assets/img/foto-02-grama-800.webp"
+                srcset="/assets/img/foto-02-grama-480.webp 480w, /assets/img/foto-02-grama-800.webp 800w, /assets/img/foto-02-grama-1200.webp 1200w"
+                sizes="(min-width: 1100px) 29vw, (min-width: 768px) 44vw, 98vw"
+                width="800" height="420" loading="lazy" decoding="async"
+                alt="Partida em quadra de grama, com a torcida acompanhando da lateral" data-i18n-attr="alt:galeria.alt2">
+              <span class="gal__lupa" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M12 2.5h5.5V8M8 17.5H2.5V12M17.5 2.5 11.5 8.5M2.5 17.5l6-6" /></svg></span>
+            </button>
+          </li>
+          <li class="gal__item" style="--i: 2">
+            <button type="button" class="gal__abrir" aria-haspopup="dialog" aria-controls="gal-caixa"
+              data-src="/assets/img/foto-04-cabeceio-1086.webp"
+              data-srcset="/assets/img/foto-04-cabeceio-800.webp 800w, /assets/img/foto-04-cabeceio-1086.webp 1086w"
+              data-sizes="min(94vw, 60vh)" data-w="1086" data-h="1448">
+              <img class="gal__foto gal__foto--cabeceio"
+                src="/assets/img/foto-04-cabeceio-480.webp"
+                srcset="/assets/img/foto-04-cabeceio-480.webp 480w, /assets/img/foto-04-cabeceio-800.webp 800w"
+                sizes="(min-width: 1100px) 17vw, (min-width: 768px) 26vw, 42vw"
+                width="480" height="640" loading="lazy" decoding="async"
+                alt="Jogador salta para cabecear a bola em quadra de terra" data-i18n-attr="alt:galeria.alt3">
+              <span class="gal__lupa" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M12 2.5h5.5V8M8 17.5H2.5V12M17.5 2.5 11.5 8.5M2.5 17.5l6-6" /></svg></span>
+            </button>
+          </li>
+          <li class="gal__item" style="--i: 3">
+            <button type="button" class="gal__abrir" aria-haspopup="dialog" aria-controls="gal-caixa"
+              data-src="/assets/img/foto-03-noturna-1097.webp"
+              data-srcset="/assets/img/foto-03-noturna-800.webp 800w, /assets/img/foto-03-noturna-1097.webp 1097w"
+              data-sizes="min(94vw, 60vh)" data-w="1097" data-h="1434">
+              <img class="gal__foto gal__foto--noturna"
+                src="/assets/img/foto-03-noturna-480.webp"
+                srcset="/assets/img/foto-03-noturna-480.webp 480w, /assets/img/foto-03-noturna-800.webp 800w"
+                sizes="(min-width: 1100px) 17vw, (min-width: 768px) 26vw, 42vw"
+                width="480" height="627" loading="lazy" decoding="async"
+                alt="Vista aérea noturna de quadras iluminadas e arquibancada lotada" data-i18n-attr="alt:galeria.alt4">
+              <span class="gal__lupa" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M12 2.5h5.5V8M8 17.5H2.5V12M17.5 2.5 11.5 8.5M2.5 17.5l6-6" /></svg></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <dialog class="gal__caixa" id="gal-caixa" aria-label="Galeria de fotos" data-i18n-attr="aria-label:galeria.caixa">
+        <div class="gal__palco">
+          <button type="button" class="gal__fechar" aria-label="Fechar" data-i18n-attr="aria-label:galeria.fechar" autofocus>
+            <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 3l14 14M17 3 3 17" /></svg>
+          </button>
+          <figure class="gal__figura">
+            <img class="gal__grande" alt="" width="1600" height="840" decoding="async">
+            <!-- a legenda repete o alt: o leitor de tela ouve só o aviso abaixo -->
+            <figcaption class="gal__legenda" aria-hidden="true">
+              <span class="gal__contador">01 / 04</span>
+              <span class="gal__texto"></span>
+            </figcaption>
+          </figure>
+          <p class="sr-only gal__aviso" aria-live="polite" aria-atomic="true"></p>
+          <button type="button" class="gal__nav gal__nav--ant" aria-label="Foto anterior" data-i18n-attr="aria-label:galeria.anterior">
+            <svg viewBox="0 0 24 16" aria-hidden="true" focusable="false"><path d="M23 8H1.8M9 .5 1.8 8 9 15.5" /></svg>
+          </button>
+          <button type="button" class="gal__nav gal__nav--prox" aria-label="Próxima foto" data-i18n-attr="aria-label:galeria.proxima">
+            <svg viewBox="0 0 24 16" aria-hidden="true" focusable="false"><path d="M1 8h21.2M15 .5 22.2 8 15 15.5" /></svg>
+          </button>
+        </div>
+      </dialog>
+    </section>

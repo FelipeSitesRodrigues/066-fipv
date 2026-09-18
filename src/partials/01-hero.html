@@ -1,0 +1,75 @@
+<!-- @head -->
+<link rel="preload" as="image" href="/assets/img/hero-mobile-720.webp" imagesrcset="/assets/img/hero-mobile-480.webp 480w, /assets/img/hero-mobile-720.webp 720w, /assets/img/hero-mobile-941.webp 941w" imagesizes="100vw" media="(max-width: 559.98px), (max-width: 1099.98px) and (orientation: portrait)" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/img/hero-desktop-1731.webp" imagesrcset="/assets/img/hero-desktop-960.webp 960w, /assets/img/hero-desktop-1280.webp 1280w, /assets/img/hero-desktop-1731.webp 1731w" imagesizes="(min-width: 1812px) 1752px, (min-width: 1220px) 97vw, 1180px" media="(min-width: 1100px), (min-width: 560px) and (orientation: landscape)" fetchpriority="high">
+<!-- /@head -->
+    <section class="hero hero--intro" id="inicio" data-atual="0" aria-labelledby="hero-titulo">
+      <div class="hero__foto">
+        <picture>
+          <source media="(max-width: 559.98px), (max-width: 1099.98px) and (orientation: portrait)" srcset="/assets/img/hero-mobile-480.webp 480w, /assets/img/hero-mobile-720.webp 720w, /assets/img/hero-mobile-941.webp 941w" sizes="100vw" width="941" height="1672" type="image/webp">
+          <source media="(min-width: 1100px), (min-width: 560px) and (orientation: landscape)" srcset="/assets/img/hero-desktop-960.webp 960w, /assets/img/hero-desktop-1280.webp 1280w, /assets/img/hero-desktop-1731.webp 1731w" sizes="(min-width: 1812px) 1752px, (min-width: 1220px) 97vw, 1180px" width="1731" height="909" type="image/webp">
+          <img class="hero__img" src="/assets/img/hero-desktop-1731.jpg" width="1731" height="909" fetchpriority="high" alt="Atleta de camisa amarela e calção azul salta e cabeceia a bola perto da rede, numa arena noturna de Pikivoley com piso escuro, refletores acesos e faixas da FIPV." data-i18n-attr="alt:hero.foto.alt">
+        </picture>
+      </div>
+      <div class="hero__veu" aria-hidden="true"></div>
+
+      <div class="hero__conteudo wrap">
+        <div class="hero__frases">
+          <h1 class="hero__frase ativa" id="hero-titulo" data-frase="0">
+            <span class="hero__linha hero__kicker" style="--i:0" data-i18n="hero.f1.kicker">Mais que um esporte,</span>
+            <span class="hero__linha hero__grande" style="--i:1"><span class="hero__ajuste">Piki<span class="ouro ouro--escuro hero__brilho">voley</span></span></span>
+            <span class="hero__linha hero__cauda" style="--i:2" data-i18n="hero.f1.cauda">sem limites.</span>
+          </h1>
+          <p class="hero__frase" data-frase="1" aria-hidden="true">
+            <span class="hero__linha hero__kicker" style="--i:0" data-i18n="hero.f2.kicker">Da América do Sul</span>
+            <span class="hero__linha hero__grande" style="--i:1" data-i18n="hero.f2.grande"><span class="hero__ajuste" style="--escala:.65">Para o <span class="ouro ouro--escuro">mundo</span></span></span>
+            <span class="hero__linha hero__cauda" style="--i:2" data-i18n="hero.f2.cauda">sem fronteiras.</span>
+          </p>
+          <p class="hero__frase" data-frase="2" aria-hidden="true">
+            <span class="hero__linha hero__kicker" style="--i:0" data-i18n="hero.f3.kicker">Onde tem chão,</span>
+            <span class="hero__linha hero__grande" style="--i:1" data-i18n="hero.f3.grande"><span class="hero__ajuste" style="--escala:.97">Tem <span class="ouro ouro--escuro">jogo</span></span></span>
+            <span class="hero__linha hero__cauda" style="--i:2" data-i18n="hero.f3.cauda">terra, grama ou quadra.</span>
+          </p>
+        </div>
+
+        <!-- pilha e subtítulo acompanham a frase: a parte que a frase grande
+             já diz sai da tela (ver [data-atual] no CSS) -->
+        <div class="hero__lado">
+          <p class="pilha hero__pilha" data-i18n="hero.pilha"><span class="hero__so-mundo">Da América</span> <span class="hero__so-mundo">do Sul</span> <span class="hero__so-mundo">para o mundo.</span> <span class="hero__so-chao">Tem chão.</span> <span class="hero__so-chao">Tem jogo.</span></p>
+          <span class="filete hero__filete" aria-hidden="true"></span>
+        </div>
+
+        <div class="hero__base">
+          <p class="hero__sub" data-i18n="hero.sub"><span class="hero__so-mundo">Da América do Sul para o mundo.</span> <span class="hero__so-chao">Tem chão, tem jogo.</span></p>
+
+          <button class="hero__video" type="button" data-requer="video" data-video="{{links.video}}" aria-haspopup="dialog">
+            <span class="hero__play" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8.5 6.2v11.6L18 12z"/></svg></span>
+            <span class="hero__video-txt" data-i18n="hero.video"><span>Assista</span> <span>ao vídeo</span></span>
+          </button>
+
+          <div class="hero__tracos" role="group" aria-label="Frases do destaque" data-i18n-attr="aria-label:hero.tracos">
+            <button class="hero__traco" type="button" data-ir="0" aria-current="true" aria-label="Frase 1 de 3" data-i18n-attr="aria-label:hero.traco1"><span class="hero__num" aria-hidden="true">01</span><span class="hero__barra" aria-hidden="true"><span class="hero__progresso"></span></span></button>
+            <button class="hero__traco" type="button" data-ir="1" aria-label="Frase 2 de 3" data-i18n-attr="aria-label:hero.traco2"><span class="hero__num" aria-hidden="true">02</span><span class="hero__barra" aria-hidden="true"><span class="hero__progresso"></span></span></button>
+            <button class="hero__traco" type="button" data-ir="2" aria-label="Frase 3 de 3" data-i18n-attr="aria-label:hero.traco3"><span class="hero__num" aria-hidden="true">03</span><span class="hero__barra" aria-hidden="true"><span class="hero__progresso"></span></span></button>
+          </div>
+
+          <ul class="hero__valores" role="list" aria-label="O que move a FIPV" data-i18n-attr="aria-label:hero.valores">
+            <li data-i18n="hero.valor1">Esporte</li>
+            <li data-i18n="hero.valor2">Pessoas</li>
+            <li data-i18n="hero.valor3">Cultura</li>
+            <li data-i18n="hero.valor4">Sem fronteiras</li>
+          </ul>
+        </div>
+      </div>
+
+      <picture class="hero__recorte" aria-hidden="true">
+        <source media="(max-width: 559.98px), (max-width: 1099.98px) and (orientation: portrait)" srcset="/assets/img/hero-mobile-atleta-480.webp 480w, /assets/img/hero-mobile-atleta-720.webp 720w, /assets/img/hero-mobile-atleta-941.webp 941w" sizes="100vw" width="941" height="1672" type="image/webp">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="941" height="1672" alt="" decoding="async">
+      </picture>
+
+      <dialog class="hero__dialogo" data-requer="video" aria-label="Vídeo da FIPV" data-i18n-attr="aria-label:hero.dialogo">
+        <div class="hero__dialogo-caixa">
+          <button class="hero__fechar" type="button" aria-label="Fechar vídeo" data-i18n-attr="aria-label:hero.fechar"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+          <div class="hero__player"></div>
+        </div>
+      </dialog>
+    </section>

@@ -1,0 +1,4632 @@
+/* _base.css */
+/* ==========================================================================
+   FIPV · base: tokens, reset, tipografia e componentes compartilhados.
+   Cores tiradas do mockup por amostragem de pixel. Tamanhos calibrados em
+   1440 px de largura (o mockup desktop tem 776 px, escala 1,856).
+   ========================================================================== */
+
+:root {
+  /* fundos */
+  --preto: #0a0a0a;
+  --preto-rodape: #0e0e0e;
+  --carvao: #141414;
+  --carvao-2: #1b1b1b;
+  --osso: #f5f1ec;
+  --osso-2: #ece6dc;
+  --branco: #ffffff;
+
+  /* texto */
+  --tinta: #070707;          /* títulos e texto forte em fundo claro */
+  --texto-claro: #4b4845;    /* corpo em fundo claro */
+  --texto-escuro: #cdcdcf;   /* corpo em fundo escuro */
+  --cinza-medio: #8a8784;
+
+  /* ouro. Nunca chapado em título: sempre degradê metálico */
+  --ouro: #c9a25a;
+  --ouro-claro: #edcd86;
+  --ouro-escuro: #a2762d;
+  --ouro-grad-escuro: linear-gradient(180deg, #f3d48e 0%, #d8af5e 48%, #a77a2e 100%);
+  --ouro-grad-claro: linear-gradient(180deg, #d0ad66 0%, #b68b40 52%, #8e6424 100%);
+  --ouro-grad-linha: linear-gradient(90deg, #a2762d 0%, #e7c46e 50%, #b8862b 100%);
+
+  --linha-escura: rgba(255, 255, 255, 0.12);
+  --linha-clara: rgba(7, 7, 7, 0.1);
+
+  /* fontes */
+  --f-display: 'Anton', Impact, 'Arial Narrow Bold', sans-serif;
+  --f-rotulo: 'Barlow', 'Segoe UI', Arial, sans-serif;
+  --f-kicker: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --f-corpo: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  /* escala fluida (valor de 1440 px no meio do clamp) */
+  --t-hero: clamp(72px, 13.9vw, 260px);
+  --t-titulo: clamp(44px, 5.9vw, 106px);
+  --t-numero: clamp(40px, 4.4vw, 80px);
+  --t-kicker: clamp(17px, 2.5vw, 44px);
+  --t-lead: clamp(16px, 1.22vw, 20px);
+  --t-corpo: clamp(15px, 1.06vw, 17px);
+  --t-rotulo: clamp(12px, 1.12vw, 17px);
+  --t-pilha: clamp(11px, 0.86vw, 13.5px);
+  --t-nav: clamp(13px, 0.95vw, 15px);
+  --t-mini: clamp(12px, 0.8vw, 13px);
+
+  /* espaço */
+  --gutter: clamp(20px, 5.1vw, 84px);
+  --wrap: 1560px;
+  --sec-pad: clamp(64px, 4.6vw, 92px);
+  --header-h: clamp(64px, 6.6vw, 104px);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-suave: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ruído de papel e de filme, em SVG, gerado pelo navegador */
+  --ruido: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------------------------------------------------------------- reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) - 1px);
+  background: var(--preto);
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--f-corpo);
+  font-size: var(--t-corpo);
+  line-height: 1.6;
+  color: var(--texto-escuro);
+  background: var(--preto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote {
+  margin: 0;
+}
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:not([href]) {
+  cursor: default;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 2px solid var(--ouro-claro);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.sec--claro :focus-visible {
+  outline-color: var(--ouro-escuro);
+}
+::selection {
+  background: var(--ouro);
+  color: var(--tinta);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.pular {
+  position: fixed;
+  left: 12px;
+  top: -60px;
+  z-index: 200;
+  padding: 12px 18px;
+  background: var(--ouro-claro);
+  color: var(--tinta);
+  font: 600 14px/1 var(--f-rotulo);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: top 0.2s;
+}
+.pular:focus {
+  top: 12px;
+}
+
+/* ------------------------------------------------------------- estrutura */
+.wrap {
+  width: min(100% - 2 * var(--gutter), var(--wrap));
+  margin-inline: auto;
+}
+
+/* Seção. O fundo alterna claro e escuro, como no mockup, sem degradê entre
+   uma e outra. O ruído dá textura de papel (claro) e de filme (escuro). */
+.sec {
+  position: relative;
+  padding-block: var(--sec-pad);
+  overflow: clip;
+  isolation: isolate;
+}
+.sec--claro {
+  background: var(--osso);
+  color: var(--texto-claro);
+}
+.sec--escuro {
+  background: var(--preto);
+  color: var(--texto-escuro);
+}
+.sec--claro::before,
+.sec--escuro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--ruido);
+  background-size: 240px 240px;
+}
+.sec--claro::before {
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+}
+.sec--escuro::before {
+  opacity: 0.07;
+  mix-blend-mode: screen;
+}
+
+/* ---------------------------------------------------------- rótulo (eyebrow)
+   Marca dourada antes do texto: barra inclinada nas seções claras, globo
+   pequeno nas escuras (use .rotulo--globo com o <svg class="rotulo__globo">). */
+.rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font: 600 var(--t-rotulo) / 1.2 var(--f-rotulo);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tinta);
+}
+.sec--escuro .rotulo {
+  color: var(--ouro-claro);
+}
+.rotulo::before {
+  content: '';
+  flex: none;
+  width: 0.46em;
+  height: 1.05em;
+  background: var(--ouro-grad-claro);
+  transform: skewX(-18deg);
+}
+.sec--escuro .rotulo::before {
+  background: var(--ouro-grad-escuro);
+}
+.rotulo--globo::before {
+  display: none;
+}
+.rotulo__globo {
+  flex: none;
+  width: 1.35em;
+  height: 1.35em;
+  color: var(--ouro);
+}
+
+/* -------------------------------------------------------------- títulos */
+.titulo {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-style: italic; /* Anton não tem itálico: o navegador inclina (14°) */
+  font-size: var(--t-titulo);
+  line-height: 0.98;
+  letter-spacing: 0.004em;
+  text-transform: uppercase;
+  color: var(--tinta);
+  font-synthesis: style;
+}
+.sec--escuro .titulo {
+  color: var(--branco);
+}
+.titulo > span,
+.titulo .linha {
+  display: block;
+}
+
+/* Palavra em ouro. O padding à direita cobre a sobra da letra inclinada, senão
+   o degradê corta a ponta da última letra. */
+.ouro {
+  background: var(--ouro-grad-claro);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--ouro-escuro);
+  padding-right: 0.09em;
+  margin-right: -0.09em;
+  padding-block: 0.06em;
+}
+.sec--escuro .ouro,
+.ouro--escuro {
+  background-image: var(--ouro-grad-escuro);
+  color: var(--ouro-claro);
+}
+/* alto contraste do Windows apaga o fundo: sem isso o texto em ouro some */
+@media (forced-colors: active) {
+  .ouro {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* --------------------------------------------------------------- textos */
+.texto {
+  font-family: var(--f-corpo);
+  font-size: var(--t-corpo);
+  line-height: 1.62;
+  color: inherit;
+  max-width: 62ch;
+}
+.texto + .texto {
+  margin-top: 0.9em;
+}
+.texto--lead {
+  font-size: var(--t-lead);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--tinta);
+}
+.sec--escuro .texto--lead {
+  color: var(--branco);
+}
+
+/* Pilha: frase curta em caixa alta, empilhada, com espaçamento largo entre
+   letras. Aparece no canto direito de várias seções do mockup. */
+.pilha {
+  font: 600 var(--t-pilha) / 2.05 var(--f-rotulo);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tinta);
+}
+.sec--escuro .pilha {
+  color: #ededed;
+}
+.pilha > span {
+  display: block;
+}
+
+/* Filete dourado curto */
+.filete {
+  display: block;
+  width: clamp(36px, 3.4vw, 60px);
+  height: 2px;
+  background: var(--ouro-grad-linha);
+  border: 0;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------- botões */
+.btn-contorno {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9em;
+  min-height: 48px;
+  padding: 0.95em 1.7em;
+  border: 1.5px solid var(--ouro);
+  font: 600 var(--t-rotulo) / 1 var(--f-rotulo);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--branco);
+  background: transparent;
+  transition: background-color 0.3s var(--ease-suave), color 0.3s var(--ease-suave), border-color 0.3s;
+}
+.sec--claro .btn-contorno {
+  color: var(--tinta);
+}
+.btn-contorno svg {
+  width: 1.2em;
+  height: 1.2em;
+  transition: transform 0.3s var(--ease);
+}
+.btn-contorno:hover {
+  background: var(--ouro);
+  border-color: var(--ouro);
+  color: var(--tinta);
+}
+.btn-contorno:hover svg {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------- revelar ao rolar
+   Só esconde quando o JS está ativo (html.js). Sem JS, tudo aparece. */
+.js [data-revelar] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: calc(var(--atraso, 0) * 90ms);
+}
+.js [data-revelar='esquerda'] {
+  transform: translateX(-30px);
+}
+.js [data-revelar='direita'] {
+  transform: translateX(30px);
+}
+.js [data-revelar='zoom'] {
+  transform: scale(0.96);
+}
+.js [data-revelar].visivel {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-revelar] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* _fontes.css */
+/* Gerado por scripts/baixar-fontes.mjs. Não editar à mão. */
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/anton-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-600.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-condensed-500-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-condensed-600-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/assets/fonts/inter-400-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* 00-header.css */
+/* ==========================================================================
+   Header. Fixo no topo, transparente sobre o hero; ganha fundo preto com blur
+   quando html.rolou. Abaixo de 1100 px vira logo + hambúrguer com menu em
+   tela cheia.
+   ========================================================================== */
+
+/* O globo para de crescer em 84 px (1541 px de janela), perto de onde o
+   --header-h para (104 px): assim a marca nunca encosta nas bordas da barra,
+   rolada ou não. O FIPV acompanha na mesma proporção do mockup (1/3). */
+.cab {
+  --cab-globo: clamp(40px, 5.45vw, 84px);
+  --cab-fipv: clamp(18px, 1.82vw, 28px);
+  --cab-nav: clamp(13px, 1vw, 16px);
+  --cab-texto: #f1eee9;
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  color: var(--cab-texto);
+}
+
+/* Fundo do estado rolado. Fica num pseudo-elemento (e não no próprio header)
+   porque backdrop-filter num ancestral quebraria o menu fixo do celular. */
+.cab::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--header-h);
+  background: rgba(8, 8, 8, 0.86);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow: inset 0 -1px 0 rgba(201, 162, 90, 0.22);
+  opacity: 0;
+  transform-origin: top;
+  transition: opacity 0.45s var(--ease-suave), transform 0.45s var(--ease);
+  pointer-events: none;
+}
+.rolou .cab::before {
+  opacity: 1;
+}
+
+.cab__barra {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--header-h);
+  transition: transform 0.45s var(--ease);
+}
+
+/* ------------------------------------------------------------------ marca */
+.cab__marca {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  flex: none;
+  transform-origin: left center;
+  transition: transform 0.45s var(--ease);
+}
+.cab__globo {
+  flex: none;
+  width: auto;
+  height: var(--cab-globo);
+  margin-left: calc(var(--cab-globo) * -0.04);
+}
+.cab__fipv {
+  flex: none;
+  width: auto;
+  height: var(--cab-fipv);
+  margin-left: calc(var(--cab-globo) * 0.13);
+}
+.cab__filete {
+  flex: none;
+  width: 1px;
+  height: calc(var(--cab-fipv) * 1.55);
+  margin-inline: calc(var(--cab-fipv) * 0.42) calc(var(--cab-fipv) * 0.36);
+  background: linear-gradient(180deg, #e7c46e, #a2762d);
+}
+.cab__nome {
+  display: flex;
+  flex-direction: column;
+  font: 600 clamp(12px, 0.9vw, 15px) / 1.18 var(--f-rotulo);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--cab-texto);
+}
+
+/* ------------------------------------------------------------------- menu */
+.cab__nav {
+  margin-left: auto;
+}
+.cab__lista {
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 2.75vw, 50px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cab__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font: 600 var(--cab-nav) / 1 var(--f-rotulo);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--cab-texto);
+  transition: color 0.3s var(--ease-suave);
+}
+.cab__link::after {
+  content: '';
+  position: absolute;
+  left: -0.12em;
+  right: 0;
+  bottom: 1px;
+  height: 2px;
+  background: linear-gradient(90deg, #f4e3b6 0%, #e7c46e 45%, #b8862b 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+.cab__link:hover {
+  color: var(--branco);
+}
+.cab__link:hover::after {
+  transform: scaleX(0.35);
+}
+.cab__link.ativo::after {
+  transform: scaleX(1);
+}
+.cab__num,
+.cab__rodape-menu,
+.cab__abrir {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- idioma */
+.cab__idioma {
+  position: relative;
+  flex: none;
+  margin-left: clamp(28px, 6.6vw, 120px);
+}
+.cab__idioma-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 44px;
+  padding-inline: 4px;
+  font: 600 var(--cab-nav) / 1 var(--f-rotulo);
+  letter-spacing: 0.1em;
+  color: var(--cab-texto);
+}
+.cab__globo-ico {
+  width: 1.55em;
+  height: 1.55em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.35;
+}
+.cab__chevron {
+  width: 0.78em;
+  height: 0.78em;
+  margin-left: -0.05em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.3s var(--ease);
+}
+.cab__idioma-btn[aria-expanded='true'] .cab__chevron {
+  transform: rotate(180deg);
+}
+.cab__idioma-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 176px;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+  background: rgba(10, 10, 10, 0.96);
+  border: 1px solid rgba(201, 162, 90, 0.38);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.25s var(--ease-suave), transform 0.25s var(--ease-suave), visibility 0s linear 0.25s;
+}
+.cab__idioma-menu.aberto {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.25s var(--ease-suave), transform 0.25s var(--ease-suave), visibility 0s;
+}
+.cab__idioma-op {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  padding: 0 18px;
+  font: 500 15px / 1 var(--f-rotulo);
+  letter-spacing: 0.04em;
+  color: var(--cab-texto);
+  transition: background-color 0.2s, color 0.2s;
+}
+.cab__idioma-op:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--branco);
+}
+.cab__idioma-op.ativo {
+  color: var(--ouro-claro);
+}
+.cab__idioma-op.ativo::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ouro);
+}
+
+/* ------------------------------------------------------ estado rolado (desktop) */
+@media (min-width: 1100px) {
+  /* no mockup o header fica um pouco pra dentro da margem do conteúdo */
+  .cab__barra {
+    padding-inline: 1.9vw 2.6vw;
+  }
+  .rolou .cab::before {
+    transform: scaleY(0.76);
+  }
+  .rolou .cab__barra {
+    transform: translateY(calc(var(--header-h) * -0.12));
+  }
+  /* barra rolada = 0,76 da altura: a marca encolhe junto e sobram 6 a 8 px
+     em cima e embaixo do globo (1440: 6 px; 1920: 7,6 px) */
+  .rolou .cab__marca {
+    transform: scale(0.76);
+  }
+}
+
+/* desktop estreito: logo, 6 itens e idioma precisam caber sem encostar */
+@media (min-width: 1100px) and (max-width: 1279.98px) {
+  .cab__barra {
+    padding-inline: 0;
+  }
+  .cab__lista {
+    gap: 2vw;
+  }
+  .cab__link {
+    letter-spacing: 0.08em;
+  }
+  .cab__idioma {
+    margin-left: 2.6vw;
+  }
+  .cab__nav {
+    padding-left: 24px;
+  }
+}
+
+/* --------------------------------------------------- celular e tablet (< 1100) */
+@media (max-width: 1099.98px) {
+  .cab {
+    --cab-globo: clamp(40px, 5.2vw, 56px);
+    --cab-fipv: clamp(18px, 2.4vw, 25px);
+  }
+  .cab__nome {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+  .cab__idioma {
+    display: none;
+  }
+
+  /* hambúrguer: três traços, vira X quando aberto */
+  .cab__abrir {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 7px;
+    width: 48px;
+    height: 48px;
+    margin-left: auto;
+    margin-right: -8px;
+    padding: 0 8px;
+  }
+  .cab__traco {
+    display: block;
+    width: 30px;
+    height: 2px;
+    background: var(--cab-texto);
+    border-radius: 1px;
+    transition: transform 0.35s var(--ease), opacity 0.2s;
+  }
+  .cab--aberto .cab__traco:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .cab--aberto .cab__traco:nth-child(2) {
+    opacity: 0;
+  }
+  .cab--aberto .cab__traco:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  /* menu em tela cheia */
+  .cab__nav {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    margin: 0;
+    padding: calc(var(--header-h) + clamp(28px, 7vh, 64px)) var(--gutter) max(28px, env(safe-area-inset-bottom));
+    background:
+      radial-gradient(120% 60% at 100% 0%, rgba(201, 162, 90, 0.12), transparent 60%),
+      var(--preto);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s var(--ease-suave), visibility 0s linear 0.4s;
+  }
+  .cab__nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--ruido);
+    background-size: 240px 240px;
+    opacity: 0.07;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .cab--aberto .cab__nav {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s var(--ease-suave), visibility 0s;
+  }
+  /* aberto por toque, o foco vai pro próprio menu (sem contorno); pelo
+     teclado, vai pro primeiro link */
+  .cab__nav:focus {
+    outline: none;
+  }
+  .cab__lista {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .cab__lista li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .cab__link {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    width: 100%;
+    min-height: 56px;
+    padding-block: clamp(6px, 1.4vh, 12px);
+    font: italic 400 clamp(34px, 9.6vw, 60px) / 1.05 var(--f-display);
+    font-synthesis: style;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), color 0.3s;
+    transition-delay: calc(var(--n, 0) * 45ms + 80ms);
+  }
+  .cab--aberto .cab__link {
+    opacity: 1;
+    transform: none;
+  }
+  .cab__lista li:nth-child(2) .cab__link { --n: 1; }
+  .cab__lista li:nth-child(3) .cab__link { --n: 2; }
+  .cab__lista li:nth-child(4) .cab__link { --n: 3; }
+  .cab__lista li:nth-child(5) .cab__link { --n: 4; }
+  .cab__lista li:nth-child(6) .cab__link { --n: 5; }
+  .cab__link::after {
+    display: none;
+  }
+  .cab__link.ativo {
+    color: var(--ouro-claro);
+  }
+  .cab__num {
+    display: inline;
+    flex: none;
+    width: 2.2em;
+    font: 600 12px / 1 var(--f-rotulo);
+    font-style: normal;
+    letter-spacing: 0.14em;
+    color: var(--ouro);
+    transform: translateY(-0.6em);
+  }
+  .cab__rodape-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .cab__lema {
+    font: italic 500 17px / 1.2 var(--f-kicker);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--texto-escuro);
+  }
+  .cab__idiomas {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+  }
+  .cab__idioma-link {
+    display: grid;
+    place-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    font: 600 15px / 1 var(--f-rotulo);
+    letter-spacing: 0.14em;
+    color: var(--cab-texto);
+  }
+  .cab__idioma-link.ativo {
+    color: var(--ouro-claro);
+    text-decoration: underline;
+    text-decoration-color: var(--ouro);
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+  }
+  .cab__barra-idioma {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+@media (max-width: 380px) {
+  .cab {
+    --cab-globo: 38px;
+    --cab-fipv: 17px;
+  }
+  .cab__nome {
+    letter-spacing: 0.03em;
+  }
+}
+
+/* trava a rolagem com o menu aberto */
+html.cab-travado,
+html.cab-travado body {
+  overflow: hidden;
+}
+
+@keyframes cab-aparece {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js .cab__marca,
+  .js .cab__lista,
+  .js .cab__idioma,
+  .js .cab__abrir {
+    /* backwards: depois de terminar, devolve o transform pro estado rolado */
+    animation: cab-aparece 0.9s 0.15s var(--ease) backwards;
+  }
+  .js .cab__lista {
+    animation-delay: 0.3s;
+  }
+  .js .cab__idioma,
+  .js .cab__abrir {
+    animation-delay: 0.42s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cab::before,
+  .cab__barra,
+  .cab__marca,
+  .cab__link,
+  .cab__link::after,
+  .cab__nav,
+  .cab__traco,
+  .cab__chevron,
+  .cab__idioma-menu {
+    transition: none !important;
+  }
+}
+
+/* 01-hero.css */
+/* ==========================================================================
+   Hero. Desktop (e qualquer tela deitada a partir de 560 px): texto à
+   esquerda, foto numa caixa que começa depois do título e se funde no preto,
+   com o atleta caindo à direita das letras.
+   Celular e tablet em pé: foto vertical, título no topo, atleta no meio,
+   subtítulo e controles no piso escuro de baixo.
+   ========================================================================== */
+
+.hero {
+  --hg: clamp(64px, 13.6vw, 236px); /* palavra gigante; para junto com o .wrap */
+  /* altura: proporção do mockup (731 px em 1440), até 920 px. A 920 px o
+     título e o .wrap já pararam de crescer (1811 px de janela): se o hero
+     continuasse, a foto cresceria sozinha e a bola entraria na pilha. */
+  --hh: clamp(620px, min(50.8vw, 920px), 100vh);
+  --hero-texto: #f4f1ec;
+  position: relative;
+  height: var(--hh);
+  overflow: clip;
+  isolation: isolate;
+  background: var(--preto);
+  color: var(--hero-texto);
+}
+
+@supports (height: 100svh) {
+  .hero {
+    --hh: clamp(620px, min(50.8vw, 920px), 100svh);
+  }
+}
+
+/* ------------------------------------------------------------------- foto
+   A foto tem sempre a altura do hero (largura = altura × 1,904) e a caixa
+   começa onde o atleta (26% da largura da foto) cai logo depois do fim do
+   título:  fim do título = margem do .wrap + 3,79 × palavra gigante.
+   Em tela muito larga a foto acaba antes da borda direita: a caixa para ali
+   e a ponta direita também se funde no preto (--fade-dir), em vez de a foto
+   ampliar e empurrar a bola pra dentro da pilha. */
+.hero__foto {
+  --foto-x: max(0px, calc(max(var(--gutter), (100% - var(--wrap)) / 2) + var(--hg) * 3.79 + 40px - var(--hh) * 0.495));
+  --fade-dir: clamp(0px, (100vw - var(--hh) * 1.904 - max(0px, max(var(--gutter), (100vw - var(--wrap)) / 2) + var(--hg) * 3.79 + 40px - var(--hh) * 0.495)) * 3, 200px);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--foto-x);
+  width: min(100% - var(--foto-x), var(--hh) * 1.904);
+  z-index: -3;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.3) 14%, rgba(0, 0, 0, 0.85) 30%, #000 38%, #000 calc(100% - var(--fade-dir)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.3) 14%, rgba(0, 0, 0, 0.85) 30%, #000 38%, #000 calc(100% - var(--fade-dir)), transparent 100%);
+}
+.hero__foto picture,
+.hero__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.hero__img {
+  object-fit: cover;
+  object-position: 0% 50%;
+  filter: brightness(0.86) contrast(1.06) saturate(0.92);
+}
+/* Escurece o terço esquerdo DA FOTO (medido na foto, não na tela): o colega
+   de amarelo e o árbitro ficam atrás de "SEM LIMITES." e do "Y". Some antes
+   do atleta, que começa em 25% da largura da foto. */
+.hero__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(calc(var(--hh) * 0.12) calc(var(--hh) * 0.13) at calc(var(--hh) * 1.904 * 0.215) calc(var(--hh) * 0.33), rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.44) calc(var(--hh) * 1.904 * 0.19), rgba(0, 0, 0, 0) calc(var(--hh) * 1.904 * 0.25));
+}
+
+/* Véus: topo (menu sobre os refletores), base, faixa escura à esquerda e um
+   brilho quente no canto de baixo, onde o mockup tinha folhagem. O ruído dá o
+   grão de filme do mockup. */
+.hero__veu {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.42) 13%, rgba(0, 0, 0, 0) 30%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0) 26%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.55) 30%, rgba(0, 0, 0, 0.42) 50%, rgba(0, 0, 0, 0) 62%),
+    radial-gradient(46% 62% at 14% 74%, rgba(96, 70, 32, 0.34), rgba(40, 28, 12, 0.14) 55%, rgba(0, 0, 0, 0) 100%),
+    radial-gradient(40% 50% at 30% 40%, rgba(70, 52, 26, 0.16), rgba(0, 0, 0, 0) 100%);
+}
+.hero__veu::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--ruido);
+  background-size: 240px 240px;
+  opacity: 0.12;
+  mix-blend-mode: screen;
+}
+
+/* Recorte do atleta: só existe no celular, por cima do texto. */
+.hero__recorte {
+  display: none;
+}
+
+/* --------------------------------------------------------------- conteúdo */
+.hero__conteudo {
+  position: relative;
+  height: 100%;
+}
+
+.hero__frases {
+  position: absolute;
+  left: calc(var(--hg) * -0.075);
+  top: 26.2%;
+  display: grid;
+  justify-items: start;
+}
+.hero__frase {
+  grid-area: 1 / 1;
+  display: grid;
+  width: max-content;
+  align-self: end; /* frases mais baixas encostam na base: a cauda fica no mesmo lugar */
+  margin: 0;
+  font-weight: 400;
+  /* opacidade (e não visibility) pra o h1 continuar na árvore de
+     acessibilidade quando outra frase está na tela */
+  opacity: 0;
+  pointer-events: none;
+}
+.hero__frase.ativa,
+.hero__frase.saindo {
+  opacity: 1;
+  pointer-events: auto;
+}
+.hero__linha {
+  display: block;
+}
+
+.hero__kicker,
+.hero__cauda {
+  font-family: var(--f-kicker);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hero-texto);
+}
+.hero__kicker {
+  font-size: calc(var(--hg) * 0.184);
+  letter-spacing: 0.137em;
+  padding-left: calc(var(--hg) * 0.14);
+}
+.hero__grande {
+  margin-top: calc(var(--hg) * 0.02);
+  font-family: var(--f-display);
+  font-style: italic;
+  font-synthesis: style;
+  font-weight: 400;
+  font-size: var(--hg);
+  line-height: 0.95;
+  letter-spacing: 0.002em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hero-texto);
+}
+/* a linha gigante de cada frase é ajustada pra ter a largura de PIKIVOLEY
+   (--escala vem no HTML, e muda com o idioma); a altura acompanha o texto */
+.hero__ajuste {
+  display: block;
+  font-size: calc(var(--escala, 1) * 1em);
+  line-height: 0.95;
+}
+.hero__grande .ouro {
+  padding-right: 0.07em;
+  margin-right: -0.07em;
+}
+.hero__cauda {
+  margin-top: calc(var(--hg) * -0.005);
+  font-size: calc(var(--hg) * 0.275);
+  letter-spacing: 0.13em;
+  text-align: right;
+  margin-right: calc(var(--hg) * -0.25);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6), 0 0 3px rgba(0, 0, 0, 0.35);
+}
+
+/* Pilha da direita */
+.hero__lado {
+  position: absolute;
+  top: 19.6%;
+  right: calc(var(--hg) * 0.02);
+}
+/* sombra própria, presa à pilha em qualquer largura: o fundo ali é a faixa
+   com o "FIPV" branco e a fita azul da rede */
+.hero__lado::before {
+  content: '';
+  position: absolute;
+  inset: -55% -42% -50% -48%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.56) 52%, rgba(0, 0, 0, 0) 100%);
+}
+#inicio .hero__pilha {
+  font-size: clamp(12px, 0.96vw, 18px);
+  line-height: 1.7;
+  letter-spacing: 0.2em;
+  color: #eeebe6;
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+#inicio .hero__filete {
+  width: clamp(60px, 6.6vw, 124px);
+  margin-top: clamp(12px, 1.25vw, 22px);
+}
+
+/* A parte do apoio que a frase grande já diz sai (frase 2 = "para o mundo",
+   frase 3 = "tem chão, tem jogo"). */
+.hero[data-atual='1'] .hero__so-mundo,
+.hero[data-atual='2'] .hero__so-chao {
+  display: none;
+}
+
+/* Base: tracinhos à esquerda, vídeo à direita */
+.hero__base {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(12px, 1.1vw, 24px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 'tracos video';
+  align-items: center;
+}
+.hero__sub,
+.hero__valores {
+  display: none;
+}
+.hero__sub > span {
+  display: block;
+}
+
+.hero__tracos {
+  grid-area: tracos;
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 0.9vw, 16px);
+  margin-left: calc(var(--hg) * 0.02);
+}
+/* O botão tem a largura da barra (o vão entre as barras fica igual, em
+   qualquer frase); a área de clique cresce 6 px pra cada lado. */
+.hero__traco {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+.hero__traco::after {
+  content: '';
+  position: absolute;
+  inset: 0 -6px;
+}
+.hero__num {
+  display: none;
+}
+.hero__barra {
+  position: relative;
+  display: block;
+  width: clamp(28px, 3vw, 54px);
+  height: 2px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.34);
+  transition: background-color 0.3s;
+}
+.hero__traco[aria-current='true'] .hero__barra {
+  width: clamp(48px, 4.9vw, 88px);
+}
+.hero__progresso {
+  position: absolute;
+  inset: 0;
+  background: #f4f1ec;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.hero__traco[aria-current='true'] .hero__progresso {
+  transform: scaleX(1);
+}
+.hero.rodando .hero__traco[aria-current='true'] .hero__progresso {
+  animation: hero-progresso 7s linear both;
+}
+.hero.rodando.pausado .hero__traco[aria-current='true'] .hero__progresso {
+  animation-play-state: paused;
+}
+.hero__traco:hover .hero__barra {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.hero__video {
+  grid-area: video;
+  margin-right: 0.75vw;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.4vw, 24px);
+  min-height: 44px;
+  text-align: left;
+  color: var(--hero-texto);
+}
+.hero__play {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: clamp(50px, 3.96vw, 74px);
+  aspect-ratio: 1;
+  border: 1.5px solid var(--ouro);
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.25);
+  transition: background-color 0.35s var(--ease-suave), transform 0.35s var(--ease);
+}
+.hero__play svg {
+  width: 38%;
+  height: 38%;
+  margin-left: 6%;
+  fill: var(--ouro-claro);
+  transition: fill 0.35s;
+}
+.hero__video-txt {
+  display: flex;
+  flex-direction: column;
+  font: 600 clamp(12px, 0.97vw, 17px) / 1.42 var(--f-rotulo);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.hero__video:hover .hero__play {
+  background: var(--ouro);
+  transform: scale(1.05);
+}
+.hero__video:hover .hero__play svg {
+  fill: var(--tinta);
+}
+
+/* ---------------------------------------------------------- lightbox vídeo */
+.hero__dialogo {
+  width: min(1100px, 100% - 32px);
+  max-width: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--branco);
+  overflow: visible;
+}
+.hero__dialogo::backdrop {
+  background: rgba(0, 0, 0, 0.88);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.hero__dialogo-caixa {
+  position: relative;
+}
+.hero__player {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid rgba(201, 162, 90, 0.4);
+}
+.hero__player iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.hero__fechar {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: var(--branco);
+}
+.hero__fechar svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+/* ==========================================================================
+   Desktop estreito e telas deitadas (tablet e celular, 560 a 1099 px)
+   ========================================================================== */
+/* desktop estreito: a palavra gigante encolhe um pouco pra bola não
+   encostar na pilha (o hero está no mínimo de 620 px e a foto fica larga) */
+@media (min-width: 1100px) and (max-width: 1279.98px) {
+  .hero {
+    --hg: 12.9vw;
+  }
+}
+
+/* deitado: sem espaço pra pilha à direita; a frase dela desce pra base,
+   como no celular */
+@media (min-width: 560px) and (max-width: 1099.98px) and (orientation: landscape) {
+  .hero {
+    --hg: 12.6vw;
+  }
+  .hero__frases {
+    top: 27%;
+  }
+  .hero__lado {
+    display: none;
+  }
+  .hero__base {
+    grid-template-areas:
+      'sub .'
+      'tracos video';
+    row-gap: 14px;
+    align-items: end;
+  }
+  .hero__sub {
+    grid-area: sub;
+    display: block;
+    max-width: 30ch;
+    font: 500 16px / 1.5 var(--f-corpo);
+    color: #f2efea;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* ==========================================================================
+   Celular e tablet em pé: foto vertical
+   Tudo aqui é calculado a partir da geometria medida da foto (941 × 1672):
+   mão do atleta em 32,3% da altura, bola de 33,6% a 37,7%, pé mais baixo em
+   79,2% (entre 60% e 75% da largura). A foto fica presa pela base; o título
+   termina acima da bola e o bloco de baixo cabe no piso (os 20,8% finais).
+   ========================================================================== */
+@media (max-width: 559.98px), (max-width: 1099.98px) and (orientation: portrait) {
+  .hero {
+    --hh: clamp(640px, 100vh, 920px);
+    /* caixa da foto: tela inteira no celular; no tablet em pé, a largura da
+       foto em pé na altura do hero, centralizada, com as laterais fundindo */
+    --caixa: min(100vw, var(--hh) * 0.5628);
+    --lado: clamp(0px, (100vw - var(--caixa)) * 0.6, 90px);
+    --img-h: max(var(--caixa) * 1.7768, var(--hh)); /* altura da foto na tela */
+    --topo: calc(var(--header-h) + clamp(8px, 3.4vh - 6px, 40px));
+    --bola: calc(var(--hh) - var(--img-h) * 0.664); /* topo da bola */
+    --piso: calc(var(--img-h) * 0.208); /* do pé mais baixo até o fim do hero */
+    --hg: clamp(56px, min(23vw, (var(--bola) - 8px - var(--topo)) / 1.54), 190px);
+  }
+  @supports (height: 100svh) {
+    .hero {
+      --hh: clamp(640px, 100svh, 920px);
+    }
+  }
+  .hero__foto,
+  .hero__recorte {
+    inset: 0;
+    width: var(--caixa);
+    margin-inline: auto;
+  }
+  .hero__foto {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--lado), #000 calc(100% - var(--lado)), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 var(--lado), #000 calc(100% - var(--lado)), transparent 100%);
+  }
+  .hero__foto::after {
+    content: none;
+  }
+  .hero__img,
+  .hero__recorte img {
+    object-fit: cover;
+    object-position: 54% 100%;
+  }
+  /* topo: escurece as faixas atrás do título. Base: forte até perto do pé
+     (onde fica o texto), leve no pé, some logo acima. */
+  .hero__veu {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.74) 18%, rgba(0, 0, 0, 0.5) 31%, rgba(0, 0, 0, 0.14) 41%, rgba(0, 0, 0, 0) 47%),
+      linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0, rgba(0, 0, 0, 0.82) calc(var(--piso) - 34px), rgba(0, 0, 0, 0.3) calc(var(--piso) + 6px), rgba(0, 0, 0, 0) calc(var(--piso) + 80px));
+  }
+
+  /* Recorte do atleta por cima do véu e do título: o fundo atrás das letras
+     escurece e o atleta continua aceso; se o título encosta nele, a mão e a
+     bola passam na frente das letras. Só a metade de cima, onde o véu do
+     topo age. */
+  .hero__recorte {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 47%, transparent 55%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 47%, transparent 55%);
+  }
+  .hero__recorte img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    filter: brightness(0.86) contrast(1.06) saturate(0.92);
+  }
+
+  .hero__conteudo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: var(--topo);
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+  }
+  .hero__frases {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+  .hero__kicker {
+    font-size: calc(var(--hg) * 0.222);
+    padding-left: calc(var(--hg) * 0.1);
+  }
+  .hero__grande {
+    margin-top: calc(var(--hg) * 0.03);
+  }
+  .hero__cauda {
+    font-size: calc(var(--hg) * 0.31);
+    margin-top: calc(var(--hg) * 0.02);
+    margin-right: calc(var(--hg) * -0.16);
+  }
+  .hero__lado {
+    display: none;
+  }
+
+  /* Bloco de baixo, na ordem do mockup: subtítulo; paginação à esquerda e
+     valores à direita na mesma linha. Quando o vídeo existir, ele assume o
+     lugar dos valores (senão o bloco sobe até os pés do atleta). */
+  .hero__base {
+    position: relative;
+    bottom: auto;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'sub sub'
+      'tracos valores';
+    align-items: center;
+    row-gap: 12px;
+    column-gap: 8px;
+  }
+  .hero__base:has(.hero__video) {
+    grid-template-areas:
+      'sub sub'
+      'tracos video';
+  }
+  .hero__base:has(.hero__video) .hero__valores {
+    display: none;
+  }
+  .hero__sub {
+    grid-area: sub;
+    display: block;
+    font: 500 clamp(15px, 4.1vw, 22px) / 1.5 var(--f-corpo);
+    color: #f2efea;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.7), 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+  .hero__video {
+    justify-self: end;
+    margin-right: 0;
+    gap: 12px;
+  }
+  .hero__play {
+    width: 48px;
+  }
+  .hero__video-txt {
+    font-size: 13px;
+  }
+
+  /* paginação 01 — 02 — 03, com o traço desenhado em CSS */
+  .hero__tracos {
+    gap: 0;
+    margin-left: -8px;
+  }
+  .hero__traco {
+    justify-content: center;
+    min-width: 44px;
+    padding-inline: 8px;
+  }
+  .hero__traco::after {
+    content: none;
+  }
+  .hero__traco + .hero__traco::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 50%;
+    width: 12px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.45);
+  }
+  .hero__num {
+    display: block;
+    font: 600 13px / 1 var(--f-rotulo);
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.72);
+    font-variant-numeric: tabular-nums;
+  }
+  .hero__traco[aria-current='true'] .hero__num {
+    color: var(--ouro-claro);
+  }
+  .hero__barra,
+  .hero__traco[aria-current='true'] .hero__barra {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 6px;
+    width: auto;
+    height: 2px;
+    background: transparent;
+  }
+  .hero__traco[aria-current='true'] .hero__barra {
+    background: rgba(201, 162, 90, 0.3);
+  }
+  .hero__progresso {
+    background: var(--ouro-grad-linha);
+  }
+
+  /* valores em 2 × 2, alinhados à direita: nenhuma linha começa com o ponto */
+  .hero__valores {
+    grid-area: valores;
+    justify-self: end;
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font: 600 12px / 1.55 var(--f-rotulo);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #efece7;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7);
+  }
+  .hero__valores li {
+    white-space: nowrap;
+  }
+  .hero__valores li:nth-child(even)::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin: 0 0.72em 0.22em;
+    border-radius: 50%;
+    background: var(--ouro);
+    vertical-align: middle;
+  }
+}
+
+/* Celular: a foto vai de borda a borda (sem faixa preta dos lados, que
+   aparecia no Safari, onde a altura visível é menor que 1,78 × a largura).
+   Só estreita, centralizada, se a tela for larga demais pra altura: aí a
+   foto larga subiria a mão do atleta pra dentro do título. */
+@media (max-width: 559.98px), (max-width: 767.98px) and (orientation: portrait) {
+  .hero {
+    --caixa: min(100vw, max(var(--hh) * 0.5628, (var(--hh) - 170px) * 0.83));
+  }
+}
+
+/* celular estreito: valores mais justos pra caber ao lado da paginação;
+   abaixo de 350 px não cabem e saem (é enfeite, e repete "sem fronteiras") */
+@media (max-width: 389.98px) {
+  .hero__valores {
+    letter-spacing: 0.1em;
+  }
+  .hero__valores li:nth-child(even)::before {
+    margin-inline: 0.5em;
+  }
+}
+@media (max-width: 349.98px) {
+  .hero__valores {
+    display: none;
+  }
+}
+
+/* tablet em pé: hero na altura da tela, foto centralizada; sobra espaço no
+   piso pra o vídeo ter linha própria e os valores numa linha só */
+@media (min-width: 768px) and (max-width: 1099.98px) and (orientation: portrait) {
+  .hero {
+    --hh: clamp(640px, 100vh, 1400px);
+  }
+  @supports (height: 100svh) {
+    .hero {
+      --hh: clamp(640px, 100svh, 1400px);
+    }
+  }
+  .hero__base,
+  .hero__base:has(.hero__video) {
+    grid-template-areas:
+      'sub sub'
+      'video video'
+      'tracos valores';
+    row-gap: 18px;
+  }
+  .hero__base:has(.hero__video) .hero__valores {
+    display: flex;
+  }
+  .hero__sub {
+    max-width: 34ch;
+  }
+  .hero__video {
+    justify-self: start;
+    gap: 16px;
+  }
+  .hero__play {
+    width: 64px;
+  }
+  .hero__video-txt {
+    font-size: 15px;
+  }
+  .hero__valores {
+    display: flex;
+    font-size: 13px;
+  }
+  .hero__valores li:nth-child(n + 2)::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin: 0 0.8em 0.22em;
+    border-radius: 50%;
+    background: var(--ouro);
+    vertical-align: middle;
+  }
+}
+
+/* ==========================================================================
+   Movimento: entrada da página e troca de frase. Nada disso roda com
+   prefers-reduced-motion; o estado final é igual ao estático.
+   ========================================================================== */
+@keyframes hero-progresso {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes hero-zoom {
+  from { transform: scale(1.06); }
+  to { transform: scale(1); }
+}
+@keyframes hero-entra {
+  from { clip-path: inset(-30% 110% -30% -10%); transform: translateX(-0.12em); }
+  to { clip-path: inset(-30% -12% -30% -10%); transform: none; }
+}
+@keyframes hero-sai {
+  from { clip-path: inset(-30% -12% -30% -10%); }
+  to { clip-path: inset(-30% -12% -30% 112%); }
+}
+@keyframes hero-sobe {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes hero-aparece {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes hero-brilho {
+  from { background-position: 135% 0, 0 0; }
+  to { background-position: -45% 0, 0 0; }
+}
+/* apaga e acende o apoio; o conteúdo troca no meio (420 ms, no JS) */
+@keyframes hero-apoio {
+  0% { opacity: 1; }
+  34%, 46% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* troca de frase: sai varrendo da esquerda pra direita, entra do mesmo jeito */
+  .hero__frase.saindo .hero__linha {
+    animation: hero-sai 0.75s cubic-bezier(0.7, 0, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+  .hero__frase.entrando .hero__linha {
+    animation: hero-entra 1.05s var(--ease) both;
+    animation-delay: calc(420ms + var(--i, 0) * 130ms);
+  }
+  .hero.trocando .hero__pilha,
+  .hero.trocando .hero__sub {
+    animation: hero-apoio 1.2s var(--ease-suave) both;
+  }
+
+  /* entrada da página */
+  .js .hero--intro .hero__img,
+  .js .hero--intro .hero__recorte img {
+    animation: hero-zoom 2.8s cubic-bezier(0.16, 0.7, 0.2, 1) both;
+  }
+  .js .hero--intro .hero__frase.ativa .hero__linha {
+    animation: hero-entra 1.25s var(--ease) both;
+    animation-delay: calc(220ms + var(--i, 0) * 150ms);
+  }
+  .js .hero--intro .hero__brilho {
+    background-image:
+      linear-gradient(100deg, rgba(255, 246, 220, 0) 34%, rgba(255, 246, 220, 0.95) 49%, rgba(255, 246, 220, 0) 64%),
+      var(--ouro-grad-escuro);
+    background-size: 260% 100%, 100% 100%;
+    background-repeat: no-repeat;
+    animation: hero-brilho 1.5s 1.25s cubic-bezier(0.45, 0, 0.25, 1) both;
+  }
+  .js .hero--intro .hero__lado {
+    animation: hero-sobe 1s 0.95s var(--ease) both;
+  }
+  .js .hero--intro .hero__base {
+    animation: hero-sobe 1s 1.15s var(--ease) both;
+  }
+  .js .hero--intro .hero__veu {
+    animation: hero-aparece 1.2s var(--ease-suave) both;
+  }
+  /* enquanto o relógio não começa (fim da entrada), a barra fica vazia */
+  .js .hero--intro:not(.rodando) .hero__traco[aria-current='true'] .hero__progresso {
+    transform: scaleX(0);
+  }
+}
+
+/* 02-sobre.css */
+/* ==========================================================================
+   02 · Sobre a FIPV
+   Desktop (>= 1100): três colunas, como no mockup. Título em três tamanhos
+   (UNINDO, NAÇÕES maior, ATRAVÉS DO JOGO menor), texto no meio e o globo
+   quase encostado na borda direita, com a pilha à direita do continente.
+   Tablet (768 a 1099): texto empilhado à esquerda, globo inteiro à direita.
+   Celular (< 768): título com o globo inteiro no alto à direita, como no
+   mockup mobile, e o texto embaixo em largura total.
+   Medidas calibradas em 1440 px (mockup 776 px, escala 1,856).
+   ========================================================================== */
+
+.sobre {
+  /* --sobre-t é o tamanho da linha menor (ATRAVÉS DO JOGO.). As outras duas
+     saem dela, calibradas pra dar a altura de maiúscula e a largura do
+     mockup em Anton (a fonte do mockup é mais estreita em ATRAVÉS). */
+  --sobre-t: clamp(26px, 7.7vw, 50px);
+  /* largura da imagem do globo no celular */
+  --sobre-g: min(47vw, 330px);
+  --sobre-k1: 1.479;
+  --sobre-k2: 1.755;
+  /* ouro de NAÇÕES, amostrado no mockup (o da base sai mais escuro embaixo) */
+  --sobre-ouro: linear-gradient(180deg, #cfae6a 0%, #bd9853 50%, #ab843e 100%);
+}
+
+/* --------------------------------------------------------------- rótulo */
+/* No mockup o rótulo é mais pesado e um pouco maior que o da base, e a
+   barra é fina, clara e quase encosta no texto. */
+.sobre__rotulo {
+  font-size: max(12px, min(1.25vw, 19px));
+  font-weight: 700;
+  gap: 0.36em;
+}
+.sobre__rotulo::before {
+  width: 0.3em;
+  opacity: 0.62;
+}
+
+/* --------------------------------------------------------------- título */
+.sobre__titulo {
+  position: relative;
+  z-index: 2;
+}
+.sobre__titulo > span {
+  display: block;
+  white-space: nowrap;
+}
+.sobre__l1 {
+  font-size: calc(var(--sobre-t) * var(--sobre-k1));
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin-left: -0.06em;
+}
+/* NAÇÕES desce um pouco pra o til não bater na base do O de UNINDO. O
+   recorte embaixo deixa só um toco da cedilha, como no mockup, pra ela não
+   entrar em ATRAVÉS. */
+.sobre__l2 {
+  font-size: calc(var(--sobre-t) * var(--sobre-k2));
+  line-height: 0.99;
+  letter-spacing: -0.02em;
+  margin-left: 0.08em;
+  margin-top: 0.085em;
+  clip-path: inset(-0.5em -0.2em -0.035em -0.2em);
+}
+.sobre .sobre__l2 .ouro {
+  background-image: var(--sobre-ouro);
+}
+/* ATRAVÉS DO JOGO. no mockup é mais estreita e alta que a Anton: estica 8%
+   na vertical a partir da linha de base, mantendo a largura. */
+.sobre__l3 {
+  font-size: var(--sobre-t);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin-top: 0.12em;
+  transform: scaleY(1.08);
+  transform-origin: 0 83%;
+}
+/* Rastro de velocidade na primeira letra, como no mockup: uma faixa clara
+   corre por dentro da haste esquerda do U, com a borda de fora ainda
+   escura. O ângulo (104°) segue a inclinação que o navegador dá à Anton
+   (14°), e as paradas em em caem dentro da haste, que nesse eixo vai de
+   0,264em a 0,423em. Fica na linha inteira, sem span no meio da palavra,
+   pro leitor de tela ler "Unindo" de uma vez. */
+.sobre__l1 {
+  background: linear-gradient(104deg, #070707 0.274em, rgba(7, 7, 7, 0.3) 0.296em, rgba(7, 7, 7, 0.16) 0.32em, rgba(7, 7, 7, 0.24) 0.345em, rgba(7, 7, 7, 0.6) 0.372em, #070707 0.395em);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Em espanhol "a través del juego." tem três letras a mais */
+.sobre__l3:lang(es) {
+  font-size: calc(var(--sobre-t) * 0.86);
+}
+
+/* ---------------------------------------------------------------- texto */
+.sobre__texto {
+  position: relative;
+  z-index: 2;
+}
+.sobre__lead {
+  font-size: clamp(17px, 1.354vw, 23.4px);
+  font-weight: 700;
+  line-height: 1.405;
+  letter-spacing: -0.006em;
+  max-width: 22.5em;
+}
+.sobre__corpo {
+  font-size: clamp(15px, 1.18vw, 20.4px);
+  line-height: 1.49;
+  color: var(--texto-claro);
+  max-width: 27.8em;
+}
+.sobre__lead + .sobre__corpo {
+  margin-top: 1.1em;
+}
+.sobre__fecho {
+  margin-top: clamp(24px, 2.1vw, 36px);
+}
+.sobre__filete {
+  width: clamp(44px, 3.93vw, 68px);
+  height: 3px;
+}
+.sobre__lema {
+  margin-top: clamp(22px, 2.05vw, 36px);
+  font: 600 clamp(12px, 1.028vw, 17.8px) / 1.5 var(--f-rotulo);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2f2a2a;
+}
+.sobre__lema span {
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- globo */
+.sobre__globo {
+  position: relative;
+  margin: 0;
+  pointer-events: none;
+  /* a pilha cresce junto com o globo (unidade cqi) */
+  container-type: inline-size;
+}
+.sobre__esfera {
+  position: relative;
+  display: block;
+}
+.sobre__globo-img {
+  width: 100%;
+  height: auto;
+  /* O globo do mockup é de vidro: o papel aparece através da esfera e o
+     continente é um ouro mais claro. O asset é um marfim opaco com o Brasil
+     marrom: o filtro SVG do parcial (#sobre-vidro) aproxima. */
+  filter: url('#sobre-vidro');
+}
+.sobre__filtros {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+/* sombra de vidro nas bordas da esfera, como no mockup */
+.sobre__esfera::after {
+  content: '';
+  position: absolute;
+  inset: 2.9%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 56% 34%, rgba(96, 88, 78, 0) 58%, rgba(96, 88, 78, 0.09) 80%, rgba(96, 88, 78, 0.2) 100%);
+}
+/* A pilha fica à direita do continente: na linha do DA ele vai até 66% do
+   globo. */
+.sobre__pilha {
+  position: absolute;
+  left: 70%;
+  top: 59%;
+  font-size: max(12px, 3.5cqi);
+  font-weight: 700;
+  line-height: 1.98;
+  white-space: nowrap;
+}
+/* Em espanhol, SUDAMÉRICA é mais longa e sairia da tela: a pilha desce pra
+   altura da Patagônia, onde o continente é estreito, e pode começar mais à
+   esquerda. */
+.sobre__pilha:lang(es) {
+  left: 55%;
+  top: 70%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sobre__esfera {
+    animation: sobre-flutuar 9s var(--ease-suave) infinite alternate;
+  }
+}
+/* Alto contraste do Windows tira o fundo: o texto recortado no degradê
+   sumiria. Volta pra cor sólida. */
+@media (forced-colors: active) {
+  .sobre__l1,
+  .sobre .sobre__l2 .ouro {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+@keyframes sobre-flutuar {
+  from {
+    transform: translate3d(0, -1.1%, 0) rotate(-1.2deg);
+  }
+  to {
+    transform: translate3d(0, 1.1%, 0) rotate(1.2deg);
+  }
+}
+
+/* ============================================================ celular */
+@media (max-width: 767.98px) {
+  .sobre__grade {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'rotulo'
+      'titulo'
+      'texto';
+  }
+  .sobre__rotulo {
+    grid-area: rotulo;
+    justify-self: start;
+    position: relative;
+    z-index: 2;
+  }
+  .sobre__titulo {
+    grid-area: titulo;
+    margin-top: 12px;
+  }
+  .sobre__texto {
+    grid-area: texto;
+    margin-top: 22px;
+  }
+  /* O globo divide a área do título, à direita, inteiro como no mockup
+     mobile: sobe até a altura do rótulo e encosta na margem do conteúdo. A
+     margem de baixo faz a linha do título terminar junto com a pilha, sem
+     buraco antes do texto. */
+  .sobre__globo {
+    grid-area: titulo;
+    justify-self: end;
+    align-self: start;
+    width: var(--sobre-g);
+    margin-top: calc(12px - min(0.24 * var(--sobre-g), 56px));
+    margin-bottom: calc(90px - 0.42 * var(--sobre-g));
+  }
+  /* A pilha fica à direita do continente e passa um pouco do contorno do
+     globo, como no mockup. Presa pela direita, a 14 px da borda da tela no
+     celular pequeno; num aparelho maior, a uns 70% do globo. O halo da cor
+     do papel só aparece onde uma letra encosta no ouro (em espanhol,
+     SUDAMÉRICA é mais longa). */
+  .sobre__pilha {
+    left: auto;
+    right: max(calc(14px - var(--gutter)), calc(30% - 5.2em));
+    top: 58%;
+    line-height: 1.5;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 3px var(--osso), 0 0 8px var(--osso);
+  }
+  /* Espanhol no celular: NACIONES e A TRAVÉS DEL JUEGO. são mais longas e
+     passariam por cima do globo. A pilha (4 linhas) desce pra baixo do
+     continente. */
+  .sobre__l2:lang(es) {
+    font-size: calc(var(--sobre-t) * var(--sobre-k2) * 0.88);
+  }
+  .sobre__l3:lang(es) {
+    font-size: calc(var(--sobre-t) * 0.79);
+  }
+  .sobre__pilha:lang(es) {
+    left: auto;
+    top: 70%;
+  }
+  .sobre__globo:lang(es) {
+    margin-bottom: calc(72px - 0.3 * var(--sobre-g));
+  }
+  .sobre__lema span {
+    display: block;
+  }
+  .sobre__lema {
+    font-size: 12.5px;
+    line-height: 1.75;
+    letter-spacing: 0.15em;
+  }
+  .sobre__filete {
+    height: 2px;
+  }
+}
+
+/* ============================================================= tablet */
+@media (min-width: 768px) and (max-width: 1099.98px) {
+  .sobre {
+    --sobre-t: min(6.6vw, 56px);
+  }
+  .sobre__grade {
+    display: grid;
+    grid-template-columns: minmax(0, 58%) minmax(0, 1fr);
+    grid-template-areas:
+      'rotulo globo'
+      'titulo globo'
+      'texto globo';
+    grid-template-rows: auto auto 1fr;
+  }
+  .sobre__rotulo {
+    grid-area: rotulo;
+    justify-self: start;
+  }
+  .sobre__titulo {
+    grid-area: titulo;
+    margin-top: 16px;
+  }
+  .sobre__texto {
+    grid-area: texto;
+    margin-top: 30px;
+  }
+  /* Globo inteiro, um pouco além da margem do conteúdo: grande o bastante
+     pra dominar a coluna e pequeno o bastante pra pilha caber à direita
+     do continente sem sair da tela. */
+  .sobre__globo {
+    grid-area: globo;
+    align-self: center;
+    justify-self: start;
+    width: calc(100% + 0.6 * var(--gutter));
+    margin-left: 1vw;
+  }
+}
+
+/* ============================================================ desktop */
+@media (min-width: 1100px) {
+  .sobre {
+    --sobre-t: clamp(40px, 4.306vw, 74.4px);
+    padding-block: clamp(40px, 3.5vw, 60px) clamp(40px, 3.38vw, 58px);
+  }
+  /* sombra de papel no canto de cima à direita, atrás do globo */
+  .sec--claro.sobre {
+    background:
+      radial-gradient(38% 70% at 100% 0%, rgba(80, 70, 60, 0.13), rgba(80, 70, 60, 0) 70%),
+      var(--osso);
+  }
+  .sobre__grade {
+    position: relative;
+    display: grid;
+    grid-template-columns: 36.3% minmax(0, 39%) 1fr;
+    grid-template-areas:
+      'rotulo . .'
+      'titulo texto .';
+    align-items: end;
+  }
+  .sobre__rotulo {
+    grid-area: rotulo;
+    justify-self: start;
+  }
+  .sobre__titulo {
+    grid-area: titulo;
+    margin-top: 0.99vw;
+  }
+  .sobre__texto {
+    grid-area: texto;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.81vw;
+  }
+  .sobre__fecho {
+    margin-top: auto;
+    padding-top: 1.83vw;
+  }
+  .sobre__lema {
+    margin-top: 1.65vw;
+    /* a linha de base do lema cai na mesma da última linha do título */
+    padding-bottom: calc(var(--sobre-t) * 0.174 - 0.35em);
+  }
+  .sobre__globo {
+    position: absolute;
+    left: 75.4%;
+    top: 50%;
+    width: 29.5%;
+    translate: 0 -51%;
+  }
+}
+
+/* Entre 1100 e 1279 a coluna do texto fica mais alta que o título (o corpo
+   ganha uma linha e o lema quebra em duas). Sem isso o título desce e se
+   solta do rótulo. */
+@media (min-width: 1100px) and (max-width: 1279.98px) {
+  .sobre__titulo {
+    align-self: start;
+  }
+}
+
+/* 03-esporte.css */
+/* ==========================================================================
+   03 · O ESPORTE (fundo escuro)
+   Desktop (>= 1100): título | texto e ícones | foto sangrando à direita.
+   768 a 1099: título e texto à esquerda, foto à direita, ícones embaixo.
+   < 768: título e foto lado a lado no alto, texto, ícones 3 + 2 em caixas.
+   ========================================================================== */
+
+#esporte {
+  --esp-pt: clamp(48px, 3.5vw, 66px);
+  --esp-pb: 52px;
+  padding-block: var(--esp-pt) var(--esp-pb);
+}
+/* névoa leve no alto, entre o título e o texto, como o fundo esfumaçado do
+   mockup (fica atrás do conteúdo e da foto) */
+#esporte::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 75% at 34% 18%, rgba(255, 255, 255, 0.034), transparent 72%),
+    radial-gradient(30% 60% at 6% 96%, rgba(255, 255, 255, 0.012), transparent 70%);
+}
+
+.esporte__defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------ grade (celular) */
+.esporte__grade {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  grid-template-areas:
+    'cabeca foto'
+    'texto texto'
+    'partes partes';
+  column-gap: 10px;
+}
+
+.esporte__cabeca {
+  grid-area: cabeca;
+  position: relative;
+  z-index: 2;
+  align-self: start;
+}
+
+#esporte .esporte__rotulo {
+  margin-bottom: clamp(12px, 1.2vw, 22px);
+}
+
+/* título: 4 linhas, a última com o recuo do mockup */
+#esporte .esporte__titulo {
+  font-size: clamp(40px, 11.4vw, 52px);
+  line-height: 1;
+  white-space: nowrap;
+}
+#esporte .esporte__titulo .ouro {
+  margin-block: -0.06em;
+}
+#esporte .esporte__recuo {
+  padding-left: 0.32em;
+}
+
+/* ------------------------------------------------------------------ texto */
+.esporte__texto {
+  grid-area: texto;
+  position: relative;
+  z-index: 2;
+  margin-top: 28px;
+}
+#esporte .esporte__lead {
+  font-size: clamp(16.5px, 1.35vw, 22px);
+  font-weight: 400;
+  line-height: 1.4;
+  max-width: 24em;
+  text-wrap: balance;
+}
+#esporte .esporte__corpo {
+  margin-top: 0.15em;
+  font-size: clamp(15px, 1.17vw, 19px);
+  line-height: 1.4;
+  color: var(--texto-escuro);
+  max-width: 26.8em;
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------ ícones (celular: caixas) */
+.esporte__partes {
+  grid-area: partes;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 26px;
+}
+.esporte__parte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 100px;
+  padding: 14px 6px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  background: rgba(6, 6, 6, 0.8);
+}
+.esporte__caixa {
+  display: grid;
+  place-items: center;
+}
+.esporte__icone {
+  width: 40px;
+  height: 40px;
+  overflow: visible;
+}
+.esporte__nome {
+  font: 700 13px/1.1 var(--f-rotulo);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--branco);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------- foto
+   Preto e branco por CSS. A borda esquerda e a de baixo somem no preto por
+   máscara, então o ruído de filme da seção continua aparecendo por trás.
+   O enquadramento (zoom e ponto de origem) põe o atleta que salta pra
+   cabecear e a bola no centro da cena. */
+.esporte__foto {
+  grid-area: foto;
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--esp-pt));
+  margin-right: calc(-1 * var(--gutter));
+  margin-left: -22vw;
+  min-height: 240px;
+  overflow: hidden;
+  --esp-rampa: transparent 0%, rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0.7) 48%, #000 58%;
+  -webkit-mask-image: linear-gradient(90deg, var(--esp-rampa)), linear-gradient(0deg, transparent 0%, #000 30%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, var(--esp-rampa)), linear-gradient(0deg, transparent 0%, #000 30%);
+  mask-composite: intersect;
+}
+.esporte__foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--esp-pos, 50% 50%);
+  /* o sépia leve dá o tom quente do preto e branco do mockup */
+  filter: grayscale(1) sepia(0.12) contrast(1.1) brightness(0.85);
+  transform: scale(var(--esp-zoom, 1.5));
+  transform-origin: var(--esp-origem, 10% 26%);
+}
+/* escurece o céu no alto, as bordas e o canto da pilha, como a foto baixa
+   e contrastada do mockup. A primeira camada apaga o jogador de costas em
+   primeiro plano: ele vira silhueta e a cena fica com a bola e o atleta que
+   salta pra cabecear, como o atleta único do mockup. */
+.esporte__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(22% 50% at 46% 64%, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.82) 50%, rgba(10, 10, 10, 0) 100%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0) 30%),
+    radial-gradient(110% 80% at 55% 38%, rgba(10, 10, 10, 0) 40%, rgba(10, 10, 10, 0.55) 100%),
+    radial-gradient(90% 55% at 100% 100%, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0) 70%);
+}
+
+/* pilha: no celular ocupa o canto de baixo, na célula que sobra ao lado de
+   COXA e JOELHO (a área de grade é definida, então a % funciona) */
+.esporte__pilha {
+  grid-area: partes;
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  justify-self: end;
+  width: calc((100% - 16px) / 3);
+  height: calc((100% - 8px) / 2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 12px;
+}
+#esporte .esporte__pilha {
+  font-size: 12px;
+  line-height: 1.95;
+  letter-spacing: 0.15em;
+}
+
+@media (max-width: 374px) {
+  #esporte .esporte__pilha {
+    letter-spacing: 0.1em;
+  }
+  .esporte__nome {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* celular deitado e tablet pequeno: a caixa da foto fica larga e baixa, e com
+   o zoom a bola sairia pelo alto. Sem zoom (a imagem não amplia) e com o ponto
+   de origem mais alto, bola e atleta ficam inteiros no quadro. */
+@media (min-width: 560px) and (max-width: 767px) {
+  .esporte__foto {
+    --esp-zoom: 1;
+    --esp-pos: 50% 41%;
+  }
+  .esporte__foto::after {
+    background:
+      radial-gradient(16% 60% at 34% 68%, rgba(10, 10, 10, 0.86) 0%, rgba(10, 10, 10, 0.74) 50%, rgba(10, 10, 10, 0) 100%),
+      radial-gradient(30% 75% at 51% 38%, rgba(10, 10, 10, 0) 40%, rgba(10, 10, 10, 0.66) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.45) 0%, rgba(10, 10, 10, 0) 26%),
+      radial-gradient(90% 55% at 100% 100%, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0) 70%);
+  }
+}
+
+/* ------------------------------------------------------ intermediário */
+@media (min-width: 768px) {
+  .esporte__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    grid-template-areas:
+      'cabeca foto'
+      'texto foto'
+      'partes partes';
+    grid-template-rows: auto 1fr auto;
+    column-gap: 28px;
+  }
+  #esporte .esporte__titulo {
+    font-size: clamp(44px, 5.55vw, 100px);
+    line-height: 1.04;
+  }
+  .esporte__texto {
+    margin-top: 30px;
+  }
+  .esporte__foto {
+    margin-left: 0;
+    margin-bottom: -12px;
+    --esp-zoom: 1.45;
+    --esp-origem: 28% 55%;
+    --esp-rampa: transparent 0%, rgba(0, 0, 0, 0.12) 28%, rgba(0, 0, 0, 0.5) 44%, #000 58%;
+  }
+  .esporte__pilha {
+    grid-area: foto;
+    width: auto;
+    height: auto;
+    display: block;
+    padding-left: 0;
+    margin-bottom: 8px;
+  }
+  #esporte .esporte__pilha {
+    font-size: clamp(12px, 0.86vw, 13.5px);
+    line-height: 2.05;
+    letter-spacing: 0.2em;
+  }
+
+  /* ícones em linha, separados por filetes verticais */
+  .esporte__partes {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 44px;
+  }
+  .esporte__parte {
+    min-height: 0;
+    gap: clamp(12px, 1.2vw, 20px);
+    padding: 0 12px clamp(12px, 1vw, 18px);
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+  .esporte__parte + .esporte__parte {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .esporte__caixa {
+    width: clamp(58px, 4.5vw, 80px);
+    aspect-ratio: 1;
+    border-radius: 5px;
+    background: #141414;
+  }
+  .esporte__icone {
+    width: 90%;
+    height: 90%;
+  }
+  .esporte__nome {
+    font-size: clamp(13px, 1.02vw, 16.5px);
+    letter-spacing: 0.06em;
+  }
+}
+
+/* só no intermediário: a linha de ícones começa alinhada ao texto, como no
+   desktop, em vez de cinco colunas iguais espalhadas na largura toda */
+@media (min-width: 768px) and (max-width: 1099px) {
+  .esporte__partes {
+    display: flex;
+  }
+  .esporte__parte {
+    padding: 0 clamp(16px, 2.4vw, 26px) 12px;
+  }
+  .esporte__parte:first-child {
+    padding-left: 0;
+  }
+  .esporte__foto::after {
+    background:
+      radial-gradient(18% 55% at 37% 58%, rgba(10, 10, 10, 0.86) 0%, rgba(10, 10, 10, 0.74) 50%, rgba(10, 10, 10, 0) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0) 30%),
+      radial-gradient(110% 80% at 55% 38%, rgba(10, 10, 10, 0) 40%, rgba(10, 10, 10, 0.55) 100%),
+      radial-gradient(90% 55% at 100% 100%, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0) 70%);
+  }
+}
+
+/* ------------------------------------------------------------ desktop */
+@media (min-width: 1100px) {
+  #esporte {
+    --esp-pb: clamp(26px, 2vw, 40px);
+  }
+  .esporte__grade {
+    grid-template-columns: minmax(30.5%, max-content) minmax(0, 38fr) minmax(0, 31.5fr);
+    grid-template-areas:
+      'cabeca texto foto'
+      'cabeca partes foto';
+    grid-template-rows: auto 1fr;
+    column-gap: 0;
+  }
+  .esporte__cabeca {
+    padding-right: clamp(28px, 2.6vw, 48px);
+  }
+  .esporte__texto {
+    margin-top: clamp(20px, 1.7vw, 32px);
+  }
+
+  /* a foto sai da grade e ocupa a altura toda da seção, colada à direita */
+  .esporte__foto {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 43%;
+    margin: 0;
+    min-height: 0;
+    --esp-zoom: 1.42;
+    --esp-origem: 26% 15%;
+    /* centro do jogador de costas (apagado) e da luz (bola e atleta) */
+    --esp-sombra: 35% 74%;
+    --esp-luz: 61% 38%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 34%, rgba(0, 0, 0, 0.45) 47%, #000 57%);
+    -webkit-mask-composite: source-over;
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 34%, rgba(0, 0, 0, 0.45) 47%, #000 57%);
+    mask-composite: add;
+  }
+  /* como no mockup, só a bola e o atleta acendem: a foto fica mais
+     contrastada e uma vinheta centrada neles apaga o resto da cena */
+  .esporte__foto img {
+    filter: grayscale(1) sepia(0.12) contrast(1.25) brightness(0.86);
+  }
+  .esporte__foto::after {
+    background:
+      radial-gradient(17% 58% at var(--esp-sombra), rgba(10, 10, 10, 0.84) 0%, rgba(10, 10, 10, 0.72) 55%, rgba(10, 10, 10, 0) 100%),
+      radial-gradient(30% 66% at var(--esp-luz), rgba(10, 10, 10, 0) 38%, rgba(10, 10, 10, 0.74) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0) 16%),
+      linear-gradient(0deg, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0) 24%),
+      linear-gradient(90deg, rgba(10, 10, 10, 0) 76%, rgba(10, 10, 10, 0.6) 100%),
+      radial-gradient(38% 40% at 88% 64%, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0) 100%);
+  }
+
+  .esporte__partes {
+    display: flex;
+    align-self: start;
+    margin-top: clamp(30px, 2.9vw, 54px);
+  }
+  .esporte__parte {
+    gap: clamp(10px, 0.8vw, 16px);
+    padding: 0 clamp(14px, 1.4vw, 26px) clamp(12px, 1.1vw, 20px);
+  }
+  .esporte__parte:first-child {
+    padding-left: 0;
+  }
+  .esporte__pilha {
+    margin-bottom: clamp(10px, 1.1vw, 20px);
+  }
+}
+
+/* tela larga: o conteúdo para antes da borda (limite do .wrap), então a pilha
+   fica mais pra dentro da foto; o atleta anda um pouco pra esquerda */
+@media (min-width: 1600px) {
+  .esporte__foto {
+    --esp-origem: 44% 15%;
+    --esp-sombra: 30% 72%;
+    --esp-luz: 54% 36%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 28%, rgba(0, 0, 0, 0.45) 40%, #000 50%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 28%, rgba(0, 0, 0, 0.45) 40%, #000 50%);
+  }
+}
+
+/* 04-origem.css */
+/* ==========================================================================
+   04 · ORIGEM
+   Desktop (>= 1100): foto P&B encostada na borda esquerda (~41% da tela),
+   texto no meio, bandeira e assinatura à direita, alinhadas à borda do .wrap.
+   Tablet (768 a 1099): foto à esquerda nas duas linhas, texto em cima e
+   bandeira + assinatura lado a lado embaixo.
+   Celular (< 768): sem foto, como no mockup mobile; rótulo e título ao lado
+   da bandeira, texto corrido na largura toda e assinatura no fim, alinhada
+   ao texto.
+   A bandeira é um SVG no próprio parcial (tecido com dobras), sem arquivo.
+   As medidas saem do mockup calibrado em 1440 px.
+   ========================================================================== */
+
+#origem {
+  /* 1cqw = 1% da largura da seção (sem a barra de rolagem, ao contrário do vw) */
+  container-type: inline-size;
+  padding-block: clamp(24px, 1.9vw, 40px);
+}
+
+.origem__grade {
+  /* margem = sobra do .wrap de cada lado; util = largura útil do .wrap */
+  --margem: max(var(--gutter), (100cqw - var(--wrap)) / 2);
+  --util: calc(100cqw - 2 * var(--margem));
+  --col-foto: calc(var(--margem) + var(--util) * 0.403);
+  --col-lado: max(176px, var(--util) * 0.164);
+
+  display: grid;
+  grid-template-columns: var(--col-foto) minmax(0, 1fr) var(--col-lado);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'foto texto bandeira'
+    'foto texto assinatura';
+  column-gap: calc(var(--util) * 0.038);
+  padding-right: var(--margem);
+}
+/* navegador sem unidade de contêiner (Safari < 16): mesma conta com vw */
+@supports not (width: 1cqw) {
+  .origem__grade {
+    --margem: max(var(--gutter), (100vw - var(--wrap)) / 2);
+    --util: calc(100vw - 2 * var(--margem));
+  }
+}
+
+/* ------------------------------------------------------------------ foto */
+.origem__foto {
+  grid-area: foto;
+  position: relative;
+  /* proporção do mockup (595 x 328 em 1440). A conta usa o gutter e não a
+     margem externa, senão em tela muito larga a foto fica mais alta que a
+     coluna da direita */
+  min-height: calc((var(--gutter) + var(--util) * 0.403) * 328 / 595);
+  overflow: hidden;
+  background: #2a2826;
+}
+.origem__foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  /* P&B com leve tom quente de foto antiga, como no mockup; contraste
+     contido pra o céu e as linhas da quadra não estourarem */
+  filter: grayscale(1) sepia(0.2) contrast(1.14) brightness(1.04);
+}
+/* desktop: aproxima um pouco a quadra (os jogadores da frente ficam maiores,
+   a bola continua no quadro) */
+@media (min-width: 1100px) {
+  .origem__foto img {
+    transform: scale(1.12);
+    transform-origin: 42% 70%;
+  }
+}
+/* grão de filme e vinheta leve por cima da foto */
+.origem__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--ruido);
+  background-size: 240px 240px;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+}
+.origem__foto::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(120% 95% at 55% 45%, transparent 58%, rgba(12, 10, 8, 0.32) 100%);
+}
+
+/* ----------------------------------------------------------------- texto */
+.origem__texto {
+  grid-area: texto;
+  align-self: center;
+}
+#origem .rotulo {
+  margin-bottom: clamp(12px, 1.1vw, 20px);
+}
+#origem .titulo {
+  font-size: clamp(44px, 4.58vw, 88px);
+  line-height: 0.99;
+  letter-spacing: -0.045em;
+}
+.origem__recuo {
+  padding-left: 0.5em;
+}
+.origem__corpo {
+  margin-top: clamp(18px, 1.4vw, 28px);
+}
+#origem .texto {
+  max-width: none;
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+/* largura em em: a quebra de linha do mockup se mantém quando a fonte trava
+   no clamp (em 1440 dá 441 px, a medida do mockup) */
+#origem .origem__p1 {
+  font-size: clamp(15px, 1.12vw, 19px);
+  color: #252321;
+  max-width: min(100%, 27.35em);
+}
+#origem .origem__p2 {
+  font-size: clamp(15px, 1.04vw, 18px);
+  color: #34312f;
+  margin-top: clamp(10px, 0.78vw, 14px);
+  max-width: min(100%, 29.4em);
+}
+
+/* ---------------------------------------------------- bandeira e assinatura */
+.origem__bandeira {
+  grid-area: bandeira;
+  position: relative;
+  aspect-ratio: 212 / 241;
+  background: #1c1a18;
+  /* quadro: filete claro em volta e sombra curta, como foto colada no papel */
+  outline: 2px solid #fbf9f4;
+  box-shadow:
+    0 1px 2px rgba(20, 16, 10, 0.18),
+    0 10px 24px -14px rgba(20, 16, 10, 0.45);
+}
+.origem__bandeira-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.origem__bandeira::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--ruido);
+  background-size: 200px 200px;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+}
+
+.origem__assinatura {
+  grid-area: assinatura;
+  padding-top: clamp(10px, 0.72vw, 16px);
+}
+#origem .pilha {
+  font-size: clamp(12px, 0.92vw, 15px);
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 0.19em;
+  color: var(--tinta);
+}
+#origem .filete {
+  width: clamp(40px, 3.8vw, 64px);
+  height: 2.5px;
+  margin-top: clamp(12px, 1.1vw, 20px);
+}
+
+/* ============================================================ tablet */
+@media (min-width: 768px) and (max-width: 1099.98px) {
+  #origem {
+    padding-block: clamp(40px, 5vw, 56px);
+  }
+  .origem__grade {
+    --col-foto: calc(var(--margem) + var(--util) * 0.43);
+    grid-template-columns: var(--col-foto) clamp(150px, 20cqw, 210px) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      'foto texto texto'
+      'foto bandeira assinatura';
+    column-gap: clamp(24px, 3.4cqw, 40px);
+    row-gap: clamp(26px, 3cqw, 34px);
+  }
+  .origem__foto {
+    min-height: 0;
+  }
+  /* coluna estreita e alta: puxa o quadro pra esquerda, pra os dois
+     jogadores da frente, a rede e a bola ficarem inteiros */
+  .origem__foto img {
+    object-position: 36% 50%;
+  }
+  .origem__texto {
+    align-self: start;
+  }
+  #origem .titulo {
+    font-size: clamp(44px, 5.9vw, 62px);
+  }
+  .origem__corpo {
+    max-width: 34em;
+  }
+  #origem .origem__p1,
+  #origem .origem__p2 {
+    max-width: none;
+  }
+  .origem__bandeira {
+    aspect-ratio: 6 / 5;
+  }
+  .origem__assinatura {
+    align-self: end;
+    padding-top: 0;
+  }
+}
+
+/* ============================================================ celular */
+@media (max-width: 767.98px) {
+  #origem {
+    padding-block: 44px 48px;
+  }
+  .origem__grade {
+    grid-template-columns: minmax(0, 1fr) clamp(146px, 38%, 260px);
+    /* rótulo alinhado ao topo da bandeira e o título logo abaixo, como no
+       mockup; a terceira linha absorve a sobra de altura da bandeira */
+    grid-template-rows: auto auto 1fr auto auto;
+    grid-template-areas:
+      'rotulo bandeira'
+      'titulo bandeira'
+      '. bandeira'
+      'corpo corpo'
+      'assinatura assinatura';
+    column-gap: 14px;
+    width: min(100% - 2 * var(--gutter), var(--wrap));
+    margin-inline: auto;
+    padding-right: 0;
+  }
+  .origem__foto {
+    display: none;
+  }
+  .origem__texto {
+    display: contents;
+  }
+  #origem .rotulo {
+    grid-area: rotulo;
+    align-self: start;
+    margin: 0;
+  }
+  #origem .titulo {
+    grid-area: titulo;
+    align-self: start;
+    /* cabe "NO PARAGUAI." numa linha só, ao lado da bandeira */
+    font-size: clamp(30px, calc(11.8vw - 8px), 60px);
+    font-size: clamp(30px, min(20cqw - 40px, 11.8cqw - 6px), 60px);
+    line-height: 0.98;
+    /* tamanho pequeno: aperto menor que no desktop, pra as letras não colarem */
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+  }
+  .origem__recuo {
+    padding-left: 0;
+  }
+  .origem__corpo {
+    grid-area: corpo;
+    max-width: none;
+    margin-top: 22px;
+  }
+  #origem .origem__p1 {
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: none;
+  }
+  #origem .origem__p2 {
+    font-size: 15px;
+    line-height: 1.55;
+    margin-top: 12px;
+    max-width: none;
+  }
+  .origem__bandeira {
+    aspect-ratio: 34 / 28;
+    align-self: start;
+    margin-top: 2px;
+  }
+  /* pilha fecha a seção no mesmo eixo do texto */
+  .origem__assinatura {
+    justify-self: start;
+    padding-top: 22px;
+  }
+  #origem .pilha {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* 05-numeros.css */
+/* ==========================================================================
+   05 · Pikivoley em números. Faixa escura e baixa: rótulo com globo, quatro
+   números em ouro separados por filetes verticais e o mapa-múndi pontilhado
+   bem apagado ao fundo, na metade direita.
+   ========================================================================== */
+
+#numeros {
+  padding-block: clamp(44px, 3.5vw, 64px) clamp(48px, 3.9vw, 72px);
+  background:
+    radial-gradient(ellipse 46% 120% at 64% 50%, rgba(255, 255, 255, 0.035), transparent 70%),
+    linear-gradient(180deg, #0b0b0b 0%, #0d0d0d 50%, #090909 100%);
+}
+
+/* mapa de textura: cinza escuro, bordas esfumadas, vazando em cima e embaixo */
+.num__fundo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.num__mapa {
+  position: absolute;
+  top: 50%;
+  left: 44%;
+  width: clamp(420px, 40vw, 780px);
+  /* múltiplo de 85px pra grade de pontos não formar faixas (moiré) */
+  width: round(nearest, clamp(420px, 40vw, 780px), 85px);
+  max-width: none;
+  height: auto;
+  transform: translateY(-53%);
+  filter: grayscale(1) brightness(0.9);
+  opacity: 0.2;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+}
+
+/* ------------------------------------------------------------- rótulo */
+#numeros .num__titulo {
+  margin-left: clamp(0px, 1vw, 16px);
+}
+
+/* ------------------------------------------------------------- lista */
+.num__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.45fr) minmax(0, 1.45fr) auto;
+  margin: clamp(16px, 1.45vw, 28px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.num__item {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 0.5vw, 10px);
+  padding-inline: clamp(24px, 4.1vw, 72px) clamp(12px, 1.4vw, 24px);
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+.num__item:first-child {
+  padding-left: clamp(0px, 2.9vw, 50px);
+  border-left: 0;
+}
+.num__item:last-child {
+  padding-right: 0;
+}
+
+.num__valor {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-style: italic;
+  font-synthesis: style;
+  font-size: var(--t-numero);
+  line-height: 1.02;
+  letter-spacing: 0.004em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ouro-claro);
+}
+.num__valor .ouro {
+  padding-block: 0.04em;
+}
+/* inline-block pra largura fixa enquanto conta; a margem negativa anula o
+   padding do .ouro, senão a linha cresce e desalinha as legendas */
+.num__contador {
+  display: inline-block;
+  margin-block: -0.04em;
+}
+/* o "+" do Anton é pequeno e baixo; no mockup ele é maior e centrado na
+   altura dos algarismos */
+.num__mais {
+  display: inline-block;
+  margin-block: -0.04em;
+  margin-left: 0.03em;
+  transform: translateY(-0.06em) scale(1.28);
+  transform-origin: 20% 62%;
+}
+/* ordinal: o º do Anton parece um zero sobrescrito. O do Barlow tem o
+   traço embaixo e se lê como "segundo" */
+.num__ordinal {
+  font-family: var(--f-rotulo);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 0.78em;
+  vertical-align: 0.4em;
+  line-height: 0;
+  margin-left: 0.1em;
+}
+
+.num__legenda {
+  display: block;
+  font: 700 clamp(13px, 1.18vw, 18px) / 1.3 var(--f-rotulo);
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  color: #f2f2f2;
+  text-wrap: balance;
+}
+
+/* --------------------------------------------------- intermediário
+   Entre 768 e 1099 as quatro colunas ficam estreitas pras legendas longas:
+   a grade vira 2 por 2, com filete vertical no meio e horizontal entre as
+   linhas. */
+@media (max-width: 1099px) {
+  .num__mapa {
+    left: 40%;
+    width: clamp(420px, 62vw, 680px);
+    width: round(nearest, clamp(420px, 62vw, 680px), 85px);
+  }
+  .num__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 0;
+  }
+  .num__item,
+  .num__item:first-child {
+    padding: clamp(20px, 3vw, 30px) clamp(16px, 3vw, 32px);
+  }
+  .num__item:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .num__item:nth-child(even) {
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .num__item:nth-child(n + 3) {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .num__item:nth-child(-n + 2) {
+    padding-top: clamp(8px, 1.4vw, 14px);
+  }
+  .num__item:nth-child(n + 3) {
+    padding-bottom: 0;
+  }
+  .num__valor {
+    font-size: clamp(42px, 7vw, 64px);
+  }
+  /* largura limitada: as duas legendas longas da primeira linha quebram
+     juntas em 2 linhas, em vez de uma em 1 e a vizinha em 2 */
+  .num__legenda {
+    max-width: 17em;
+    font-size: clamp(13px, 1.9vw, 16px);
+  }
+  #numeros .num__titulo {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  #numeros {
+    padding-block: 40px 44px;
+  }
+  .num__mapa {
+    left: 22%;
+    top: 46%;
+    width: 150vw;
+    opacity: 0.15;
+  }
+  .num__lista {
+    margin-top: 18px;
+  }
+  .num__item,
+  .num__item:first-child {
+    padding: 22px 0 22px 18px;
+    gap: 10px;
+  }
+  .num__item:nth-child(odd) {
+    padding-left: 0;
+    padding-right: 8px;
+  }
+  .num__item:nth-child(even) {
+    padding-left: 14px;
+  }
+  .num__item:nth-child(-n + 2) {
+    padding-top: 6px;
+  }
+  .num__item:nth-child(n + 3) {
+    padding-bottom: 0;
+  }
+  .num__valor {
+    font-size: clamp(40px, 12vw, 54px);
+  }
+  .num__legenda {
+    font-size: 13px;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* 06-expansao.css */
+/* ==========================================================================
+   06 · Expansão global. Faixa clara em três colunas: mapa-múndi pontilhado com
+   as rotas douradas saindo de Ciudad del Este, o bloco de texto no meio e a
+   pilha "MAIS ..." à direita, cada coluna com seu filete dourado.
+   ========================================================================== */
+
+#expansao {
+  padding-block: clamp(36px, 2.8vw, 56px) clamp(32px, 2.4vw, 48px);
+}
+
+.exp__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 590fr) minmax(0, 414fr) auto;
+  /* coluna do mapa em múltiplo de 85px (ver .exp__mapa); o texto fica com o
+     resto. Em 1440 dá 595px, a mesma proporção do mockup */
+  grid-template-columns: round(nearest, 46%, 85px) minmax(0, 1fr) auto;
+  grid-template-areas: 'mapa texto lado';
+  column-gap: clamp(28px, 4.1vw, 76px);
+  align-items: start;
+}
+
+/* ------------------------------------------------------------------ mapa
+   O mapa vaza um pouco pra esquerda do alinhamento, como no mockup. A camada
+   de arcos tem o mesmo viewBox (170 x 86) e fica por cima, alinhada sozinha. */
+/* A largura do mapa é sempre múltiplo de 85px (a coluna da grade já sai
+   assim): cada ponto do mapa (1 unidade do viewBox) cai em 2, 2,5, 3, 3,5...
+   pixels. Com passo fracionado qualquer, a grade de pontos bate com a de
+   pixels e forma faixas (moiré) em tela de densidade 1. O vazamento pra
+   esquerda é deslocamento, não largura extra, pra não quebrar o múltiplo. */
+.exp__mapa {
+  grid-area: mapa;
+  position: relative;
+  left: -0.6vw;
+  width: 100%;
+  aspect-ratio: 170 / 86;
+  align-self: center;
+}
+.exp__mapa-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.82;
+  filter: saturate(0.8);
+}
+.exp__mapa .mapa-arcos {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.exp__mapa .mapa-arcos__rotas {
+  stroke-width: 0.46;
+}
+.exp__mapa .mapa-arcos__rota {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.exp__mapa .mapa-arcos__pino {
+  r: 1.05;
+  stroke: rgba(201, 154, 62, 0.3);
+  stroke-width: 0.9;
+  paint-order: stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.exp__mapa .mapa-arcos__halo,
+.exp__mapa .mapa-arcos__origem {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.exp__mapa .mapa-arcos__origem {
+  r: 1.2;
+  fill: #b8862b;
+}
+.exp__mapa .mapa-arcos__halo {
+  r: 2.6;
+}
+
+/* Animação: rotas se desenham uma a uma, os pinos surgem no fim de cada rota e
+   a origem pulsa de leve. Só com JS e sem movimento reduzido; senão, tudo
+   desenhado de cara. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .exp__mapa .mapa-arcos__rota {
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.45, 0.05, 0.25, 1);
+    transition-delay: calc(0.45s + var(--i, 0) * 0.16s);
+  }
+  .js .exp__mapa .mapa-arcos__pino {
+    opacity: 0;
+    transform: scale(0.2);
+    transition: opacity 0.4s ease, transform 0.6s var(--ease);
+    transition-delay: calc(1.55s + var(--i, 0) * 0.16s);
+  }
+  .js .exp__mapa .mapa-arcos__origem,
+  .js .exp__mapa .mapa-arcos__halo {
+    opacity: 0;
+    transform: scale(0.3);
+    transition: opacity 0.5s ease 0.2s, transform 0.7s var(--ease) 0.2s;
+  }
+  .js .exp__mapa.visivel .mapa-arcos__rota {
+    stroke-dashoffset: 0;
+  }
+  .js .exp__mapa.visivel .mapa-arcos__pino,
+  .js .exp__mapa.visivel .mapa-arcos__origem {
+    opacity: 1;
+    transform: none;
+  }
+  .js .exp__mapa.visivel .mapa-arcos__halo {
+    opacity: 1;
+    transform: none;
+    animation: exp-pulso 2.8s ease-in-out 1.2s infinite;
+  }
+}
+@keyframes exp-pulso {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.9);
+    opacity: 0.25;
+  }
+}
+
+/* ----------------------------------------------------------------- texto */
+.exp__texto {
+  grid-area: texto;
+  min-width: 0;
+}
+#expansao .exp__titulo {
+  margin-top: clamp(8px, 0.7vw, 14px);
+  font-size: clamp(44px, 4.1vw, 78px);
+  letter-spacing: -0.004em;
+}
+#expansao .exp__titulo-recuo {
+  padding-left: 0.37em;
+}
+/* no mockup o "MUNDIAL." tem o topo mais claro e o meio mais quente que o
+   degradê claro da base */
+#expansao .exp__titulo .ouro {
+  background-image: linear-gradient(180deg, #e4c98f 0%, #c49a4c 50%, #9a7030 100%);
+}
+#expansao .exp__corpo {
+  max-width: 26em;
+  margin-top: clamp(14px, 1.2vw, 24px);
+  line-height: 1.52;
+  color: #34312e;
+  text-wrap: pretty;
+}
+#expansao .exp__filete {
+  margin-top: clamp(12px, 1vw, 20px);
+}
+/* no mockup o parágrafo e o filete entram um pouco à direita do título */
+@media (min-width: 1100px) {
+  #expansao .exp__corpo,
+  #expansao .exp__filete {
+    margin-left: clamp(0px, 0.85vw, 16px);
+  }
+}
+
+/* ----------------------------------------------------------- lado (pilha) */
+.exp__lado {
+  grid-area: lado;
+  padding-top: clamp(18px, 2vw, 36px);
+}
+.exp__lado-filete {
+  display: block;
+  width: clamp(56px, 6vw, 100px);
+  height: 2px;
+  background: var(--ouro-grad-linha);
+}
+#expansao .exp__lista {
+  margin: clamp(8px, 0.8vw, 14px) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(12px, 0.98vw, 16px);
+  font-weight: 700;
+  line-height: 2.35;
+  letter-spacing: 0.17em;
+  color: #121110;
+  white-space: nowrap;
+}
+
+/* 1100 a 1279: o mapa cede espaço pro parágrafo não quebrar em 6 linhas */
+@media (min-width: 1100px) and (max-width: 1279px) {
+  .exp__grade {
+    grid-template-columns: minmax(0, 500fr) minmax(0, 414fr) auto;
+    grid-template-columns: round(nearest, 44%, 85px) minmax(0, 1fr) auto;
+    column-gap: clamp(28px, 3vw, 44px);
+  }
+}
+
+/* --------------------------------------------------- intermediário
+   Entre 768 e 1099: duas colunas. Mapa e pilha à esquerda, texto à direita. */
+@media (max-width: 1099px) {
+  /* a coluna do mapa tem largura em múltiplo de 85px (ver acima) e o texto
+     fica com o resto, nunca menos que uns 300px */
+  .exp__grade {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-columns: round(down, min(60%, 100% - 340px), 85px) minmax(0, 1fr);
+    grid-template-areas:
+      'mapa texto'
+      'lado texto';
+    column-gap: clamp(28px, 4.6vw, 48px);
+    row-gap: 0;
+  }
+  .exp__mapa {
+    left: 0;
+    align-self: start;
+    margin-top: 6px;
+  }
+  .exp__texto {
+    align-self: center;
+  }
+  .exp__lado {
+    padding-top: clamp(22px, 3vw, 32px);
+  }
+  /* pilha em duas colunas, pra coluna do mapa não ficar mais alta que a do
+     texto */
+  #expansao .exp__lista {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column;
+    justify-content: start;
+    column-gap: clamp(24px, 4vw, 48px);
+  }
+  #expansao .exp__titulo {
+    font-size: clamp(44px, 5.6vw, 60px);
+  }
+  #expansao .exp__corpo {
+    max-width: none;
+  }
+}
+
+/* ----------------------------------------------------------- celular
+   Uma coluna, na ordem do mockup: mapa, texto, pilha. O mapa ocupa a largura
+   toda (lado a lado com o texto ficaria ilegível). */
+@media (max-width: 767px) {
+  #expansao {
+    padding-block: 36px 40px;
+  }
+  .exp__grade {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'mapa'
+      'texto'
+      'lado';
+  }
+  .exp__texto {
+    align-self: start;
+  }
+  /* vaza até 4px da borda da tela e fica centralizado quando bate no limite */
+  .exp__mapa {
+    width: calc(100% + 2 * var(--gutter) - 8px);
+    max-width: 620px;
+    margin: 0 0 28px;
+    justify-self: center;
+  }
+  #expansao .exp__titulo {
+    font-size: clamp(44px, 13vw, 60px);
+  }
+  #expansao .exp__corpo {
+    max-width: 34em;
+  }
+  #expansao .exp__filete {
+    display: none;
+  }
+  .exp__lado {
+    padding-top: 28px;
+  }
+  .exp__lado-filete {
+    width: 64px;
+  }
+  #expansao .exp__lista {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 2.05;
+  }
+}
+
+/* 07-competicoes.css */
+/* ==========================================================================
+   07 · Competições
+   Desktop (>= 1100): título | texto e botão | foto aérea noturna encostada na
+   borda direita, fundida no preto pela esquerda, com a pilha por cima.
+   Tablet (768 a 1099): título, texto e botão na metade esquerda; foto na
+   metade direita, de cima a baixo.
+   Celular (< 768): título à esquerda com a foto à direita (mesma leitura do
+   mockup), texto e botão embaixo, em largura cheia.
+   ========================================================================== */
+
+#competicoes {
+  --comp-pad-topo: clamp(36px, 2.75vw, 64px);
+  --comp-pad-base: clamp(28px, 2.1vw, 52px);
+  padding-block: var(--comp-pad-topo) var(--comp-pad-base);
+}
+/* esfumaçado leve no alto, como a névoa do mockup (fica atrás do conteúdo) */
+#competicoes::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 90% at 42% 10%, rgba(255, 255, 255, 0.04), transparent 70%),
+    radial-gradient(40% 70% at 8% 90%, rgba(255, 255, 255, 0.018), transparent 70%);
+}
+/* No desktop a seção tem a proporção do mockup (377 de altura em 1440) e o
+   conteúdo fica centrado nela; em tela muito larga ela cresce junto com a foto. */
+@media (min-width: 1100px) {
+  #competicoes {
+    min-height: min(26.2vw, 680px);
+    display: grid;
+    align-content: center;
+  }
+}
+
+/* ---------------------------------------------------------------- grade */
+.comp__grade {
+  display: grid;
+  grid-template-columns: 27.6% minmax(0, 34%) minmax(0, 1fr) auto;
+  grid-template-areas: 'cabeca corpo . pilha';
+  align-items: center;
+}
+
+.comp__cabeca,
+.comp__corpo,
+.comp__pilha {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------------- título */
+.comp__cabeca {
+  grid-area: cabeca;
+  align-self: start;
+}
+#competicoes .comp__titulo {
+  margin-top: 0.16em;
+  padding-left: 0.08em;
+  /* teto em 82 px: é o tamanho em 1728 px, quando o .wrap para de crescer */
+  font-size: clamp(40px, 4.75vw, 82px);
+  line-height: 0.99;
+  /* a Anton sai mais larga que a fonte do mockup; aperta um pouco sem colar */
+  letter-spacing: -0.015em;
+}
+/* segunda e quarta linha recuadas, como no mockup */
+#competicoes .comp__recuo {
+  padding-left: 0.39em;
+}
+
+/* ---------------------------------------------------------- texto e botão */
+.comp__corpo {
+  grid-area: corpo;
+  padding-top: 0.9em;
+}
+#competicoes .comp__texto {
+  font-size: clamp(15px, 1.225vw, 20.5px);
+  line-height: 1.62;
+  max-width: 27.4em;
+  color: #e4e4e4;
+  text-wrap: pretty;
+}
+/* quebras de linha do mockup, só quando a coluna tem largura pra elas */
+.comp__qb {
+  display: none;
+}
+@media (min-width: 1360px) {
+  .comp__qb {
+    display: inline;
+  }
+  #competicoes .comp__texto {
+    max-width: none;
+  }
+}
+#competicoes .comp__btn {
+  margin-top: clamp(26px, 2.4vw, 44px);
+  padding-block: 1em;
+  padding-inline: 1.78em 1.15em;
+  gap: 1.05em;
+}
+#competicoes .comp__btn svg {
+  color: var(--ouro-claro);
+}
+#competicoes .comp__btn:hover svg {
+  color: var(--tinta);
+}
+
+/* ---------------------------------------------------------------- pilha */
+.comp__pilha {
+  grid-area: pilha;
+  align-self: end;
+  justify-self: end;
+  font-size: max(12px, var(--t-pilha));
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.85);
+}
+/* No desktop a pilha acompanha a foto, não o .wrap: fica a um gutter da borda
+   direita da tela, com a base um pouco acima da base do título. Até 1728 px dá
+   no mesmo lugar do fim do .wrap; acima disso não fica solta no meio da foto. */
+@media (min-width: 1100px) {
+  .comp__pilha {
+    position: absolute;
+    right: var(--gutter);
+    bottom: calc(var(--comp-pad-base) + 0.2em);
+  }
+}
+
+/* ---------------------------------------------------------------- foto
+   A figura cobre a metade direita da seção, de cima a baixo. No desktop a
+   imagem (retrato 1097x1434) é dimensionada pela largura da tela (38vw, e não
+   pela altura da seção), ancorada na borda direita e quase centrada na
+   vertical: com a seção em 26,2vw, aparecem os refletores e a torcida em cima
+   e o conjunto de quadras na diagonal. Some no preto pela esquerda com uma
+   máscara longa, que começa logo depois do texto, como no mockup. */
+.comp__foto {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 54%;
+  margin: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.comp__img {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 38vw;
+  height: auto;
+  max-width: none;
+  /* translate (e não transform) pra somar com o scale da entrada; -45% em vez
+     de -50% traz pra dentro os refletores do alto, como no mockup */
+  translate: 0 -45%;
+  filter: brightness(0.8) saturate(0.92) contrast(1.08);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.45) 12%, rgba(0, 0, 0, 0.85) 24%, #000 34%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.45) 12%, rgba(0, 0, 0, 0.85) 24%, #000 34%);
+}
+/* véu: sombra macia atrás da pilha (a quina das quadras encosta na borda
+   direita da foto real, então a pilha cai perto dela), escurece a borda direita
+   e um fio no topo e na base */
+.comp__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(26% 52% at 86% 70%, rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0) 100%),
+    linear-gradient(270deg, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0.35) 17%, rgba(10, 10, 10, 0) 34%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.12) 0%, rgba(10, 10, 10, 0) 16%, rgba(10, 10, 10, 0) 84%, rgba(10, 10, 10, 0.3) 100%);
+}
+
+/* Entrada da foto: só esmaece (sem deslocar a figura, que encosta nas bordas)
+   e a imagem assenta de 1,06 para 1, sem nunca abrir fresta. */
+.js #competicoes .comp__foto[data-revelar] {
+  transform: none;
+  transition-duration: 1.2s;
+}
+.js .comp__foto[data-revelar] .comp__img {
+  transform: scale(1.06);
+  transform-origin: 70% 50%;
+  transition: transform 1.8s var(--ease);
+  transition-delay: 90ms;
+}
+.js .comp__foto.visivel .comp__img {
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .comp__foto[data-revelar] .comp__img {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ===================================================== tablet 768 a 1099 */
+@media (max-width: 1099px) {
+  #competicoes {
+    padding-block: var(--sec-pad);
+  }
+  .comp__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+    grid-template-areas:
+      'cabeca pilha'
+      'corpo pilha';
+    align-items: start;
+  }
+  #competicoes .rotulo {
+    font-size: 13px;
+  }
+  #competicoes .comp__titulo {
+    font-size: clamp(40px, 6.6vw, 68px);
+  }
+  .comp__corpo {
+    padding-top: clamp(24px, 3.2vw, 34px);
+  }
+  #competicoes .comp__texto {
+    font-size: 16px;
+    /* não encosta na foto, que começa na metade da tela */
+    max-width: min(26.5em, calc(50vw - var(--gutter) - 24px));
+  }
+  #competicoes .comp__btn {
+    font-size: 13px;
+  }
+  #competicoes .comp__pilha {
+    font-size: 13px;
+  }
+  .comp__foto {
+    width: 50%;
+  }
+  .comp__img {
+    top: 0;
+    height: 100%;
+    width: 100%;
+    translate: none;
+    object-fit: cover;
+    object-position: 62% 50%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.55) 20%, #000 46%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.55) 20%, #000 46%);
+  }
+}
+
+/* ======================================================== celular < 768 */
+@media (max-width: 767px) {
+  #competicoes {
+    --comp-pad-topo: 56px;
+    padding-block: var(--comp-pad-topo) 60px;
+  }
+  .comp__grade {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    grid-template-areas:
+      'cabeca foto'
+      'corpo corpo';
+  }
+  #competicoes .comp__titulo {
+    font-size: clamp(38px, 11.6vw, 60px);
+  }
+  #competicoes .comp__texto {
+    font-size: 15.5px;
+    line-height: 1.62;
+    max-width: 34em;
+  }
+  #competicoes .comp__btn {
+    margin-top: 26px;
+  }
+  #competicoes .comp__pilha {
+    grid-area: foto;
+    align-self: end;
+    justify-self: end;
+    font-size: 12px;
+    line-height: 2;
+    letter-spacing: 0.18em;
+    margin: 0 -2px -4px 0;
+  }
+
+  /* a foto entra na grade, à direita do título, e sangra até a borda da tela
+     e até o topo da seção */
+  .comp__foto {
+    grid-area: foto;
+    position: relative;
+    inset: auto;
+    width: auto;
+    align-self: stretch;
+    min-height: 300px;
+    margin-top: calc(-1 * var(--comp-pad-topo));
+    margin-right: calc(-1 * var(--gutter));
+    margin-left: -26%;
+    margin-bottom: -28px;
+  }
+  .comp__img {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 58% 52%;
+    filter: brightness(0.84) saturate(0.92) contrast(1.08);
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.6) 24%, #000 48%),
+      linear-gradient(0deg, transparent 0%, #000 22%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.6) 24%, #000 48%),
+      linear-gradient(0deg, transparent 0%, #000 22%);
+    mask-composite: intersect;
+  }
+  .comp__foto::after {
+    background: linear-gradient(270deg, rgba(10, 10, 10, 0.85) 0%, rgba(10, 10, 10, 0.55) 26%, rgba(10, 10, 10, 0) 50%);
+  }
+  .comp__corpo {
+    padding-top: 30px;
+  }
+}
+
+/* 08-galeria.css */
+/* ==========================================================================
+   08 · Galeria. Rótulo e título à esquerda, frase e setas no topo direito,
+   faixa de 4 fotos reais com rolagem e snap. Clique abre o lightbox.
+   Medidas calibradas no recorte 07-galeria a 1440 px.
+   ========================================================================== */
+
+#galeria {
+  --gal-gap: clamp(10px, 0.78vw, 14px);
+  --gal-proporcao: 1.05;
+  padding-block: clamp(28px, 2.24vw, 42px) clamp(24px, 1.65vw, 36px);
+}
+
+/* ------------------------------------------------------------- grade */
+.gal__grade {
+  display: grid;
+  /* a coluna do título cresce se o texto (espanhol, tela estreita) pedir */
+  grid-template-columns: minmax(max-content, 25.9%) minmax(0, 1fr);
+  grid-template-areas:
+    'rotulo topo'
+    'titulo faixa';
+  row-gap: clamp(7px, 0.58vw, 12px);
+  align-items: center;
+}
+.gal__rotulo {
+  grid-area: rotulo;
+  justify-self: start;
+}
+/* No recorte da galeria o rótulo é mais cheio e mais fechado que o da base
+   (maiúscula de ~11 px e 66 px de largura a 1440, marca da altura da
+   maiúscula, colada no texto). */
+#galeria .gal__rotulo {
+  font-size: clamp(12px, 1.04vw, 16px);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  gap: 0.45em;
+}
+#galeria .gal__rotulo::before {
+  width: 0.34em;
+  height: 0.82em;
+}
+.gal__titulo {
+  grid-area: titulo;
+  align-self: start;
+}
+.gal__topo {
+  grid-area: topo;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(24px, 3.95vw, 72px);
+  min-width: 0;
+}
+.gal__faixa {
+  grid-area: faixa;
+}
+
+/* ------------------------------------------------------------- título */
+/* Anton tem maiúscula de 0,845em: 62 px dá os 54 px de altura do mockup. */
+#galeria .titulo {
+  /* teto de 75 px: acima de 1440 o .wrap para de crescer e o título não pode
+     continuar crescendo sozinho, senão encosta na primeira foto */
+  font-size: clamp(44px, 4.3vw, 75px);
+  line-height: 1.03;
+  /* a Anton sai ~7% mais larga que a letra do mockup: o tracking negativo
+     devolve parte do respiro até a primeira foto sem baixar a maiúscula */
+  letter-spacing: -0.03em;
+  word-spacing: -0.04em;
+  margin-top: -0.17em;
+  margin-left: -0.09em; /* o O inclinado alinha com a barra do rótulo */
+  padding-right: 0.3em;
+}
+#galeria .gal__linha {
+  white-space: nowrap;
+}
+.gal__linha--recuo {
+  padding-left: 0.27em;
+}
+/* "Juega unido." é mais longo: no desktop o título desce ~8% pra não
+   encostar na primeira foto */
+@media (min-width: 1100px) {
+  html[lang='es'] #galeria .titulo {
+    font-size: clamp(42px, 3.95vw, 69px);
+  }
+}
+
+/* ------------------------------------------ frase do topo e setas */
+.gal__frase {
+  font: 700 clamp(12px, 0.94vw, 17px) / 1.5 var(--f-rotulo);
+  letter-spacing: 0.165em;
+  text-transform: uppercase;
+  color: #2e2a27;
+  text-align: right;
+}
+/* Ouro um pouco mais fechado que o do mockup: com o claro do mockup a
+   palavra ficava em 2,2:1 sobre o osso; assim passa de 3:1. */
+.gal__frase .ouro {
+  background-image: linear-gradient(180deg, #c6a15b 0%, #a98545 50%, #8e6a2c 100%);
+  padding-block: 0;
+}
+.gal__setas {
+  display: flex;
+  gap: clamp(8px, 0.97vw, 16px);
+  flex: none;
+  margin-right: -5px; /* ponta da seta a ~10 px da borda da faixa, como no mockup */
+}
+.no-js .gal__setas {
+  display: none;
+}
+.gal__seta {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--ouro-escuro);
+  transition: color 0.3s var(--ease-suave), opacity 0.3s var(--ease-suave);
+}
+/* traço de 2,2 no viewBox de 24 desenhado a ~21 px: ~2 px na tela, como no mockup */
+.gal__seta svg {
+  width: clamp(20px, 1.5vw, 26px);
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  overflow: visible;
+  transition: transform 0.35s var(--ease);
+}
+.gal__seta:disabled {
+  opacity: 0.72;
+  cursor: default;
+}
+@media (hover: hover) {
+  .gal__seta:not(:disabled):hover {
+    color: var(--tinta);
+  }
+  .gal__seta--ant:not(:disabled):hover svg {
+    transform: translateX(-4px);
+  }
+  .gal__seta--prox:not(:disabled):hover svg {
+    transform: translateX(4px);
+  }
+}
+
+/* ------------------------------------------------------------- faixa */
+.gal__faixa {
+  display: flex;
+  gap: var(--gal-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.gal__faixa::-webkit-scrollbar {
+  display: none;
+}
+.gal__item {
+  flex: 0 0 max(160px, (100% - 3 * var(--gal-gap)) / 4);
+  scroll-snap-align: start;
+  min-width: 0;
+}
+.gal__abrir {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--gal-proporcao);
+  overflow: hidden;
+  background: var(--osso-2);
+  cursor: zoom-in;
+}
+/* Anel de foco num pseudo-elemento acima da foto: um outline por dentro some
+   debaixo da imagem quando o hover a amplia (o transform vira camada própria
+   e é pintado por cima). O sombreado escuro segura o ouro sobre foto clara. */
+.gal__abrir::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  z-index: 1;
+  border: 2px solid var(--ouro-claro);
+  box-shadow: 0 0 0 1px rgba(8, 8, 8, 0.4), inset 0 0 0 1px rgba(8, 8, 8, 0.4);
+  opacity: 0;
+  pointer-events: none;
+}
+#galeria .gal__abrir:focus-visible {
+  outline: none;
+}
+.gal__abrir:focus-visible::after {
+  opacity: 1;
+}
+.gal__foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+.gal__foto--terra {
+  object-position: 42% 50%;
+}
+.gal__foto--grama {
+  object-position: 40% 50%;
+}
+.gal__foto--cabeceio {
+  object-position: 50% 45%;
+}
+.gal__foto--noturna {
+  object-position: 50% 57%;
+}
+
+/* ícone de ampliar: aparece no hover e no foco do teclado */
+.gal__lupa {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: rgba(10, 10, 10, 0.62);
+  border: 1px solid rgba(237, 205, 134, 0.55);
+  color: var(--ouro-claro);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s var(--ease-suave), transform 0.35s var(--ease);
+}
+.gal__lupa svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+.gal__abrir:focus-visible .gal__lupa {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: hover) {
+  .gal__abrir:hover .gal__foto {
+    transform: scale(1.045);
+  }
+  .gal__abrir:hover .gal__lupa {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* No toque não há hover: a lupa fica sempre, pequena no canto, pra dizer que
+   a foto amplia. */
+@media (hover: none) {
+  .gal__lupa {
+    opacity: 0.88;
+    transform: none;
+    width: 30px;
+    height: 30px;
+    right: 8px;
+    bottom: 8px;
+  }
+  .gal__lupa svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* entrada das fotos em sequência (a faixa inteira observa, os itens animam) */
+.js #galeria .gal__faixa[data-revelar] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+.js #galeria .gal__faixa[data-revelar] .gal__item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: calc((var(--i, 0) + 2) * 90ms);
+}
+.js #galeria .gal__faixa.visivel .gal__item {
+  opacity: 1;
+  transform: none;
+}
+
+/* ------------------------------------------------------------ lightbox */
+.gal__caixa {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #080808;
+  color: var(--texto-escuro);
+  overscroll-behavior: contain;
+}
+.gal__caixa::backdrop {
+  background: #080808;
+}
+.gal__caixa[open] {
+  display: block;
+  animation: gal-entra 0.35s var(--ease-suave);
+}
+.gal__caixa :focus-visible {
+  outline-color: var(--ouro-claro);
+}
+.gal__palco {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 64px clamp(16px, 7vw, 120px) 28px;
+}
+.gal__figura {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 100%;
+  max-height: 100%;
+}
+.gal__grande {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 1500px);
+  max-height: calc(100vh - 170px);
+  max-height: calc(100dvh - 170px);
+  object-fit: contain;
+  background: var(--carvao);
+  transition: opacity 0.25s var(--ease-suave);
+}
+.gal__grande--troca {
+  opacity: 0.25;
+}
+.gal__caixa[open] .gal__grande {
+  animation: gal-foto 0.45s var(--ease);
+}
+.gal__legenda {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  max-width: 62ch;
+  text-align: left;
+  font: 400 15px / 1.5 var(--f-corpo);
+  color: #d9d6d2;
+}
+.gal__contador {
+  flex: none;
+  font: 600 13px / 1 var(--f-rotulo);
+  letter-spacing: 0.16em;
+  color: var(--ouro-claro);
+}
+.gal__fechar,
+.gal__nav {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  color: var(--branco);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 10, 10, 0.45);
+  transition: border-color 0.3s var(--ease-suave), color 0.3s var(--ease-suave), background-color 0.3s;
+}
+.gal__fechar {
+  top: 12px;
+  right: 12px;
+  width: 48px;
+  height: 48px;
+}
+.gal__fechar svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+.gal__nav {
+  top: 50%;
+  margin-top: -26px;
+  color: var(--ouro-claro);
+}
+.gal__nav--ant {
+  left: clamp(12px, 2vw, 32px);
+}
+.gal__nav--prox {
+  right: clamp(12px, 2vw, 32px);
+}
+.gal__nav svg {
+  width: 22px;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+@media (hover: hover) {
+  .gal__fechar:hover,
+  .gal__nav:hover {
+    border-color: var(--ouro);
+    color: var(--ouro-claro);
+    background: rgba(10, 10, 10, 0.8);
+  }
+}
+@keyframes gal-entra {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes gal-foto {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js #galeria .gal__faixa[data-revelar] .gal__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .gal__foto,
+  .gal__lupa,
+  .gal__seta svg,
+  .gal__grande {
+    transition: none;
+  }
+  .gal__caixa[open],
+  .gal__caixa[open] .gal__grande {
+    animation: none;
+  }
+}
+
+/* ----------------------------------------------- 768 a 1099: tablet
+   Título à esquerda, frase e setas à direita na mesma linha, faixa larga
+   embaixo, sangrando até a borda da tela pra rolagem ficar natural. */
+@media (max-width: 1099px) {
+  #galeria {
+    padding-block: clamp(56px, 7vw, 72px) clamp(48px, 6vw, 64px);
+  }
+  .gal__grade {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'rotulo rotulo'
+      'titulo topo'
+      'faixa faixa';
+    column-gap: 32px;
+    row-gap: 0;
+  }
+  .gal__rotulo {
+    margin-bottom: 18px;
+  }
+  .gal__topo {
+    align-self: end;
+    gap: 24px;
+  }
+  #galeria .titulo {
+    font-size: clamp(46px, 5.6vw, 58px);
+  }
+  /* .gal__grade na frente: ul[role='list'] da base zera o padding com mais peso */
+  .gal__grade > .gal__faixa {
+    margin: clamp(28px, 3.4vw, 36px) calc(-1 * var(--gutter)) 0;
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
+  .gal__item {
+    flex-basis: max(200px, (100% - 3 * var(--gal-gap)) / 4);
+  }
+}
+
+/* ------------------------------------------------ < 768: celular
+   Mesma ordem do mockup (rótulo, título, fotos). Frase em duas linhas com as
+   setas ao lado. Duas fotos por vez e a ponta da terceira aparecendo. */
+@media (max-width: 767px) {
+  #galeria {
+    --gal-gap: 10px;
+    --gal-proporcao: 0.8;
+    padding-block: 56px 52px;
+  }
+  .gal__grade {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'rotulo'
+      'titulo'
+      'topo'
+      'faixa';
+  }
+  .gal__rotulo {
+    margin-bottom: 14px;
+  }
+  #galeria .titulo {
+    font-size: clamp(44px, 11.8vw, 60px);
+  }
+  .gal__topo {
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 22px;
+  }
+  .gal__frase {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    line-height: 1.75;
+    text-align: left;
+  }
+  .gal__frase > span {
+    display: block;
+  }
+  .gal__setas {
+    gap: 4px;
+    margin-right: -10px;
+  }
+  .gal__seta svg {
+    width: 24px;
+  }
+  .gal__grade > .gal__faixa {
+    margin-top: 16px;
+  }
+  .gal__item {
+    flex-basis: calc((100% + var(--gutter) - 2 * var(--gal-gap) - 28px) / 2);
+  }
+  .gal__foto--terra {
+    object-position: 44% 50%;
+  }
+  .gal__foto--grama {
+    object-position: 38% 50%;
+  }
+  .gal__foto--cabeceio {
+    object-position: 50% 40%;
+  }
+  .gal__foto--noturna {
+    object-position: 50% 50%;
+  }
+
+  /* lightbox no celular: setas embaixo, foto ocupa a largura */
+  .gal__palco {
+    padding: 68px 12px 92px;
+  }
+  .gal__grande {
+    max-height: calc(100vh - 230px);
+    max-height: calc(100dvh - 230px);
+  }
+  .gal__legenda {
+    padding-inline: 4px;
+    font-size: 15px;
+  }
+  .gal__nav {
+    top: auto;
+    bottom: 20px;
+    margin-top: 0;
+  }
+  .gal__nav--ant {
+    left: 16px;
+  }
+  .gal__nav--prox {
+    right: 16px;
+  }
+}
+
+/* 09-rodape.css */
+/* ==========================================================================
+   09 · Rodapé. Quatro colunas no desktop (marca, navegação, redes e a pilha
+   por cima do globo escuro cortado pela borda), linha fina e copyright.
+   Medidas calibradas no recorte do mockup em 1440 px.
+   ========================================================================== */
+
+/* O fundo sai um tom abaixo de --preto-rodape (#0e0e0e) porque o grão
+   branco por cima clareia a média de volta pra perto de #0e0e0e. */
+.rod {
+  --rod-ruido: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: #0a0a0a;
+  color: var(--texto-escuro);
+  padding-top: clamp(48px, 3.7vw, 72px);
+  padding-bottom: clamp(40px, 5.2vw, 92px);
+}
+
+/* Grão de filme. O --ruido da base pinta pontos pretos, que no modo screen
+   não aparecem; aqui o mesmo ruído sai em branco. */
+.rod::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--rod-ruido);
+  background-size: 240px 240px;
+  opacity: 0.035;
+  mix-blend-mode: screen;
+}
+
+/* Listras verticais finas de película, como no fundo do mockup. Períodos
+   primos entre si pra não formar desenho repetido. */
+.rod::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 5px, rgba(255, 255, 255, 0.009) 7px, transparent 9px 17px),
+    repeating-linear-gradient(90deg, transparent 0, rgba(0, 0, 0, 0.14) 2px, transparent 4px 23px),
+    repeating-linear-gradient(90deg, transparent 0 20px, rgba(255, 255, 255, 0.008) 23px, transparent 26px 41px);
+}
+
+/* Globo decorativo: o logo em cinza escuro e metálico, cortado pela borda
+   direita. Acompanha a borda do .wrap até 1920 e depois para de fugir. */
+.rod__globo {
+  position: absolute;
+  z-index: -2;
+  top: 0.2vw;
+  right: calc(max((100% - var(--wrap)) / 2 - 180px, 0px) - 1.2vw);
+  width: min(34.6vw, 620px);
+  pointer-events: none;
+  user-select: none;
+  /* corpo escuro da esfera por trás dos traços: no mockup o globo é mais
+     escuro que o fundo, não só um desenho de linhas. Fica na caixa e não na
+     imagem, senão o reflexo do drop-shadow clareia o disco. */
+  background:
+    radial-gradient(ellipse 26% 20% at 44% 24%, rgba(255, 255, 255, 0.03), transparent 100%),
+    radial-gradient(ellipse 42.5% 46% at 57.5% 49%, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.22) 94%, transparent 100%);
+  /* acaba antes da linha divisória: a faixa do copyright fica limpa */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 48%, rgba(0, 0, 0, 0.3) 62%, transparent 72%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 48%, rgba(0, 0, 0, 0.3) 62%, transparent 72%);
+}
+/* sem opacity: o brilho dos traços vem só do filtro */
+.rod__globo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) brightness(0.28) contrast(1.6) drop-shadow(0 -1.5px 0 rgba(255, 255, 255, 0.15)) drop-shadow(0 10px 16px rgba(0, 0, 0, 0.9));
+}
+
+.rod__wrap {
+  position: relative;
+}
+
+/* ------------------------------------------------------------ grade */
+.rod__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 443fr) minmax(0, 238fr) minmax(0, 474fr) auto;
+  grid-template-areas: 'marca nav siga pilha';
+  align-items: start;
+}
+.rod__marca-bloco {
+  grid-area: marca;
+  min-width: 0;
+}
+.rod__nav {
+  grid-area: nav;
+}
+.rod__siga {
+  grid-area: siga;
+}
+.rod__pilha {
+  grid-area: pilha;
+}
+
+/* ------------------------------------------------------------ marca */
+.rod__marca {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(14px, 1.4vw, 24px);
+  max-width: 100%;
+}
+.rod__marca-globo {
+  flex: none;
+  width: clamp(84px, 8.9vw, 150px);
+  height: auto;
+}
+.rod__marca-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding-top: 0.5vw;
+}
+.rod__marca-fipv {
+  width: clamp(140px, 15.4vw, 256px);
+  height: auto;
+}
+.rod__marca-nome {
+  display: block;
+  margin-top: clamp(8px, 0.75vw, 13px);
+  font: 600 clamp(12px, 0.97vw, 16px) / 1.3 var(--f-rotulo);
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  color: var(--branco);
+}
+.rod__frase {
+  margin-top: clamp(24px, 2.25vw, 40px);
+  font: 600 clamp(15px, 1.25vw, 21px) / 1.92 var(--f-rotulo);
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  color: var(--branco);
+}
+.rod__frase > span {
+  display: block;
+}
+.rod__email {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 6px;
+  font-size: var(--t-corpo);
+  color: var(--cinza-medio);
+  text-decoration: underline;
+  text-decoration-color: rgba(201, 162, 90, 0.5);
+  text-underline-offset: 4px;
+  transition: color 0.25s var(--ease-suave);
+}
+.rod__email:hover {
+  color: var(--ouro-claro);
+}
+
+/* ------------------------------------------------------ colunas do meio */
+.rod__titulo {
+  margin-top: 4px;
+  font: 700 clamp(13px, 1.1vw, 18px) / 1.2 var(--f-rotulo);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--branco);
+}
+
+.rod__links {
+  margin: clamp(12px, 1.18vw, 20px) 0 0;
+}
+.rod__links a {
+  display: inline-block;
+  font: 400 clamp(15px, 1.12vw, 18px) / 1.93 var(--f-corpo);
+  color: #e2e2e1;
+  transition: color 0.25s var(--ease-suave), transform 0.3s var(--ease);
+}
+.rod__links a:hover {
+  color: var(--ouro-claro);
+  transform: translateX(3px);
+}
+
+/* redes: alvo de 44 px, ícone de 24 px alinhado à esquerda da coluna */
+.rod__redes {
+  display: flex;
+  gap: clamp(4px, 0.63vw, 12px);
+  margin: clamp(10px, 1.04vw, 18px) 0 0 -10px;
+}
+.rod__rede {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--branco);
+  transition: color 0.25s var(--ease-suave), transform 0.3s var(--ease);
+}
+.rod__rede svg {
+  width: 24px;
+  height: 24px;
+}
+.rod__rede[href]:hover {
+  color: var(--ouro-claro);
+  transform: translateY(-2px);
+}
+/* endereço ainda não configurado: mesma cara, sem parecer quebrado */
+.rod__rede[data-pendente] {
+  cursor: default;
+}
+
+.rod__filete {
+  width: clamp(40px, 3.8vw, 64px);
+  height: 2px;
+  margin-top: clamp(22px, 2.15vw, 36px);
+}
+
+.rod__valores {
+  margin: clamp(14px, 1.46vw, 24px) 0 0;
+}
+.rod__valores li {
+  font: 700 clamp(12px, 0.94vw, 15.5px) / 2.2 var(--f-rotulo);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ccab67;
+}
+
+/* ------------------------------------------------------------- pilha */
+.rod__pilha {
+  justify-self: end;
+  margin-top: clamp(64px, 7.6vw, 132px);
+  padding-right: 4px;
+  white-space: nowrap;
+}
+.rod .rod__pilha {
+  font-size: clamp(12px, 0.9vw, 15px);
+  letter-spacing: 0.19em;
+  line-height: 2.1;
+  color: #e2e2e0;
+  text-shadow: 0 0 12px var(--preto-rodape), 0 0 3px var(--preto-rodape);
+}
+.rod__pilha > span {
+  display: block;
+}
+.rod__pilha > span:last-child {
+  color: #d2d2d0;
+}
+.rod .rod__pilha .rod__apagado {
+  color: #858583;
+}
+
+/* -------------------------------------------------------- linha de baixo */
+.rod__base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 32px;
+  margin-top: clamp(40px, 3.6vw, 64px);
+  padding-top: clamp(20px, 1.9vw, 32px);
+  border-top: 2px solid rgba(255, 245, 230, 0.15);
+  font: 400 clamp(12.5px, 0.9vw, 14px) / 1.5 var(--f-corpo);
+  color: #8f8f8a;
+}
+.rod__credito a {
+  color: #a9a9a4;
+  transition: color 0.25s var(--ease-suave);
+}
+.rod__credito a:hover {
+  color: var(--ouro-claro);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rod__links a:hover,
+  .rod__rede[href]:hover {
+    transform: none;
+  }
+}
+
+/* ============================================ 768 a 1099: três colunas
+   Marca em cima, navegação e redes embaixo, pilha à direita sobre o globo. */
+@media (max-width: 1099px) {
+  .rod__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr);
+    grid-template-areas:
+      'marca marca pilha'
+      'nav siga pilha';
+    row-gap: clamp(40px, 5vw, 56px);
+  }
+  .rod__pilha {
+    align-self: end;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+  /* aqui a pilha fica em cima do globo e a linha cai perto do pé dele:
+     a máscara de desktop apagaria o globo atrás da pilha */
+  .rod__globo {
+    top: auto;
+    bottom: 64px;
+    right: -9vw;
+    width: 54vw;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, rgba(0, 0, 0, 0.25) 74%, transparent 90%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 52%, rgba(0, 0, 0, 0.25) 74%, transparent 90%);
+  }
+  .rod__marca-globo {
+    width: clamp(84px, 10.4vw, 108px);
+  }
+  .rod__marca-fipv {
+    width: clamp(150px, 19vw, 196px);
+  }
+  .rod__marca-nome {
+    font-size: clamp(12px, 1.4vw, 14px);
+  }
+  .rod__titulo {
+    font-size: 14px;
+  }
+  .rod__valores li {
+    font-size: 13px;
+  }
+  .rod .rod__pilha {
+    font-size: 13px;
+  }
+}
+
+/* =================================================== celular: < 768 */
+@media (max-width: 767px) {
+  .rod {
+    padding-top: 48px;
+    padding-bottom: 36px;
+  }
+  .rod__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(166px, 1fr);
+    grid-template-areas:
+      'marca marca'
+      'nav siga'
+      'nav pilha';
+    grid-template-rows: auto auto 1fr;
+    column-gap: 20px;
+    row-gap: 36px;
+  }
+  .rod__marca {
+    gap: 14px;
+  }
+  .rod__marca-globo {
+    width: 80px;
+  }
+  .rod__marca-fipv {
+    width: 150px;
+  }
+  .rod__marca-nome {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+  .rod__frase {
+    margin-top: 22px;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .rod__titulo {
+    margin-top: 0;
+    font-size: 13px;
+  }
+  .rod__links {
+    margin-top: 8px;
+  }
+  .rod__links a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .rod__redes {
+    gap: 0;
+    margin-top: 8px;
+  }
+  .rod__filete {
+    width: 44px;
+    margin-top: 18px;
+  }
+  .rod__valores {
+    margin-top: 12px;
+  }
+  .rod__valores li {
+    font-size: 12px;
+    line-height: 2.35;
+    letter-spacing: 0.2em;
+  }
+  .rod__pilha {
+    justify-self: start;
+    align-self: start;
+    margin: 0;
+  }
+  .rod .rod__pilha {
+    font-size: 12px;
+    line-height: 2.1;
+  }
+  .rod__globo {
+    top: auto;
+    bottom: 96px;
+    right: -30vw;
+    width: max(300px, 86vw);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 60%, transparent 92%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 60%, transparent 92%);
+  }
+  .rod__base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 13px;
+  }
+}

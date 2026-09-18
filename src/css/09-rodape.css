@@ -1,0 +1,410 @@
+/* ==========================================================================
+   09 · Rodapé. Quatro colunas no desktop (marca, navegação, redes e a pilha
+   por cima do globo escuro cortado pela borda), linha fina e copyright.
+   Medidas calibradas no recorte do mockup em 1440 px.
+   ========================================================================== */
+
+/* O fundo sai um tom abaixo de --preto-rodape (#0e0e0e) porque o grão
+   branco por cima clareia a média de volta pra perto de #0e0e0e. */
+.rod {
+  --rod-ruido: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: #0a0a0a;
+  color: var(--texto-escuro);
+  padding-top: clamp(48px, 3.7vw, 72px);
+  padding-bottom: clamp(40px, 5.2vw, 92px);
+}
+
+/* Grão de filme. O --ruido da base pinta pontos pretos, que no modo screen
+   não aparecem; aqui o mesmo ruído sai em branco. */
+.rod::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--rod-ruido);
+  background-size: 240px 240px;
+  opacity: 0.035;
+  mix-blend-mode: screen;
+}
+
+/* Listras verticais finas de película, como no fundo do mockup. Períodos
+   primos entre si pra não formar desenho repetido. */
+.rod::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 5px, rgba(255, 255, 255, 0.009) 7px, transparent 9px 17px),
+    repeating-linear-gradient(90deg, transparent 0, rgba(0, 0, 0, 0.14) 2px, transparent 4px 23px),
+    repeating-linear-gradient(90deg, transparent 0 20px, rgba(255, 255, 255, 0.008) 23px, transparent 26px 41px);
+}
+
+/* Globo decorativo: o logo em cinza escuro e metálico, cortado pela borda
+   direita. Acompanha a borda do .wrap até 1920 e depois para de fugir. */
+.rod__globo {
+  position: absolute;
+  z-index: -2;
+  top: 0.2vw;
+  right: calc(max((100% - var(--wrap)) / 2 - 180px, 0px) - 1.2vw);
+  width: min(34.6vw, 620px);
+  pointer-events: none;
+  user-select: none;
+  /* corpo escuro da esfera por trás dos traços: no mockup o globo é mais
+     escuro que o fundo, não só um desenho de linhas. Fica na caixa e não na
+     imagem, senão o reflexo do drop-shadow clareia o disco. */
+  background:
+    radial-gradient(ellipse 26% 20% at 44% 24%, rgba(255, 255, 255, 0.03), transparent 100%),
+    radial-gradient(ellipse 42.5% 46% at 57.5% 49%, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.22) 94%, transparent 100%);
+  /* acaba antes da linha divisória: a faixa do copyright fica limpa */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 48%, rgba(0, 0, 0, 0.3) 62%, transparent 72%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 48%, rgba(0, 0, 0, 0.3) 62%, transparent 72%);
+}
+/* sem opacity: o brilho dos traços vem só do filtro */
+.rod__globo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) brightness(0.28) contrast(1.6) drop-shadow(0 -1.5px 0 rgba(255, 255, 255, 0.15)) drop-shadow(0 10px 16px rgba(0, 0, 0, 0.9));
+}
+
+.rod__wrap {
+  position: relative;
+}
+
+/* ------------------------------------------------------------ grade */
+.rod__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 443fr) minmax(0, 238fr) minmax(0, 474fr) auto;
+  grid-template-areas: 'marca nav siga pilha';
+  align-items: start;
+}
+.rod__marca-bloco {
+  grid-area: marca;
+  min-width: 0;
+}
+.rod__nav {
+  grid-area: nav;
+}
+.rod__siga {
+  grid-area: siga;
+}
+.rod__pilha {
+  grid-area: pilha;
+}
+
+/* ------------------------------------------------------------ marca */
+.rod__marca {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(14px, 1.4vw, 24px);
+  max-width: 100%;
+}
+.rod__marca-globo {
+  flex: none;
+  width: clamp(84px, 8.9vw, 150px);
+  height: auto;
+}
+.rod__marca-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding-top: 0.5vw;
+}
+.rod__marca-fipv {
+  width: clamp(140px, 15.4vw, 256px);
+  height: auto;
+}
+.rod__marca-nome {
+  display: block;
+  margin-top: clamp(8px, 0.75vw, 13px);
+  font: 600 clamp(12px, 0.97vw, 16px) / 1.3 var(--f-rotulo);
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  color: var(--branco);
+}
+.rod__frase {
+  margin-top: clamp(24px, 2.25vw, 40px);
+  font: 600 clamp(15px, 1.25vw, 21px) / 1.92 var(--f-rotulo);
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  color: var(--branco);
+}
+.rod__frase > span {
+  display: block;
+}
+.rod__email {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 6px;
+  font-size: var(--t-corpo);
+  color: var(--cinza-medio);
+  text-decoration: underline;
+  text-decoration-color: rgba(201, 162, 90, 0.5);
+  text-underline-offset: 4px;
+  transition: color 0.25s var(--ease-suave);
+}
+.rod__email:hover {
+  color: var(--ouro-claro);
+}
+
+/* ------------------------------------------------------ colunas do meio */
+.rod__titulo {
+  margin-top: 4px;
+  font: 700 clamp(13px, 1.1vw, 18px) / 1.2 var(--f-rotulo);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--branco);
+}
+
+.rod__links {
+  margin: clamp(12px, 1.18vw, 20px) 0 0;
+}
+.rod__links a {
+  display: inline-block;
+  font: 400 clamp(15px, 1.12vw, 18px) / 1.93 var(--f-corpo);
+  color: #e2e2e1;
+  transition: color 0.25s var(--ease-suave), transform 0.3s var(--ease);
+}
+.rod__links a:hover {
+  color: var(--ouro-claro);
+  transform: translateX(3px);
+}
+
+/* redes: alvo de 44 px, ícone de 24 px alinhado à esquerda da coluna */
+.rod__redes {
+  display: flex;
+  gap: clamp(4px, 0.63vw, 12px);
+  margin: clamp(10px, 1.04vw, 18px) 0 0 -10px;
+}
+.rod__rede {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--branco);
+  transition: color 0.25s var(--ease-suave), transform 0.3s var(--ease);
+}
+.rod__rede svg {
+  width: 24px;
+  height: 24px;
+}
+.rod__rede[href]:hover {
+  color: var(--ouro-claro);
+  transform: translateY(-2px);
+}
+/* endereço ainda não configurado: mesma cara, sem parecer quebrado */
+.rod__rede[data-pendente] {
+  cursor: default;
+}
+
+.rod__filete {
+  width: clamp(40px, 3.8vw, 64px);
+  height: 2px;
+  margin-top: clamp(22px, 2.15vw, 36px);
+}
+
+.rod__valores {
+  margin: clamp(14px, 1.46vw, 24px) 0 0;
+}
+.rod__valores li {
+  font: 700 clamp(12px, 0.94vw, 15.5px) / 2.2 var(--f-rotulo);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ccab67;
+}
+
+/* ------------------------------------------------------------- pilha */
+.rod__pilha {
+  justify-self: end;
+  margin-top: clamp(64px, 7.6vw, 132px);
+  padding-right: 4px;
+  white-space: nowrap;
+}
+.rod .rod__pilha {
+  font-size: clamp(12px, 0.9vw, 15px);
+  letter-spacing: 0.19em;
+  line-height: 2.1;
+  color: #e2e2e0;
+  text-shadow: 0 0 12px var(--preto-rodape), 0 0 3px var(--preto-rodape);
+}
+.rod__pilha > span {
+  display: block;
+}
+.rod__pilha > span:last-child {
+  color: #d2d2d0;
+}
+.rod .rod__pilha .rod__apagado {
+  color: #858583;
+}
+
+/* -------------------------------------------------------- linha de baixo */
+.rod__base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 32px;
+  margin-top: clamp(40px, 3.6vw, 64px);
+  padding-top: clamp(20px, 1.9vw, 32px);
+  border-top: 2px solid rgba(255, 245, 230, 0.15);
+  font: 400 clamp(12.5px, 0.9vw, 14px) / 1.5 var(--f-corpo);
+  color: #8f8f8a;
+}
+.rod__credito a {
+  color: #a9a9a4;
+  transition: color 0.25s var(--ease-suave);
+}
+.rod__credito a:hover {
+  color: var(--ouro-claro);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rod__links a:hover,
+  .rod__rede[href]:hover {
+    transform: none;
+  }
+}
+
+/* ============================================ 768 a 1099: três colunas
+   Marca em cima, navegação e redes embaixo, pilha à direita sobre o globo. */
+@media (max-width: 1099px) {
+  .rod__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr);
+    grid-template-areas:
+      'marca marca pilha'
+      'nav siga pilha';
+    row-gap: clamp(40px, 5vw, 56px);
+  }
+  .rod__pilha {
+    align-self: end;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+  /* aqui a pilha fica em cima do globo e a linha cai perto do pé dele:
+     a máscara de desktop apagaria o globo atrás da pilha */
+  .rod__globo {
+    top: auto;
+    bottom: 64px;
+    right: -9vw;
+    width: 54vw;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, rgba(0, 0, 0, 0.25) 74%, transparent 90%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 52%, rgba(0, 0, 0, 0.25) 74%, transparent 90%);
+  }
+  .rod__marca-globo {
+    width: clamp(84px, 10.4vw, 108px);
+  }
+  .rod__marca-fipv {
+    width: clamp(150px, 19vw, 196px);
+  }
+  .rod__marca-nome {
+    font-size: clamp(12px, 1.4vw, 14px);
+  }
+  .rod__titulo {
+    font-size: 14px;
+  }
+  .rod__valores li {
+    font-size: 13px;
+  }
+  .rod .rod__pilha {
+    font-size: 13px;
+  }
+}
+
+/* =================================================== celular: < 768 */
+@media (max-width: 767px) {
+  .rod {
+    padding-top: 48px;
+    padding-bottom: 36px;
+  }
+  .rod__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(166px, 1fr);
+    grid-template-areas:
+      'marca marca'
+      'nav siga'
+      'nav pilha';
+    grid-template-rows: auto auto 1fr;
+    column-gap: 20px;
+    row-gap: 36px;
+  }
+  .rod__marca {
+    gap: 14px;
+  }
+  .rod__marca-globo {
+    width: 80px;
+  }
+  .rod__marca-fipv {
+    width: 150px;
+  }
+  .rod__marca-nome {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+  .rod__frase {
+    margin-top: 22px;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .rod__titulo {
+    margin-top: 0;
+    font-size: 13px;
+  }
+  .rod__links {
+    margin-top: 8px;
+  }
+  .rod__links a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .rod__redes {
+    gap: 0;
+    margin-top: 8px;
+  }
+  .rod__filete {
+    width: 44px;
+    margin-top: 18px;
+  }
+  .rod__valores {
+    margin-top: 12px;
+  }
+  .rod__valores li {
+    font-size: 12px;
+    line-height: 2.35;
+    letter-spacing: 0.2em;
+  }
+  .rod__pilha {
+    justify-self: start;
+    align-self: start;
+    margin: 0;
+  }
+  .rod .rod__pilha {
+    font-size: 12px;
+    line-height: 2.1;
+  }
+  .rod__globo {
+    top: auto;
+    bottom: 96px;
+    right: -30vw;
+    width: max(300px, 86vw);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 60%, transparent 92%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 60%, transparent 92%);
+  }
+  .rod__base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 13px;
+  }
+}

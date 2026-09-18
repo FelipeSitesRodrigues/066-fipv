@@ -1,0 +1,56 @@
+    <!-- 02 · Sobre a FIPV: título em três tamanhos, texto no meio e globo com a América do Sul -->
+    <section class="sec sec--claro sobre" id="sobre" aria-labelledby="sobre-titulo">
+      <div class="wrap sobre__grade">
+        <p class="rotulo sobre__rotulo" data-revelar data-i18n="sobre.rotulo">Sobre a FIPV</p>
+
+        <h2 class="titulo sobre__titulo" id="sobre-titulo" data-revelar="esquerda" style="--atraso: 1">
+          <span class="sobre__l1" data-i18n="sobre.titulo1">Unindo</span>
+          <span class="sobre__l2"><span class="ouro" data-i18n="sobre.titulo2">nações</span></span>
+          <span class="sobre__l3" data-i18n="sobre.titulo3">através do jogo.</span>
+        </h2>
+
+        <div class="sobre__texto">
+          <p class="texto texto--lead sobre__lead" data-revelar style="--atraso: 2" data-i18n="sobre.lead">A FIPV, Federação Internacional de Pikivoley, nasce para regulamentar, organizar e difundir o Pikivoley no mundo inteiro.</p>
+          <p class="texto sobre__corpo" data-revelar style="--atraso: 3" data-i18n="sobre.corpo">Somos uma federação internacional, sem sede única, que trabalha pelo crescimento do esporte, pela integração entre países e pela construção de um futuro global para o Pikivoley.</p>
+          <div class="sobre__fecho" data-revelar style="--atraso: 4">
+            <span class="filete sobre__filete" aria-hidden="true"></span>
+            <p class="sobre__lema" data-i18n="sobre.lema"><span>Da América do Sul para o mundo.</span> <span>Tem chão, tem jogo.</span></p>
+          </div>
+        </div>
+
+        <figure class="sobre__globo" data-revelar="zoom" style="--atraso: 2">
+          <span class="sobre__esfera">
+          <img class="sobre__globo-img"
+               src="/assets/img/globo-america-do-sul-520.webp"
+               srcset="/assets/img/globo-america-do-sul-520.webp 520w, /assets/img/globo-america-do-sul-1000.webp 1000w"
+               sizes="(min-width: 1100px) min(26.5vw, 460px), (min-width: 768px) 42vw, min(47vw, 330px)"
+               width="1000" height="1000"
+               alt="Globo terrestre com a América do Sul destacada em dourado"
+               data-i18n-attr="alt:sobre.globo_alt"
+               loading="lazy" decoding="async">
+          </span>
+          <p class="pilha sobre__pilha" aria-hidden="true" data-i18n="sobre.pilha"><span>Da</span><span>América</span><span>do Sul</span><span>para</span><span>o mundo.</span></p>
+        </figure>
+      </div>
+      <!-- Globo de vidro, como no mockup. Curvas por canal clareiam e
+           achatam o ouro do continente e tiram o amarelo do marfim; o alfa
+           sai do azul (a esfera clara fica meio transparente e deixa o papel
+           aparecer, o continente continua sólido); e um grão fino entra só no
+           continente, no lugar do pontilhado do mockup. -->
+      <svg class="sobre__filtros" width="0" height="0" aria-hidden="true" focusable="false">
+        <filter id="sobre-vidro" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+          <feComponentTransfer result="curvas">
+            <feFuncR type="table" tableValues="0.1 0.2 0.3 0.42 0.56 0.64 0.69 0.735 0.82 0.9 1"/>
+            <feFuncG type="table" tableValues="0.08 0.17 0.3 0.46 0.53 0.57 0.625 0.715 0.815 0.925 1"/>
+            <feFuncB type="table" tableValues="0.12 0.25 0.3 0.345 0.41 0.52 0.64 0.76 0.87 0.93 1"/>
+          </feComponentTransfer>
+          <feColorMatrix in="curvas" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 -1.45 0 2" result="vidro"/>
+          <feColorMatrix in="curvas" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 -6 0 3.3" result="terra"/>
+          <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="7" result="ruido"/>
+          <feColorMatrix in="ruido" type="matrix" values="0 0 0 0 0.98  0 0 0 0 0.9  0 0 0 0 0.74  0.9 0 0 0 -0.42" result="grao"/>
+          <feComposite in="grao" in2="terra" operator="in" result="grao-terra"/>
+          <feComposite in="grao-terra" in2="vidro" operator="over"/>
+          <feComposite in2="SourceAlpha" operator="in"/>
+        </filter>
+      </svg>
+    </section>

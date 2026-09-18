@@ -1,0 +1,202 @@
+{
+  "hero-desktop-960.webp": {
+    "w": 960,
+    "h": 504,
+    "kb": 89
+  },
+  "hero-desktop-1280.webp": {
+    "w": 1280,
+    "h": 672,
+    "kb": 134
+  },
+  "hero-desktop-1731.webp": {
+    "w": 1731,
+    "h": 909,
+    "kb": 192
+  },
+  "hero-desktop-1731.jpg": {
+    "w": 1731,
+    "h": 909,
+    "kb": 262
+  },
+  "hero-mobile-480.webp": {
+    "w": 480,
+    "h": 853,
+    "kb": 80
+  },
+  "hero-mobile-720.webp": {
+    "w": 720,
+    "h": 1279,
+    "kb": 138
+  },
+  "hero-mobile-941.webp": {
+    "w": 941,
+    "h": 1672,
+    "kb": 192
+  },
+  "hero-mobile-941.jpg": {
+    "w": 941,
+    "h": 1672,
+    "kb": 256
+  },
+  "hero-mobile-atleta-480.webp": {
+    "w": 480,
+    "h": 853,
+    "kb": 22
+  },
+  "hero-mobile-atleta-720.webp": {
+    "w": 720,
+    "h": 1279,
+    "kb": 37
+  },
+  "hero-mobile-atleta-941.webp": {
+    "w": 941,
+    "h": 1672,
+    "kb": 48
+  },
+  "foto-01-terra-480.webp": {
+    "w": 480,
+    "h": 252,
+    "kb": 46
+  },
+  "foto-01-terra-800.webp": {
+    "w": 800,
+    "h": 420,
+    "kb": 114
+  },
+  "foto-01-terra-1200.webp": {
+    "w": 1200,
+    "h": 630,
+    "kb": 208
+  },
+  "foto-01-terra-1600.webp": {
+    "w": 1600,
+    "h": 840,
+    "kb": 289
+  },
+  "foto-01-terra-1600.jpg": {
+    "w": 1600,
+    "h": 840,
+    "kb": 319
+  },
+  "foto-02-grama-480.webp": {
+    "w": 480,
+    "h": 252,
+    "kb": 39
+  },
+  "foto-02-grama-800.webp": {
+    "w": 800,
+    "h": 420,
+    "kb": 103
+  },
+  "foto-02-grama-1200.webp": {
+    "w": 1200,
+    "h": 630,
+    "kb": 190
+  },
+  "foto-02-grama-1600.webp": {
+    "w": 1600,
+    "h": 840,
+    "kb": 262
+  },
+  "foto-02-grama-1600.jpg": {
+    "w": 1600,
+    "h": 840,
+    "kb": 294
+  },
+  "foto-03-noturna-480.webp": {
+    "w": 480,
+    "h": 627,
+    "kb": 69
+  },
+  "foto-03-noturna-800.webp": {
+    "w": 800,
+    "h": 1046,
+    "kb": 145
+  },
+  "foto-03-noturna-1097.webp": {
+    "w": 1097,
+    "h": 1434,
+    "kb": 213
+  },
+  "foto-03-noturna-1097.jpg": {
+    "w": 1097,
+    "h": 1434,
+    "kb": 266
+  },
+  "foto-04-cabeceio-480.webp": {
+    "w": 480,
+    "h": 640,
+    "kb": 83
+  },
+  "foto-04-cabeceio-800.webp": {
+    "w": 800,
+    "h": 1067,
+    "kb": 159
+  },
+  "foto-04-cabeceio-1086.webp": {
+    "w": 1086,
+    "h": 1448,
+    "kb": 222
+  },
+  "foto-04-cabeceio-1086.jpg": {
+    "w": 1086,
+    "h": 1448,
+    "kb": 264
+  },
+  "logo-globo-96.webp": {
+    "w": 96,
+    "h": 89,
+    "kb": 8
+  },
+  "logo-globo-192.webp": {
+    "w": 192,
+    "h": 178,
+    "kb": 21
+  },
+  "logo-globo-640.webp": {
+    "w": 640,
+    "h": 592,
+    "kb": 108
+  },
+  "logo-globo-192.png": {
+    "w": 192,
+    "h": 178,
+    "kb": 31
+  },
+  "logo-fipv-160.webp": {
+    "w": 160,
+    "h": 34,
+    "kb": 4
+  },
+  "logo-fipv-320.webp": {
+    "w": 320,
+    "h": 68,
+    "kb": 9
+  },
+  "logo-fipv-640.webp": {
+    "w": 640,
+    "h": 137,
+    "kb": 22
+  },
+  "logo-fipv-320.png": {
+    "w": 320,
+    "h": 68,
+    "kb": 19
+  },
+  "favicon-32.png": {
+    "w": 32,
+    "h": 32,
+    "kb": 2
+  },
+  "apple-touch-icon.png": {
+    "w": 180,
+    "h": 180,
+    "kb": 18
+  },
+  "icon-512.png": {
+    "w": 512,
+    "h": 512,
+    "kb": 95
+  }
+}
