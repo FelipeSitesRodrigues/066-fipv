@@ -106,8 +106,9 @@ async function desktop(rota) {
   })
 
   await bloco('menu', async () => {
-    for (const id of ['sobre', 'esporte', 'competicoes', 'galeria', 'contato', 'inicio']) {
-      await page.click(`.cab__link[href="#${id}"]`)
+    // o menu não tem mais 'Início': o topo se testa pelo logo
+    for (const id of ['sobre', 'esporte', 'competicoes', 'categorias', 'diretoria', 'galeria', 'contato', 'inicio']) {
+      await page.click(id === 'inicio' ? '.cab__marca' : `.cab__link[href="#${id}"]`)
       await esperar(450)
       const r = await $((id) => {
         const topo = document.getElementById(id).getBoundingClientRect().top
@@ -118,7 +119,7 @@ async function desktop(rota) {
         }
       }, id)
       const encosta = id === 'inicio' ? r.topo === 0 : r.fim || Math.abs(r.topo - cabH) < 8
-      ok(r.ativo === `#${id}` && encosta, `menu #${id}: ativo ${r.ativo}, topo da seção ${r.topo}px (header ${Math.round(cabH)}px)`)
+      ok((id === 'inicio' || r.ativo === `#${id}`) && encosta, `menu #${id}: ativo ${r.ativo}, topo da seção ${r.topo}px (header ${Math.round(cabH)}px)`)
     }
   })
 

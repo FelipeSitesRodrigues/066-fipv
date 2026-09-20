@@ -380,6 +380,7 @@
   .cab__lista li:nth-child(4) .cab__link { --n: 3; }
   .cab__lista li:nth-child(5) .cab__link { --n: 4; }
   .cab__lista li:nth-child(6) .cab__link { --n: 5; }
+  .cab__lista li:nth-child(7) .cab__link { --n: 6; }
   .cab__link::after {
     display: none;
   }

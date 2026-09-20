@@ -1,0 +1,21 @@
+{
+  "dir.rotulo": "Directiva",
+  "dir.titulo": "<span>Del mando</span> <span class=\"dir__recuo\">a cada</span> <span class=\"ouro\">continente.</span>",
+  "dir.lead": "La FIPV se organiza en una Directiva Ejecutiva y en cinco Directivas Continentales, una para cada región del mundo.",
+  "dir.executiva": "Directiva ejecutiva",
+  "dir.x1": "Presidencia",
+  "dir.x1c": "Presidente",
+  "dir.x2": "Vicepresidencia Administrativa",
+  "dir.x2c": "Vicepresidente Administrativo",
+  "dir.x3": "Vicepresidencia Financiera",
+  "dir.x3c": "Vicepresidente Financiero",
+  "dir.x4": "Eventos y Competencias",
+  "dir.x4c": "Director de Eventos y Competencias",
+  "dir.x5": "Arbitraje y Reglas",
+  "dir.x5c": "Director de Arbitraje y Reglas",
+  "dir.continentais": "Directivas continentales",
+  "dir.c1": "América del Sur",
+  "dir.c2": "América del Norte, Central y el Caribe",
+  "dir.c5": "Asia y Oceanía",
+  "dir.cc": "Director Continental"
+}

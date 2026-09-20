@@ -1,0 +1,263 @@
+/* ==========================================================================
+   07b · Categorias e estilos. Seção clara.
+   Desktop: título e lead à esquerda, naipes e categorias em duas colunas à
+   direita; embaixo, os 4 estilos em cards (o Piki Triathlon em preto, como
+   destaque) e a faixa das regras em finalização.
+   ========================================================================== */
+
+.cat__topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(40px, 5.6vw, 110px);
+  align-items: start;
+}
+.cat__titulo {
+  margin-top: clamp(16px, 1.4vw, 24px);
+}
+.cat__recuo {
+  padding-left: 0.39em;
+}
+.cat__lead {
+  margin-top: clamp(20px, 1.8vw, 32px);
+  max-width: 30em;
+}
+
+.cat__listas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 56px);
+  padding-top: clamp(6px, 1vw, 18px);
+}
+.cat__grupo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  font: 600 var(--t-rotulo) / 1.2 var(--f-rotulo);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ouro-escuro);
+}
+.cat__grupo-titulo::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--linha-clara);
+}
+.cat__lista {
+  margin-top: clamp(10px, 1vw, 16px);
+}
+.cat__item {
+  display: grid;
+  gap: 2px;
+  padding-block: clamp(14px, 1.2vw, 20px);
+  border-bottom: 1px solid var(--linha-clara);
+}
+.cat__nome {
+  font: italic 400 clamp(30px, 2.5vw, 44px) / 1 var(--f-display);
+  font-synthesis: style;
+  text-transform: uppercase;
+  color: var(--tinta);
+}
+.cat__desc {
+  font: 600 var(--t-mini) / 1.4 var(--f-rotulo);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--texto-claro);
+}
+
+/* ---------------------------------------------------------------- estilos */
+.cat__estilos-titulo {
+  margin-top: clamp(56px, 5.6vw, 100px);
+}
+.cat__estilos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.35fr);
+  gap: clamp(12px, 1.2vw, 20px);
+  margin-top: clamp(18px, 1.6vw, 28px);
+}
+.estilo {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: clamp(22px, 2vw, 34px);
+  background: var(--branco);
+  border: 1px solid var(--linha-clara);
+}
+.estilo::before {
+  content: '';
+  position: absolute;
+  inset: -1px -1px auto;
+  height: 3px;
+  background: var(--ouro-grad-linha);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+.estilo:hover::before {
+  transform: none;
+}
+.estilo__formato {
+  font: italic 400 clamp(60px, 5.6vw, 104px) / 0.9 var(--f-display);
+  font-synthesis: style;
+}
+.estilo__nome {
+  font: 700 clamp(14px, 1.1vw, 17px) / 1.3 var(--f-rotulo);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tinta);
+}
+
+/* mini quadra: jogadores de cada lado da rede, na inclinação do logo */
+.estilo__jogo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 26px;
+  margin-bottom: clamp(8px, 1vw, 16px);
+}
+.estilo__lado {
+  display: flex;
+  gap: 4px;
+}
+.estilo__lado i {
+  width: 7px;
+  height: 18px;
+  background: var(--tinta);
+  transform: skewX(-14deg);
+}
+.estilo__rede {
+  width: 2px;
+  height: 26px;
+  background: var(--ouro-grad-claro);
+}
+
+/* Piki Triathlon: o card de destaque, em preto */
+.estilo--tri {
+  align-content: end;
+  background:
+    radial-gradient(80% 100% at 50% 120%, rgba(216, 175, 94, 0.2), transparent 70%),
+    var(--preto);
+  border-color: var(--preto);
+}
+.estilo--tri::before {
+  transform: none;
+}
+.estilo__formato--tri {
+  font-size: clamp(34px, 2.9vw, 54px);
+  line-height: 1;
+}
+.estilo--tri .estilo__nome {
+  color: var(--branco);
+}
+.estilo__desc {
+  font-size: var(--t-corpo);
+  line-height: 1.5;
+  color: var(--texto-escuro);
+}
+
+/* ------------------------------------------------------------------ regras */
+.regras {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(20px, 3.4vw, 64px);
+  align-items: center;
+  margin-top: clamp(40px, 4vw, 72px);
+  padding: clamp(22px, 2.2vw, 36px) clamp(22px, 2.6vw, 44px);
+  border: 1px dashed rgba(7, 7, 7, 0.28);
+}
+.regras__cabeca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+}
+.regras__titulo {
+  font: italic 400 clamp(28px, 2.4vw, 42px) / 1 var(--f-display);
+  font-synthesis: style;
+  text-transform: uppercase;
+  color: var(--tinta);
+}
+.regras__selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.55em 0.9em;
+  font: 700 var(--t-mini) / 1 var(--f-rotulo);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tinta);
+  background: var(--osso-2);
+}
+/* ponto piscando devagar: está em andamento */
+.regras__selo::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ouro-escuro);
+  animation: regras-pulso 2.4s ease-in-out infinite;
+}
+@keyframes regras-pulso {
+  50% {
+    opacity: 0.25;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .regras__selo::before {
+    animation: none;
+  }
+}
+.regras__texto {
+  max-width: 60em;
+}
+
+/* ===================================================== tablet 768 a 1099 */
+@media (max-width: 1099px) {
+  .cat__topo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cat__estilos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .estilo--tri {
+    grid-column: 1 / -1;
+  }
+  .regras {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ======================================================== celular < 768 */
+@media (max-width: 767px) {
+  .cat__listas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+  .cat__estilos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .estilo {
+    padding: 16px 12px 18px;
+  }
+  .estilo__formato {
+    font-size: clamp(38px, 11vw, 60px);
+  }
+  .estilo__nome {
+    font-size: 13px;
+  }
+  .estilo__lado i {
+    width: 5px;
+    height: 13px;
+  }
+  .estilo__nome {
+    letter-spacing: 0.06em;
+  }
+  .estilo--tri {
+    grid-column: 1 / -1;
+  }
+  .estilo__formato--tri {
+    font-size: clamp(28px, 8.6vw, 40px);
+  }
+}

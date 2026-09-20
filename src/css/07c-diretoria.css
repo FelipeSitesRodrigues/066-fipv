@@ -1,0 +1,154 @@
+/* ==========================================================================
+   07c · Diretoria. Seção escura.
+   Cabeçalho com título à esquerda e lead à direita; embaixo dois grupos de
+   cinco cards (executiva e continentais). No celular os cards viram linhas.
+   Sem nome e foto por enquanto: só área e cargo.
+   ========================================================================== */
+
+.dir__cabeca {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 24px clamp(40px, 5.6vw, 110px);
+  align-items: end;
+}
+.dir__titulo {
+  margin-top: clamp(16px, 1.4vw, 24px);
+}
+.dir__recuo {
+  padding-left: 0.39em;
+}
+.dir__lead {
+  max-width: 28em;
+}
+
+.dir__grupo {
+  margin-top: clamp(48px, 4.6vw, 84px);
+}
+.dir__grupo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  font: 600 var(--t-rotulo) / 1.2 var(--f-rotulo);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ouro-claro);
+}
+.dir__grupo-titulo::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--linha-escura);
+}
+
+.dir__cards {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(10px, 1vw, 16px);
+  margin-top: clamp(18px, 1.6vw, 28px);
+}
+.dir__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: clamp(170px, 13vw, 230px);
+  padding: clamp(18px, 1.6vw, 28px);
+  background: linear-gradient(180deg, var(--carvao) 0%, #0e0e0e 100%);
+  border: 1px solid var(--linha-escura);
+  transition: border-color 0.4s var(--ease-suave);
+}
+.dir__card::before {
+  content: '';
+  position: absolute;
+  inset: -1px -1px auto;
+  height: 2px;
+  background: var(--ouro-grad-linha);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+.dir__card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.dir__card:hover::before,
+.dir__card--pres::before {
+  transform: none;
+}
+.dir__num {
+  font: italic 400 clamp(26px, 2vw, 34px) / 1 var(--f-display);
+  font-synthesis: style;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(237, 205, 134, 0.7);
+}
+.dir__globo {
+  width: 30px;
+  height: 30px;
+  color: var(--ouro);
+}
+.dir__area {
+  margin-top: auto;
+  font: italic 400 clamp(21px, 1.6vw, 28px) / 1.05 var(--f-display);
+  font-synthesis: style;
+  text-transform: uppercase;
+  color: var(--branco);
+  hyphens: manual;
+}
+.dir__cargo {
+  font: 600 var(--t-mini) / 1.4 var(--f-rotulo);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ouro-claro);
+}
+@media (forced-colors: active) {
+  .dir__num {
+    -webkit-text-stroke: 0;
+    color: CanvasText;
+  }
+}
+
+/* ===================================================== tablet 768 a 1099 */
+@media (max-width: 1099px) {
+  .dir__cabeca {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dir__cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ======================================================== celular < 768:
+   cada card vira uma linha: número (ou globo) | área e cargo */
+@media (max-width: 767px) {
+  .dir__cards {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .dir__card {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    grid-template-areas:
+      'marca area'
+      'marca cargo';
+    column-gap: 14px;
+    row-gap: 4px;
+    align-items: center;
+    min-height: 0;
+    padding: 16px 18px;
+  }
+  .dir__num,
+  .dir__globo {
+    grid-area: marca;
+  }
+  .dir__globo {
+    width: 28px;
+    height: 28px;
+  }
+  .dir__area {
+    grid-area: area;
+    margin-top: 0;
+    font-size: 22px;
+  }
+  .dir__cargo {
+    grid-area: cargo;
+  }
+}

@@ -1,6 +1,7 @@
     <!-- Competições: título à esquerda, texto e botão no meio, foto aérea
          noturna real encostada na borda direita e fundida no preto. -->
     <section class="sec sec--escuro comp" id="competicoes" aria-labelledby="comp-titulo">
+      <div class="comp__abertura">
       <div class="wrap comp__grade">
         <figure class="comp__foto" data-revelar style="--atraso: 1">
           <img
@@ -27,9 +28,9 @@
         </div>
 
         <div class="comp__corpo" data-revelar style="--atraso: 2">
-          <p class="texto comp__texto" data-i18n="comp.texto">A FIPV apoia e organiza competições em<br class="comp__qb"> diferentes formatos, do nível local ao internacional,<br class="comp__qb"> sempre com foco na valorização dos atletas e<br class="comp__qb"> no crescimento do esporte.</p>
-          <a class="btn-contorno comp__btn" href="#galeria" aria-label="Saiba mais: fotos das competições na galeria" data-i18n-attr="aria-label:comp.botao_aria">
-            <span data-i18n="comp.botao">Saiba mais</span>
+          <p class="texto comp__texto" data-i18n="comp.texto">A FIPV estabelece um calendário internacional permanente, alternando a cada ano a World Cup Pikivoley e as Copas Continentais, e chancela campeonatos mundiais, copas internacionais e competições continentais.</p>
+          <a class="btn-contorno comp__btn" href="#calendario" aria-label="Ver o calendário internacional da FIPV" data-i18n-attr="aria-label:comp.botao_aria">
+            <span data-i18n="comp.botao">Ver o calendário</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5"/></svg>
           </a>
         </div>
@@ -42,5 +43,110 @@
           <span>Sempre</span>
           <span>Pikivoley.</span>
         </p>
+      </div>
+      </div>
+
+      <div class="wrap comp__mais">
+        <!-- WORLD CUP 2027 -->
+        <article class="copa" id="world-cup" aria-labelledby="copa-titulo" data-revelar>
+          <div class="copa__cabeca">
+            <p class="copa__selo" data-i18n="copa.selo">Primeira edição · Lançamento oficial da FIPV</p>
+            <h3 class="copa__titulo" id="copa-titulo">
+              <span class="copa__t1">World Cup</span>
+              <span class="copa__t2">Pikivoley <span class="ouro">2027</span></span>
+            </h3>
+            <p class="copa__sede"><span data-i18n="copa.sede">Niterói · Rio de Janeiro ·</span> <strong data-i18n="copa.pais">Brasil</strong></p>
+            <p class="texto copa__texto" data-i18n="copa.texto">A edição de 2027, no Brasil, marca o início do calendário mundial oficial da modalidade e reúne 16 países na primeira World Cup organizada sob a estrutura internacional da FIPV.</p>
+          </div>
+
+          <div class="copa__numero" aria-hidden="true">
+            <span class="copa__16"><span class="ouro ouro--escuro">16</span></span>
+            <span class="copa__16-legenda" data-i18n="copa.paises">países</span>
+          </div>
+
+          <dl class="copa__ficha">
+            <div class="copa__dado">
+              <dt data-i18n="copa.f.sede">Cidade-sede</dt>
+              <dd data-i18n="copa.f.sede_v">Niterói, Rio de Janeiro, Brasil</dd>
+            </div>
+            <div class="copa__dado">
+              <dt data-i18n="copa.f.naipe">Naipe oficial</dt>
+              <dd data-i18n="copa.f.naipe_v">Masculino</dd>
+            </div>
+            <div class="copa__dado">
+              <dt data-i18n="copa.f.participantes">Participantes</dt>
+              <dd data-i18n="copa.f.participantes_v">16 países</dd>
+            </div>
+            <div class="copa__dado">
+              <dt data-i18n="copa.f.especial">Apresentação especial</dt>
+              <dd data-i18n="copa.f.especial_v">Naipe Misto</dd>
+            </div>
+            <div class="copa__dado">
+              <dt data-i18n="copa.f.marco">Marco institucional</dt>
+              <dd data-i18n="copa.f.marco_v">Lançamento oficial da FIPV</dd>
+            </div>
+          </dl>
+        </article>
+
+        <!-- CICLO INTERNACIONAL -->
+        <div class="ciclo" id="calendario">
+          <header class="ciclo__cabeca" data-revelar>
+            <h3 class="comp__subtitulo" data-i18n="ciclo.titulo">Ciclo <span class="ouro">internacional</span></h3>
+            <p class="ciclo__regra">
+              <span class="ciclo__chave ciclo__chave--copa"><strong data-i18n="ciclo.impar">Anos ímpares</strong> <span data-i18n="ciclo.impar_v">World Cup Pikivoley</span></span>
+              <span class="ciclo__chave"><strong data-i18n="ciclo.par">Anos pares</strong> <span data-i18n="ciclo.par_v">Copas Continentais</span></span>
+            </p>
+          </header>
+
+          <ol class="ciclo__linha" role="list">
+            <li class="ciclo__ano ciclo__ano--copa" data-revelar style="--atraso: 1">
+              <span class="ciclo__num">2027</span>
+              <span class="ciclo__nome" data-i18n="ciclo.a1.nome">World Cup Pikivoley · Brasil</span>
+              <span class="ciclo__funcao" data-i18n="ciclo.a1.funcao">Mundial e lançamento oficial da FIPV</span>
+            </li>
+            <li class="ciclo__ano" data-revelar style="--atraso: 2">
+              <span class="ciclo__num">2028</span>
+              <span class="ciclo__nome" data-i18n="ciclo.a2.nome">Copas Continentais</span>
+              <span class="ciclo__funcao" data-i18n="ciclo.a2.funcao">Classificatórias para a World Cup 2029</span>
+            </li>
+            <li class="ciclo__ano ciclo__ano--copa" data-revelar style="--atraso: 3">
+              <span class="ciclo__num">2029</span>
+              <span class="ciclo__nome" data-i18n="ciclo.a3.nome">World Cup Pikivoley</span>
+              <span class="ciclo__funcao" data-i18n="ciclo.a3.funcao">Mundial</span>
+            </li>
+            <li class="ciclo__ano" data-revelar style="--atraso: 4">
+              <span class="ciclo__num">2030</span>
+              <span class="ciclo__nome" data-i18n="ciclo.a4.nome">Copas Continentais</span>
+              <span class="ciclo__funcao" data-i18n="ciclo.a4.funcao">Classificatórias para a World Cup 2031</span>
+            </li>
+          </ol>
+          <p class="ciclo__nota" data-revelar data-i18n="ciclo.nota">As Copas Continentais fazem parte do sistema classificatório para a World Cup do ano seguinte.</p>
+        </div>
+
+        <!-- CAMPEÃO NACIONAL ÚNICO + SISTEMA FIPV -->
+        <div class="sistema">
+          <div class="sistema__texto" data-revelar>
+            <h3 class="comp__subtitulo" data-i18n="sistema.titulo">Campeão nacional <span class="ouro">único</span></h3>
+            <p class="texto texto--lead" data-i18n="sistema.lead">Cada país filiado à FIPV reconhece, ao fim de cada temporada, um único campeão nacional por categoria.</p>
+            <p class="texto" data-i18n="sistema.texto1">As entidades nacionais podem organizar ligas, circuitos, etapas regionais e outras classificatórias ao longo do ano. Mas o calendário nacional termina, obrigatoriamente, numa disputa que define um só Campeão Nacional oficial por categoria. Não existem dois campeões nacionais da mesma categoria na mesma temporada.</p>
+            <p class="texto" data-i18n="sistema.texto2">O mesmo vale para as Copas Continentais: ao fim da competição, há um único Campeão Continental por categoria.</p>
+          </div>
+
+          <figure class="piramide" data-revelar="zoom" style="--atraso: 1">
+            <figcaption class="piramide__rotulo" data-i18n="sistema.rotulo">Sistema FIPV</figcaption>
+            <!-- na ordem do regulamento (da base ao topo); o CSS inverte pra
+                 desenhar a pirâmide com a World Cup em cima -->
+            <ol class="piramide__degraus" role="list">
+              <li class="piramide__degrau" style="--d: 0"><span data-i18n="sistema.d1">Etapas e competições nacionais</span></li>
+              <li class="piramide__degrau" style="--d: 1"><span data-i18n="sistema.d2">1 Campeão Nacional por categoria</span></li>
+              <li class="piramide__degrau" style="--d: 2"><span data-i18n="sistema.d3">Copas Continentais · anos pares</span></li>
+              <li class="piramide__degrau" style="--d: 3"><span data-i18n="sistema.d4">1 Campeão Continental por categoria</span></li>
+              <li class="piramide__degrau piramide__degrau--topo" style="--d: 4"><span data-i18n="sistema.d5">World Cup Pikivoley · anos ímpares</span></li>
+            </ol>
+            <p class="piramide__nota" data-i18n="sistema.nota">Uma pirâmide esportiva internacional única, que liga as competições de cada país ao calendário continental e mundial da FIPV.</p>
+          </figure>
+        </div>
+
+        <p class="comp__lema" data-revelar data-i18n="comp.lema"><span>Um país. <span class="ouro">Um campeão.</span></span> <span>Um continente. <span class="ouro">Um campeão.</span></span> <span>Um mundial. <span class="ouro">Um campeão.</span></span></p>
       </div>
     </section>
