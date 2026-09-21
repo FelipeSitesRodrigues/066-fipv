@@ -2,7 +2,7 @@
    07b · Categorias e estilos. Seção clara.
    Desktop: título e lead à esquerda, naipes e categorias em duas colunas à
    direita; embaixo, os 4 estilos em cards (o Piki Triathlon em preto, como
-   destaque) e a faixa das regras em finalização.
+   destaque).
    ========================================================================== */
 
 .cat__topo {
@@ -156,61 +156,6 @@
   color: var(--texto-escuro);
 }
 
-/* ------------------------------------------------------------------ regras */
-.regras {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(20px, 3.4vw, 64px);
-  align-items: center;
-  margin-top: clamp(40px, 4vw, 72px);
-  padding: clamp(22px, 2.2vw, 36px) clamp(22px, 2.6vw, 44px);
-  border: 1px dashed rgba(7, 7, 7, 0.28);
-}
-.regras__cabeca {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 18px;
-}
-.regras__titulo {
-  font: italic 400 clamp(28px, 2.4vw, 42px) / 1 var(--f-display);
-  font-synthesis: style;
-  text-transform: uppercase;
-  color: var(--tinta);
-}
-.regras__selo {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6em;
-  padding: 0.55em 0.9em;
-  font: 700 var(--t-mini) / 1 var(--f-rotulo);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--tinta);
-  background: var(--osso-2);
-}
-/* ponto piscando devagar: está em andamento */
-.regras__selo::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--ouro-escuro);
-  animation: regras-pulso 2.4s ease-in-out infinite;
-}
-@keyframes regras-pulso {
-  50% {
-    opacity: 0.25;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .regras__selo::before {
-    animation: none;
-  }
-}
-.regras__texto {
-  max-width: 60em;
-}
 
 /* ===================================================== tablet 768 a 1099 */
 @media (max-width: 1099px) {
@@ -222,9 +167,6 @@
   }
   .estilo--tri {
     grid-column: 1 / -1;
-  }
-  .regras {
-    grid-template-columns: minmax(0, 1fr);
   }
 }
 

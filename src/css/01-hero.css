@@ -170,9 +170,11 @@
   font-size: calc(var(--escala, 1) * 1em);
   line-height: 0.95;
 }
+/* a Anton não tem itálico: o navegador inclina a letra e a ponta do Y sai da
+   caixa. O degradê só pinta dentro da caixa, então ela precisa sobrar à direita */
 .hero__grande .ouro {
-  padding-right: 0.07em;
-  margin-right: -0.07em;
+  padding-right: 0.3em;
+  margin-right: -0.3em;
 }
 .hero__cauda {
   margin-top: calc(var(--hg) * -0.005);

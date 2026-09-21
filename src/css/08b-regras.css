@@ -1,0 +1,67 @@
+/* ==========================================================================
+   08b · Regras: faixa curta entre a galeria e o rodapé, só com o aviso de
+   que o regulamento vem em breve. Fundo osso-2 pra não emendar com a galeria
+   (osso) nem com o rodapé (preto).
+   ========================================================================== */
+.regras {
+  background: var(--osso-2);
+  padding-block: clamp(56px, 6vw, 104px);
+}
+.regras__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 80px);
+  align-items: end;
+}
+.regras__cabeca {
+  display: grid;
+  gap: clamp(14px, 1.4vw, 22px);
+}
+.regras__aviso {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  padding: clamp(22px, 2.2vw, 36px) clamp(22px, 2.6vw, 44px);
+  border: 1px dashed rgba(7, 7, 7, 0.28);
+}
+.regras__selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.55em 0.9em;
+  font: 700 var(--t-mini) / 1 var(--f-rotulo);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--osso);
+  background: var(--tinta);
+}
+/* ponto piscando devagar: está em andamento */
+.regras__selo::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ouro-claro);
+  animation: regras-pulso 2.4s ease-in-out infinite;
+}
+@keyframes regras-pulso {
+  50% {
+    opacity: 0.25;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .regras__selo::before {
+    animation: none;
+  }
+}
+.regras__texto {
+  max-width: 34em;
+}
+
+/* ======================================================== até tablet */
+@media (max-width: 1099px) {
+  .regras__grade {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}

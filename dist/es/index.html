@@ -23,7 +23,7 @@
   <link rel="preload" href="/assets/fonts/inter-400-700.woff2" as="font" type="font/woff2" crossorigin="">
   <link rel="preload" as="image" href="/assets/img/hero-mobile-720.webp" imagesrcset="/assets/img/hero-mobile-480.webp 480w, /assets/img/hero-mobile-720.webp 720w, /assets/img/hero-mobile-941.webp 941w" imagesizes="100vw" media="(max-width: 559.98px), (max-width: 1099.98px) and (orientation: portrait)" fetchpriority="high">
 <link rel="preload" as="image" href="/assets/img/hero-desktop-1731.webp" imagesrcset="/assets/img/hero-desktop-960.webp 960w, /assets/img/hero-desktop-1280.webp 1280w, /assets/img/hero-desktop-1731.webp 1731w" imagesizes="(min-width: 1812px) 1752px, (min-width: 1220px) 97vw, 1180px" media="(min-width: 1100px), (min-width: 560px) and (orientation: landscape)" fetchpriority="high">
-  <link rel="stylesheet" href="/assets/css/site.css?v=8b4279ae">
+  <link rel="stylesheet" href="/assets/css/site.css?v=ded280a2">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -602,8 +602,8 @@
     </section>
 
         <!-- 07b · Categorias e estilos (texto oficial do Vitor, 2026-09-19):
-         3 naipes, 3 categorias etárias, 4 estilos. No fim, o aviso de que
-         o regulamento está em finalização. -->
+         3 naipes, 3 categorias etárias, 4 estilos. O aviso das regras
+         virou seção própria (08b-regras). -->
     <section class="sec sec--claro cat" id="categorias" aria-labelledby="cat-titulo">
       <div class="wrap">
         <div class="cat__topo">
@@ -660,14 +660,6 @@
             <span class="estilo__desc">Los tres estilos en la misma competencia.</span>
           </li>
         </ul>
-
-        <aside class="regras" id="regras" aria-labelledby="regras-titulo" data-revelar="">
-          <div class="regras__cabeca">
-            <h3 class="regras__titulo" id="regras-titulo">Reglas oficiales</h3>
-            <span class="regras__selo">En finalización</span>
-          </div>
-          <p class="texto regras__texto">La FIPV está cerrando el reglamento internacional del Pikivoley. En cuanto se oficialice, será publicado aquí, con el estándar de cancha, red, pelota y equipamiento y el formato de cada estilo.</p>
-        </aside>
       </div>
     </section>
 
@@ -824,6 +816,21 @@
       </dialog>
     </section>
 
+        <!-- 08b · Regras (pedido do Vitor, 2026-09-21). O regulamento ainda está
+         sendo fechado: por enquanto só o aviso. Quando vier, entra aqui. -->
+    <section class="sec sec--claro regras" id="regras" aria-labelledby="regras-titulo">
+      <div class="wrap regras__grade">
+        <div class="regras__cabeca">
+          <p class="rotulo" data-revelar="">Reglas</p>
+          <h2 class="titulo regras__titulo" id="regras-titulo" data-revelar="" style="--atraso: 1">Reglas <span class="ouro">oficiales.</span></h2>
+        </div>
+        <div class="regras__aviso" data-revelar="" style="--atraso: 2">
+          <span class="regras__selo">Muy pronto</span>
+          <p class="texto regras__texto">Las reglas oficiales del Pikivoley serán publicadas aquí muy pronto.</p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
     <footer class="rod" id="contato">
@@ -858,6 +865,7 @@
             <li><a href="#categorias">Categorías</a></li>
             <li><a href="#diretoria">Directiva</a></li>
             <li><a href="#galeria">Galería</a></li>
+            <li><a href="#regras">Reglas</a></li>
             <li><a href="#contato">Contacto</a></li>
           </ul>
         </nav>
@@ -907,7 +915,7 @@
   </footer>
 
 
-  <script src="/assets/js/site.js?v=8b4279ae" defer=""></script>
+  <script src="/assets/js/site.js?v=ded280a2" defer=""></script>
 
 
 </body></html>
