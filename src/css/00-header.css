@@ -282,8 +282,28 @@
     font-size: 12px;
     letter-spacing: 0.05em;
   }
+  /* idioma à vista no celular: bandeira + sigla antes do hambúrguer, e o
+     mesmo menu de três bandeiras do desktop ao tocar */
   .cab__idioma {
+    order: 1;
+    z-index: 2;
+    margin-left: auto;
+    margin-right: 4px;
+  }
+  .cab__idioma-btn {
+    gap: 7px;
+    padding-inline: 4px;
+    font-size: 14px;
+  }
+  .cab__idioma-btn .cab__bandeira {
+    width: 27px;
+    height: 18px;
+  }
+  .cab__idioma-btn .cab__chevron {
     display: none;
+  }
+  .cab__idioma-menu {
+    top: calc(100% + 4px);
   }
 
   /* hambúrguer: três traços, vira X quando aberto */
@@ -295,9 +315,10 @@
     justify-content: center;
     align-items: flex-end;
     gap: 7px;
+    order: 2;
     width: 48px;
     height: 48px;
-    margin-left: auto;
+    margin-left: 0;
     margin-right: -8px;
     padding: 0 8px;
   }
@@ -519,5 +540,19 @@ html.cab-travado body {
     min-height: 46px;
     padding-block: 3px;
     font-size: clamp(28px, 8.4vw, 44px);
+  }
+}
+
+/* celular estreito: só a bandeira no botão de idioma */
+@media (max-width: 399.98px) {
+  .cab__idioma-btn .cab__idioma-sigla {
+    display: none;
+  }
+}
+/* celular bem estreito: o nome por extenso sai pra caber a bandeira */
+@media (max-width: 340px) {
+  .cab__filete,
+  .cab__nome {
+    display: none;
   }
 }
