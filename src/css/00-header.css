@@ -299,8 +299,12 @@
     width: 27px;
     height: 18px;
   }
+  /* setinha: avisa que dá pra trocar o idioma */
   .cab__idioma-btn .cab__chevron {
-    display: none;
+    width: 11px;
+    height: 11px;
+    margin-left: -2px;
+    stroke-width: 1.9;
   }
   .cab__idioma-menu {
     top: calc(100% + 4px);
@@ -543,10 +547,21 @@ html.cab-travado body {
   }
 }
 
-/* celular estreito: só a bandeira no botão de idioma */
+/* celular estreito: bandeira e setinha, sem a sigla; o nome encolhe um
+   pouco pra caber */
 @media (max-width: 399.98px) {
+  .cab__idioma-btn {
+    gap: 5px;
+  }
   .cab__idioma-btn .cab__idioma-sigla {
     display: none;
+  }
+  .cab__idioma-btn .cab__bandeira {
+    width: 24px;
+    height: 16px;
+  }
+  .cab__nome {
+    font-size: 11px;
   }
 }
 /* celular bem estreito: o nome por extenso sai pra caber a bandeira */
