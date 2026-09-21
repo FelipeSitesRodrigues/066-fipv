@@ -8,6 +8,7 @@
   <meta name="color-scheme" content="dark light">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:locale:alternate" content="es_PY">
+  <meta property="og:locale:alternate" content="en_US">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="FIPV">
   <meta property="og:title" content="FIPV · Federação Internacional de Pikivoley">
@@ -23,13 +24,13 @@
   <link rel="preload" href="/assets/fonts/inter-400-700.woff2" as="font" type="font/woff2" crossorigin="">
   <link rel="preload" as="image" href="/assets/img/hero-mobile-720.webp" imagesrcset="/assets/img/hero-mobile-480.webp 480w, /assets/img/hero-mobile-720.webp 720w, /assets/img/hero-mobile-941.webp 941w" imagesizes="100vw" media="(max-width: 559.98px), (max-width: 1099.98px) and (orientation: portrait)" fetchpriority="high">
 <link rel="preload" as="image" href="/assets/img/hero-desktop-1731.webp" imagesrcset="/assets/img/hero-desktop-960.webp 960w, /assets/img/hero-desktop-1280.webp 1280w, /assets/img/hero-desktop-1731.webp 1731w" imagesizes="(min-width: 1812px) 1752px, (min-width: 1220px) 97vw, 1180px" media="(min-width: 1100px), (min-width: 560px) and (orientation: landscape)" fetchpriority="high">
-  <link rel="stylesheet" href="/assets/css/site.css?v=92704dba">
+  <link rel="stylesheet" href="/assets/css/site.css?v=96342630">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SportsOrganization",
     "name": "FIPV · Federação Internacional de Pikivoley",
-    "alternateName": ["FIPV", "Federación Internacional de Pikivoley"],
+    "alternateName": ["FIPV", "Federación Internacional de Pikivoley", "International Pikivoley Federation"],
     "sport": "Pikivoley",
     "description": "Federação internacional que regulamenta, organiza e difunde o Pikivoley, esporte sul-americano nascido no Paraguai no fim dos anos 1990.",
     "logo": "/assets/img/icon-512.png",
@@ -63,27 +64,31 @@
           <li><a class="cab__link" href="#categorias"><span class="cab__num" aria-hidden="true">04</span><span>Categorias</span></a></li>
           <li><a class="cab__link" href="#diretoria"><span class="cab__num" aria-hidden="true">05</span><span>Diretoria</span></a></li>
           <li><a class="cab__link" href="#galeria"><span class="cab__num" aria-hidden="true">06</span><span>Galeria</span></a></li>
-          <li><a class="cab__link" href="#contato"><span class="cab__num" aria-hidden="true">07</span><span>Contato</span></a></li>
+          <li><a class="cab__link" href="#regras"><span class="cab__num" aria-hidden="true">07</span><span>Regras</span></a></li>
+          <li><a class="cab__link" href="#contato"><span class="cab__num" aria-hidden="true">08</span><span>Contato</span></a></li>
         </ul>
         <div class="cab__rodape-menu">
           <p class="cab__lema">Da América do Sul para o mundo.</p>
           <div class="cab__idiomas" role="group" aria-label="Idioma">
-            <a class="cab__idioma-link ativo" data-idioma="pt" href="/" hreflang="pt-BR" lang="pt-BR" aria-current="true">PT</a>
+            <a class="cab__idioma-link ativo" data-idioma="pt" aria-label="Português" href="/" hreflang="pt-BR" lang="pt-BR" aria-current="true"><img class="cab__bandeira" src="/assets/img/bandeiras/pt.svg" width="24" height="16" alt="">PT</a>
             <span class="cab__barra-idioma" aria-hidden="true"></span>
-            <a class="cab__idioma-link" data-idioma="es" href="/es/" hreflang="es" lang="es">ES</a>
+            <a class="cab__idioma-link" data-idioma="es" aria-label="Español" href="/es/" hreflang="es" lang="es"><img class="cab__bandeira" src="/assets/img/bandeiras/es.svg" width="24" height="16" alt="">ES</a>
+            <span class="cab__barra-idioma" aria-hidden="true"></span>
+            <a class="cab__idioma-link" data-idioma="en" aria-label="English" href="/en/" hreflang="en" lang="en"><img class="cab__bandeira" src="/assets/img/bandeiras/en.svg" width="24" height="16" alt="">EN</a>
           </div>
         </div>
       </nav>
 
       <div class="cab__idioma">
         <button class="cab__idioma-btn" type="button" aria-expanded="false" aria-controls="cab-idiomas" aria-label="PT, idioma português. Trocar idioma">
-          <svg class="cab__globo-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.25"></circle><ellipse cx="12" cy="12" rx="4.1" ry="9.25"></ellipse><path d="M2.9 8.6h18.2M2.9 15.4h18.2M12 2.75v18.5"></path></svg>
+          <img class="cab__bandeira" src="/assets/img/bandeiras/pt.svg" width="24" height="16" alt="">
           <span class="cab__idioma-sigla">PT</span>
           <svg class="cab__chevron" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg>
         </button>
         <ul class="cab__idioma-menu" id="cab-idiomas" role="list">
-          <li><a class="cab__idioma-op ativo" data-idioma="pt" href="/" hreflang="pt-BR" lang="pt-BR" aria-current="true">Português</a></li>
-          <li><a class="cab__idioma-op" data-idioma="es" href="/es/" hreflang="es" lang="es">Español</a></li>
+          <li><a class="cab__idioma-op ativo" data-idioma="pt" href="/" hreflang="pt-BR" lang="pt-BR" aria-current="true"><img class="cab__bandeira" src="/assets/img/bandeiras/pt.svg" width="24" height="16" alt=""><span>Português</span></a></li>
+          <li><a class="cab__idioma-op" data-idioma="es" href="/es/" hreflang="es" lang="es"><img class="cab__bandeira" src="/assets/img/bandeiras/es.svg" width="24" height="16" alt=""><span>Español</span></a></li>
+          <li><a class="cab__idioma-op" data-idioma="en" href="/en/" hreflang="en" lang="en"><img class="cab__bandeira" src="/assets/img/bandeiras/en.svg" width="24" height="16" alt=""><span>English</span></a></li>
         </ul>
       </div>
     </div>
@@ -930,7 +935,7 @@
   </footer>
 
 
-  <script src="/assets/js/site.js?v=92704dba" defer=""></script>
+  <script src="/assets/js/site.js?v=96342630" defer=""></script>
 
 
 </body></html>

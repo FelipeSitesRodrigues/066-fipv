@@ -1,0 +1,23 @@
+{
+  "dir.rotulo": "Board",
+  "dir.titulo": "<span>From the top</span> <span class=\"dir__recuo\">to every</span> <span class=\"ouro\">continent.</span>",
+  "dir.lead": "The FIPV is organized into an Executive Board and five Continental Boards, one for each region of the world.",
+  "dir.executiva": "Executive board",
+  "dir.x1": "Presidency",
+  "dir.x1c": "President",
+  "dir.x2": "Administrative Vice Presidency",
+  "dir.x2c": "Administrative Vice President",
+  "dir.x3": "Financial Vice Presidency",
+  "dir.x3c": "Financial Vice President",
+  "dir.x4": "Events and Competitions",
+  "dir.x4c": "Director of Events and Competitions",
+  "dir.x5": "Refereeing and Rules",
+  "dir.x5c": "Director of Refereeing and Rules",
+  "dir.continentais": "Continental boards",
+  "dir.c1": "South America",
+  "dir.c2": "North America, Central America and the Caribbean",
+  "dir.c3": "Europe",
+  "dir.c4": "Africa",
+  "dir.c5": "Asia and Oceania",
+  "dir.cc": "Continental Director"
+}

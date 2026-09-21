@@ -104,6 +104,13 @@
   line-height: 0;
   margin-left: 0.1em;
 }
+/* em inglês é "2nd": duas letras, então menores e minúsculas, no alto */
+.num__ordinal:lang(en) {
+  font-size: 0.4em;
+  vertical-align: 1.05em;
+  margin-left: 0.06em;
+  text-transform: none;
+}
 
 .num__legenda {
   display: block;

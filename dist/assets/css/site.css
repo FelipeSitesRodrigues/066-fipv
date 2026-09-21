@@ -558,10 +558,11 @@ button {
 .cab__nav {
   margin-left: auto;
 }
+/* 8 itens (Regras entrou em 2026-09-21): espaço menor entre eles */
 .cab__lista {
   display: flex;
   align-items: center;
-  gap: clamp(22px, 2.75vw, 50px);
+  gap: clamp(16px, 1.55vw, 36px);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -572,7 +573,7 @@ button {
   align-items: center;
   min-height: 44px;
   font: 600 var(--cab-nav) / 1 var(--f-rotulo);
-  letter-spacing: 0.11em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--cab-texto);
@@ -609,7 +610,7 @@ button {
 .cab__idioma {
   position: relative;
   flex: none;
-  margin-left: clamp(28px, 6.6vw, 120px);
+  margin-left: clamp(20px, 2.8vw, 56px);
 }
 .cab__idioma-btn {
   display: flex;
@@ -621,12 +622,14 @@ button {
   letter-spacing: 0.1em;
   color: var(--cab-texto);
 }
-.cab__globo-ico {
-  width: 1.55em;
-  height: 1.55em;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.35;
+/* bandeira do idioma: no botão, no menu do desktop e na linha do celular */
+.cab__bandeira {
+  flex: none;
+  width: 22px;
+  height: 15px;
+  border-radius: 2px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
 }
 .cab__chevron {
   width: 0.78em;
@@ -667,8 +670,7 @@ button {
 .cab__idioma-op {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   min-height: 44px;
   padding: 0 18px;
   font: 500 15px / 1 var(--f-rotulo);
@@ -685,6 +687,7 @@ button {
 }
 .cab__idioma-op.ativo::after {
   content: '';
+  margin-left: auto;
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -693,6 +696,10 @@ button {
 
 /* ------------------------------------------------------ estado rolado (desktop) */
 @media (min-width: 1100px) {
+  /* folga entre o nome da federação e o primeiro item do menu */
+  .cab__nav {
+    padding-left: clamp(20px, 2.4vw, 48px);
+  }
   /* no mockup o header fica um pouco pra dentro da margem do conteúdo */
   .cab__barra {
     padding-inline: 1.9vw 2.6vw;
@@ -710,19 +717,24 @@ button {
   }
 }
 
-/* desktop estreito: logo, 6 itens e idioma precisam caber sem encostar */
+/* desktop estreito: logo, 8 itens e idioma precisam caber sem encostar.
+   O nome por extenso sai (o logo FIPV fica) */
 @media (min-width: 1100px) and (max-width: 1279.98px) {
   .cab__barra {
     padding-inline: 0;
   }
+  .cab__filete,
+  .cab__nome {
+    display: none;
+  }
   .cab__lista {
-    gap: 2vw;
+    gap: 1.5vw;
   }
   .cab__link {
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
   }
   .cab__idioma {
-    margin-left: 2.6vw;
+    margin-left: 2vw;
   }
   .cab__nav {
     padding-left: 24px;
@@ -850,6 +862,7 @@ button {
   .cab__lista li:nth-child(5) .cab__link { --n: 4; }
   .cab__lista li:nth-child(6) .cab__link { --n: 5; }
   .cab__lista li:nth-child(7) .cab__link { --n: 6; }
+  .cab__lista li:nth-child(8) .cab__link { --n: 7; }
   .cab__link::after {
     display: none;
   }
@@ -886,13 +899,18 @@ button {
     margin: 0;
   }
   .cab__idioma-link {
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     min-width: 44px;
     min-height: 44px;
+    padding-inline: 4px;
     font: 600 15px / 1 var(--f-rotulo);
     letter-spacing: 0.14em;
     color: var(--cab-texto);
+  }
+  .cab__idioma-link:not(.ativo) .cab__bandeira {
+    opacity: 0.75;
   }
   .cab__idioma-link.ativo {
     color: var(--ouro-claro);
@@ -956,6 +974,20 @@ html.cab-travado body {
   .cab__chevron,
   .cab__idioma-menu {
     transition: none !important;
+  }
+}
+
+/* celular com tela baixa: com 8 itens, o menu encolhe um pouco pra linha das
+   bandeiras continuar à vista sem rolar */
+@media (max-width: 1099.98px) and (max-height: 720px) {
+  .cab__nav {
+    gap: 20px;
+    padding-top: calc(var(--header-h) + 16px);
+  }
+  .cab__link {
+    min-height: 46px;
+    padding-block: 3px;
+    font-size: clamp(28px, 8.4vw, 44px);
   }
 }
 
@@ -1851,8 +1883,10 @@ html.cab-travado body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-/* Em espanhol "a través del juego." tem três letras a mais */
-.sobre__l3:lang(es) {
+/* Em espanhol "a través del juego." tem três letras a mais; em inglês
+   "through the game." também passa do português */
+.sobre__l3:lang(es),
+.sobre__l3:lang(en) {
   font-size: calc(var(--sobre-t) * 0.86);
 }
 
@@ -2027,14 +2061,17 @@ html.cab-travado body {
   .sobre__l2:lang(es) {
     font-size: calc(var(--sobre-t) * var(--sobre-k2) * 0.88);
   }
-  .sobre__l3:lang(es) {
+  .sobre__l3:lang(es),
+  .sobre__l3:lang(en) {
     font-size: calc(var(--sobre-t) * 0.79);
   }
-  .sobre__pilha:lang(es) {
+  .sobre__pilha:lang(es),
+  .sobre__pilha:lang(en) {
     left: auto;
     top: 70%;
   }
-  .sobre__globo:lang(es) {
+  .sobre__globo:lang(es),
+  .sobre__globo:lang(en) {
     margin-bottom: calc(72px - 0.3 * var(--sobre-g));
   }
   .sobre__lema span {
@@ -2961,6 +2998,13 @@ html.cab-travado body {
   vertical-align: 0.4em;
   line-height: 0;
   margin-left: 0.1em;
+}
+/* em inglês é "2nd": duas letras, então menores e minúsculas, no alto */
+.num__ordinal:lang(en) {
+  font-size: 0.4em;
+  vertical-align: 1.05em;
+  margin-left: 0.06em;
+  text-transform: none;
 }
 
 .num__legenda {

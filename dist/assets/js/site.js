@@ -485,7 +485,7 @@
     grande.alt = mini.alt
     texto.textContent = mini.alt
     contador.textContent = `${dois(atual + 1)} / ${dois(botoes.length)}`
-    anunciar(`${atual + 1} de ${botoes.length}: ${mini.alt}`)
+    anunciar(`${atual + 1} ${document.documentElement.lang === 'en' ? 'of' : 'de'} ${botoes.length}: ${mini.alt}`)
   }
   const tirarTroca = () => grande.classList.remove('gal__grande--troca')
   grande.addEventListener('load', () => {

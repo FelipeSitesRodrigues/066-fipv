@@ -86,8 +86,10 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-/* Em espanhol "a través del juego." tem três letras a mais */
-.sobre__l3:lang(es) {
+/* Em espanhol "a través del juego." tem três letras a mais; em inglês
+   "through the game." também passa do português */
+.sobre__l3:lang(es),
+.sobre__l3:lang(en) {
   font-size: calc(var(--sobre-t) * 0.86);
 }
 
@@ -262,14 +264,17 @@
   .sobre__l2:lang(es) {
     font-size: calc(var(--sobre-t) * var(--sobre-k2) * 0.88);
   }
-  .sobre__l3:lang(es) {
+  .sobre__l3:lang(es),
+  .sobre__l3:lang(en) {
     font-size: calc(var(--sobre-t) * 0.79);
   }
-  .sobre__pilha:lang(es) {
+  .sobre__pilha:lang(es),
+  .sobre__pilha:lang(en) {
     left: auto;
     top: 70%;
   }
-  .sobre__globo:lang(es) {
+  .sobre__globo:lang(es),
+  .sobre__globo:lang(en) {
     margin-bottom: calc(72px - 0.3 * var(--sobre-g));
   }
   .sobre__lema span {

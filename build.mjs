@@ -1,6 +1,6 @@
 /**
- * Build do site da FIPV. HTML, CSS e JS estático, gerado em português (/) e
- * espanhol (/es/) a partir de uma fonte só.
+ * Build do site da FIPV. HTML, CSS e JS estático, gerado em português (/),
+ * espanhol (/es/) e inglês (/en/) a partir de uma fonte só.
  *
  *   node build.mjs                          página inteira em dist/
  *   node build.mjs --preview 02-sobre       só aquela seção, em dist/preview/
@@ -13,10 +13,12 @@
  * - CSS: src/css/_*.css primeiro (fontes e base), depois o resto em ordem de
  *   nome. Cada seção tem o seu arquivo com o mesmo nome do parcial.
  * - JS: mesma regra, em src/js.
- * - Espanhol: todo elemento com data-i18n="chave" recebe o HTML da chave em
- *   src/i18n/es/*.json. data-i18n-attr="alt:chave;aria-label:chave2" troca
- *   atributos. Chave sem tradução mantém o português e aparece no aviso.
- * - Idioma: <a data-idioma="pt|es"> recebe o href certo e marca o ativo.
+ * - Outros idiomas (lista em IDIOMAS): todo elemento com data-i18n="chave"
+ *   recebe o HTML da chave em src/i18n/<idioma>/*.json. data-i18n-attr=
+ *   "alt:chave;aria-label:chave2" troca atributos. Chave sem tradução mantém
+ *   o português e aparece no aviso.
+ * - Idioma: <a data-idioma="pt|es|en"> recebe o href certo e marca o ativo;
+ *   <img data-bandeira-atual> recebe a bandeira do idioma da página.
  * - Links do site.config.json: href="{{links.instagram}}" vazio vira link
  *   pendente (sem href, com data-pendente). Elemento com data-requer="video"
  *   some quando links.video está vazio.
@@ -34,6 +36,14 @@ const P = (...a) => path.join(RAIZ, ...a)
 const DIST = P('dist')
 const cfg = JSON.parse(readFileSync(P('site.config.json'), 'utf8'))
 const avisos = []
+
+// pt é o original (fica na raiz); os outros saem em /<pasta>/
+const IDIOMAS = {
+  pt: { pasta: '', html: 'pt-BR', og: 'pt_BR' },
+  es: { pasta: 'es', html: 'es', og: 'es_PY' },
+  en: { pasta: 'en', html: 'en', og: 'en_US' },
+}
+const url = (l) => (IDIOMAS[l].pasta ? `/${IDIOMAS[l].pasta}/` : '/')
 
 const argPreview = (() => {
   const i = process.argv.indexOf('--preview')
@@ -109,18 +119,18 @@ function juntar(pasta, ext, so) {
     .join(ext === '.js' ? '\n;\n' : '\n')
 }
 
-function traducoes() {
-  const dir = P('src/i18n/es')
-  const es = {}
-  if (!existsSync(dir)) return es
+function traducoes(lang) {
+  const dir = P('src/i18n', lang)
+  const dic = {}
+  if (!existsSync(dir)) return dic
   for (const f of readdirSync(dir).filter((f) => f.endsWith('.json')).sort()) {
     try {
-      Object.assign(es, JSON.parse(readFileSync(path.join(dir, f), 'utf8')))
+      Object.assign(dic, JSON.parse(readFileSync(path.join(dir, f), 'utf8')))
     } catch (e) {
-      avisos.push(`JSON inválido em src/i18n/es/${f}: ${e.message}`)
+      avisos.push(`JSON inválido em src/i18n/${lang}/${f}: ${e.message}`)
     }
   }
-  return es
+  return dic
 }
 
 // ---------------------------------------------------------------- montagem
@@ -166,23 +176,22 @@ function aplicarConfig(html, versao) {
   return { html, pendentes }
 }
 
-function idioma(html, lang, es, faltando) {
+function idioma(html, lang, dic, faltando) {
   const $ = cheerio.load(html)
-  const ehES = lang === 'es'
-  $('html').attr('lang', ehES ? 'es' : 'pt-BR')
+  $('html').attr('lang', IDIOMAS[lang].html)
 
-  if (ehES) {
+  if (lang !== 'pt') {
     $('[data-i18n]').each((_, el) => {
       const k = $(el).attr('data-i18n')
-      if (k in es) $(el).html(es[k])
-      else faltando.add(k)
+      if (k in dic) $(el).html(dic[k])
+      else faltando.add(`${lang}:${k}`)
     })
     $('[data-i18n-attr]').each((_, el) => {
       for (const par of $(el).attr('data-i18n-attr').split(';')) {
         const [attr, k] = par.split(':').map((s) => s.trim())
         if (!attr || !k) continue
-        if (k in es) $(el).attr(attr, es[k])
-        else faltando.add(k)
+        if (k in dic) $(el).attr(attr, dic[k])
+        else faltando.add(`${lang}:${k}`)
       }
     })
   }
@@ -199,26 +208,27 @@ function idioma(html, lang, es, faltando) {
   // seletor de idioma
   $('[data-idioma]').each((_, el) => {
     const alvo = $(el).attr('data-idioma')
-    $(el).attr('href', alvo === 'es' ? '/es/' : '/')
-    $(el).attr('hreflang', alvo === 'es' ? 'es' : 'pt-BR')
-    $(el).attr('lang', alvo === 'es' ? 'es' : 'pt-BR')
+    $(el).attr('href', url(alvo))
+    $(el).attr('hreflang', IDIOMAS[alvo].html)
+    $(el).attr('lang', IDIOMAS[alvo].html)
     if (alvo === lang) $(el).attr('aria-current', 'true').addClass('ativo')
     else $(el).removeAttr('aria-current').removeClass('ativo')
   })
+  $('[data-bandeira-atual]').attr('src', `/assets/img/bandeiras/${lang}.svg`).removeAttr('data-bandeira-atual')
 
   // meta de idioma
   const base = cfg.siteUrl.replace(/\/$/, '')
+  const outros = Object.keys(IDIOMAS).filter((l) => l !== lang)
   const meta = [
-    `<meta property="og:locale" content="${ehES ? 'es_PY' : 'pt_BR'}">`,
-    `<meta property="og:locale:alternate" content="${ehES ? 'pt_BR' : 'es_PY'}">`,
+    `<meta property="og:locale" content="${IDIOMAS[lang].og}">`,
+    ...outros.map((l) => `<meta property="og:locale:alternate" content="${IDIOMAS[l].og}">`),
   ]
   if (base) {
     meta.unshift(
-      `<link rel="canonical" href="${base}${ehES ? '/es/' : '/'}">`,
-      `<link rel="alternate" hreflang="pt-BR" href="${base}/">`,
-      `<link rel="alternate" hreflang="es" href="${base}/es/">`,
+      `<link rel="canonical" href="${base}${url(lang)}">`,
+      ...Object.keys(IDIOMAS).map((l) => `<link rel="alternate" hreflang="${IDIOMAS[l].html}" href="${base}${url(l)}">`),
       `<link rel="alternate" hreflang="x-default" href="${base}/">`,
-      `<meta property="og:url" content="${base}${ehES ? '/es/' : '/'}">`,
+      `<meta property="og:url" content="${base}${url(lang)}">`,
     )
   }
   let saida = $.html().replace('<!-- @meta-idioma -->', meta.join('\n  '))
@@ -248,7 +258,7 @@ function verificar(html, rotulo) {
 }
 
 // ---------------------------------------------------------------- execução
-const es = traducoes()
+const dics = Object.fromEntries(Object.keys(IDIOMAS).map((l) => [l, l === 'pt' ? {} : traducoes(l)]))
 const faltando = new Set()
 copiarPasta(P('assets'), path.join(DIST, 'assets'))
 
@@ -263,20 +273,21 @@ if (!argPreview) {
   // a config entra depois do idioma, pra {{ano}} e {{links.x}} valerem também
   // dentro das traduções
   const montado = montar(null)
-  const { html: pt, pendentes } = aplicarConfig(idioma(montado, 'pt', es, faltando), versao)
-  const { html: esHtml } = aplicarConfig(idioma(montado, 'es', es, faltando), versao)
-  verificar(pt, 'pt')
-  verificar(esHtml, 'es')
-  gravar(path.join(DIST, 'index.html'), pt)
-  gravar(path.join(DIST, 'es/index.html'), esHtml)
+  let pendentes
+  for (const l of Object.keys(IDIOMAS)) {
+    const r = aplicarConfig(idioma(montado, l, dics[l], faltando), versao)
+    pendentes ??= r.pendentes
+    verificar(r.html, l)
+    gravar(path.join(DIST, IDIOMAS[l].pasta, 'index.html'), r.html)
+  }
   gravar(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n${cfg.siteUrl ? `Sitemap: ${cfg.siteUrl.replace(/\/$/, '')}/sitemap.xml\n` : ''}`)
   if (cfg.siteUrl) {
     const b = cfg.siteUrl.replace(/\/$/, '')
-    gravar(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${['/', '/es/'].map((u) => `  <url><loc>${b}${u}</loc><xhtml:link rel="alternate" hreflang="pt-BR" href="${b}/"/><xhtml:link rel="alternate" hreflang="es" href="${b}/es/"/></url>`).join('\n')}\n</urlset>\n`)
+    gravar(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${Object.keys(IDIOMAS).map((u) => `  <url><loc>${b}${url(u)}</loc>${Object.keys(IDIOMAS).map((l) => `<xhtml:link rel="alternate" hreflang="${IDIOMAS[l].html}" href="${b}${url(l)}"/>`).join('')}</url>`).join('\n')}\n</urlset>\n`)
   }
   if (pendentes.size) avisos.push(`links pendentes em site.config.json: ${[...pendentes].join(', ')}`)
   if (!cfg.siteUrl) avisos.push('siteUrl vazio em site.config.json: sem canonical, sem hreflang absoluto e og:image relativo')
-  console.log(`ok dist/index.html e dist/es/index.html · versão ${versao}`)
+  console.log(`ok ${Object.keys(IDIOMAS).map((l) => `dist/${IDIOMAS[l].pasta ? IDIOMAS[l].pasta + '/' : ''}index.html`).join(', ')} · versão ${versao}`)
 } else {
   const nome = argPreview.join('+')
   gravar(path.join(DIST, `preview/css/${nome}.css`), css)
@@ -284,13 +295,13 @@ if (!argPreview) {
   const montado = montar(argPreview)
     .replace(/\/assets\/css\/site\.css\?v=\{\{versao\}\}/, `/preview/css/${nome}.css?v={{versao}}`)
     .replace(/\/assets\/js\/site\.js\?v=\{\{versao\}\}/, `/preview/js/${nome}.js?v={{versao}}`)
-  const { html: pt } = aplicarConfig(idioma(montado, 'pt', es, faltando), versao)
-  const { html: esHtml } = aplicarConfig(idioma(montado, 'es', es, faltando), versao)
-  verificar(pt, `preview ${nome}`)
-  gravar(path.join(DIST, `preview/${nome}.html`), pt)
-  gravar(path.join(DIST, `preview/${nome}.es.html`), esHtml)
-  console.log(`ok /preview/${nome}.html e /preview/${nome}.es.html`)
+  for (const l of Object.keys(IDIOMAS)) {
+    const { html } = aplicarConfig(idioma(montado, l, dics[l], faltando), versao)
+    if (l === 'pt') verificar(html, `preview ${nome}`)
+    gravar(path.join(DIST, `preview/${nome}${l === 'pt' ? '' : '.' + l}.html`), html)
+  }
+  console.log(`ok /preview/${nome}.html (+ .es e .en)`)
 }
 
-if (faltando.size) avisos.push(`chaves sem tradução em espanhol (${faltando.size}): ${[...faltando].slice(0, 12).join(', ')}${faltando.size > 12 ? '...' : ''}`)
+if (faltando.size) avisos.push(`chaves sem tradução (${faltando.size}): ${[...faltando].slice(0, 12).join(', ')}${faltando.size > 12 ? '...' : ''}`)
 if (avisos.length) console.log(`AVISOS:\n  ${avisos.join('\n  ')}`)
