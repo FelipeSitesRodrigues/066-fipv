@@ -39,9 +39,9 @@ const avisos = []
 
 // pt é o original (fica na raiz); os outros saem em /<pasta>/
 const IDIOMAS = {
-  pt: { pasta: '', html: 'pt-BR', og: 'pt_BR' },
-  es: { pasta: 'es', html: 'es', og: 'es_PY' },
-  en: { pasta: 'en', html: 'en', og: 'en_US' },
+  pt: { pasta: '', html: 'pt-BR', og: 'pt_BR', bandeira: 'brasil' },
+  es: { pasta: 'es', html: 'es', og: 'es_PY', bandeira: 'espanha' },
+  en: { pasta: 'en', html: 'en', og: 'en_US', bandeira: 'eua' },
 }
 const url = (l) => (IDIOMAS[l].pasta ? `/${IDIOMAS[l].pasta}/` : '/')
 
@@ -214,7 +214,7 @@ function idioma(html, lang, dic, faltando) {
     if (alvo === lang) $(el).attr('aria-current', 'true').addClass('ativo')
     else $(el).removeAttr('aria-current').removeClass('ativo')
   })
-  $('[data-bandeira-atual]').attr('src', `/assets/img/bandeiras/${lang}.svg`).removeAttr('data-bandeira-atual')
+  $('[data-bandeira-atual]').attr('src', `/assets/img/bandeiras/${IDIOMAS[lang].bandeira}.svg`).removeAttr('data-bandeira-atual')
 
   // meta de idioma
   const base = cfg.siteUrl.replace(/\/$/, '')
