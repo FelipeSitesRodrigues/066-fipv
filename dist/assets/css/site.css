@@ -273,16 +273,18 @@ button {
   display: block;
 }
 
-/* Palavra em ouro. O padding à direita cobre a sobra da letra inclinada, senão
-   o degradê corta a ponta da última letra. */
+/* Palavra em ouro. A Anton não tem itálico: o navegador inclina a letra e a
+   ponta de cima da última (Y, 7, 6...) sai da caixa. O degradê só pinta dentro
+   da caixa, então o padding à direita precisa cobrir essa sobra; a margem
+   negativa devolve o espaço, e nada sai do lugar. */
 .ouro {
   background: var(--ouro-grad-claro);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: var(--ouro-escuro);
-  padding-right: 0.09em;
-  margin-right: -0.09em;
+  padding-right: 0.3em;
+  margin-right: -0.3em;
   padding-block: 0.06em;
 }
 .sec--escuro .ouro,
@@ -1129,12 +1131,6 @@ html.cab-travado body {
   display: block;
   font-size: calc(var(--escala, 1) * 1em);
   line-height: 0.95;
-}
-/* a Anton não tem itálico: o navegador inclina a letra e a ponta do Y sai da
-   caixa. O degradê só pinta dentro da caixa, então ela precisa sobrar à direita */
-.hero__grande .ouro {
-  padding-right: 0.3em;
-  margin-right: -0.3em;
 }
 .hero__cauda {
   margin-top: calc(var(--hg) * -0.005);
